@@ -1,16 +1,27 @@
-import {db} from "@/utils";
-import {Kids} from "@/utils/schema";
-import {NextResponse} from "next/server";
+// app/api/kid/route.ts
+import { db } from '@/utils';
+import { Kids } from '@/utils/schema';
+import { NextResponse } from 'next/server';
 
-export async function POST(req: Request, res: NextResponse) {
-    const data = await req.json()
+export async function POST(req: Request) {
+    try {
+        const data = await req.json();
 
-    const result = await db.insert(Kids).values({
-        name: data?.name,
-        ageGroup: data?.ageGroup,
-        address: data?.address,
-        contact: data?.contact,
-    })
+        // Optional: basic validation
+        if (!data?.name || !data?.age) {
+            return NextResponse.json({ message: 'Missing required fields' }, { status: 400 });
+        }
 
-    return NextResponse.json(result);
+        const result = await db.insert(Kids).values({
+            name: data.name,
+            age: data.age,
+            address: data.address || '',
+            contact: data.contact || '',
+        }).$returningId(); // to get inserted record if needed
+
+        return NextResponse.json(result[0], { status: 201 });
+    } catch (error) {
+        console.error('Error inserting kid:', error);
+        return NextResponse.json({ message: 'Server error', error }, { status: 500 });
+    }
 }

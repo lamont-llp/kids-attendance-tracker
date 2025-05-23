@@ -1,4 +1,10 @@
-import { int, mysqlTable, serial, varchar } from 'drizzle-orm/mysql-core';
+import { int, mysqlTable, serial, varchar, timestamp } from 'drizzle-orm/mysql-core';
+import {relations} from "drizzle-orm";
+
+const timestamps = {
+    created_at: timestamp("created_at").defaultNow().notNull(),
+    updated_at: timestamp("updated_at").defaultNow().notNull().$onUpdate(() => new Date()),
+}
 
 export const ageGroup = mysqlTable('age_group', {
     id: serial().primaryKey(),
@@ -6,9 +12,12 @@ export const ageGroup = mysqlTable('age_group', {
 });
 
 export const Kids = mysqlTable('kids', {
-    id: serial().primaryKey(),
+    id: serial("id").primaryKey(),
     name: varchar('name',{ length: 20 }).notNull(),
-    ageGroup: varchar('ageGroup',{ length: 20 }).notNull(),
+    age: varchar('age',{ length: 10 }).notNull(),
     address: varchar('address',{ length: 50 }),
     contact: varchar('contact',{ length: 11}),
+    ...timestamps
 })
+
+// Create relations

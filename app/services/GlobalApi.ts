@@ -1,14 +1,23 @@
-import {default as axios} from "axios";
-import {NextResponse} from "next/server";
+// lib/GlobalApi.ts
+import axios from 'axios';
+
+export interface AgeGroup {
+    id: number;
+    group: string;
+}
 
 export interface CreateKidRequest {
     name: string;
-    ageGroup: string;
+    age: string;
     address: string;
     contact: string;
 }
 
 const GetAllAgeGroups = () => axios.get('/api/ageGroup');
-const CreateNewKid = (data: Response) => axios.post('/api/kid', data);
 
-export default { GetAllAgeGroups, CreateNewKid };
+const CreateNewKid = (data: CreateKidRequest) => axios.post('/api/kid', data);
+
+export default {
+    GetAllAgeGroups,
+    CreateNewKid,
+};
