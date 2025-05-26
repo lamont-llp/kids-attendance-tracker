@@ -22,30 +22,36 @@ import {Input} from "@/components/ui/input";
 import {useForm, FormProvider} from "react-hook-form";
 import GlobalApi from "@/app/services/GlobalApi";
 import {CreateKidRequest, AgeGroup} from "@/app/services/GlobalApi";
+import {toast} from "sonner";
+import {LoaderIcon} from "lucide-react";
 
 function AddNewKid() {
     const [open, setOpen] = useState(false)
     const [ageGroups, setAgeGroups] = useState<AgeGroup[]>([])
+    const [loading, setLoading] = useState<boolean>(false)
     const methods = useForm<CreateKidRequest>();
     const { handleSubmit, register, reset, formState: { errors } } = methods;
 
 
     const onSubmit = async (data: CreateKidRequest) => {
+        setLoading(true);
         if (!data.name || !data.age) {
-            alert("Name and Age Group are required");
+            toast("Name and Age Group are required");
             return;
         }
 
         try {
-            const response = await GlobalApi.CreateNewKid(data);
+            const response = await GlobalApi.CreateNewKid(data)
             console.log("Kid created:", response.data);
-            alert("Kid successfully added!");
+            toast("Kid successfully added!");
 
             // Reset form or close modal
+            setLoading(false);
+            reset();
             setOpen(false);
         } catch (error) {
             console.error("Error creating kid:", error);
-            alert("Failed to add kid.");
+            toast("Failed to add kid.");
         }
     };
 
@@ -65,7 +71,7 @@ function AddNewKid() {
         <div>
             <Button onClick={ ()=>setOpen(true) } >+ Add New Kid</Button>
 
-            <Dialog open={open}>
+            <Dialog open={open} onOpenChange={setOpen}>
                 <DialogContent>
                     <DialogHeader>
                         <DialogTitle>Add New Kid</DialogTitle>
@@ -105,9 +111,13 @@ function AddNewKid() {
                                     </FormItem>
 
                                     <FormItem className='flex gap-3 items-center justify-end mt-5'>
-                                        <Button onClick={()=>setOpen(false)} variant="ghost">Cancel</Button>
+                                        <Button type="button" onClick={()=>setOpen(false)} variant="ghost">Cancel</Button>
                                         <Button
-                                            type="submit">Save</Button>
+                                            type="submit"
+                                            disabled={loading}
+                                        >
+                                            {loading? <LoaderIcon className='animate-spin'/> :
+                                                "Save"}</Button>
                                     </FormItem>
                                 </form>
                             </FormProvider>

@@ -25,3 +25,14 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: 'Server error', error }, { status: 500 });
     }
 }
+
+export async function GET(req: Request) {
+    try {
+        const result = await db.select().from(Kids);
+        return NextResponse.json(result, { status: 200 })
+    }
+    catch (error) {
+        console.log('Error getting kids: ', error);
+        return NextResponse.json({ message: 'Server error', error }, { status: 500});
+    }
+}

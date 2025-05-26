@@ -17,7 +17,9 @@ const GetAllAgeGroups = () => axios.get('/api/ageGroup');
 
 const CreateNewKid = (data: CreateKidRequest) => axios.post('/api/kid', data);
 
+const GetAllKids = () => axios.get('/api/kid');
 export default {
     GetAllAgeGroups,
     CreateNewKid,
+    GetAllKids,
 };
