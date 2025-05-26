@@ -1,10 +1,11 @@
 "use client"
 
-import React from 'react'
+import React, {useEffect} from 'react'
 import Image from "next/image";
 import {GraduationCap, Hand, LayoutIcon, Settings} from "lucide-react";
 import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
 import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 function SideNav() {
 
@@ -35,6 +36,11 @@ function SideNav() {
             path: '/dashboard/settings',
         }
     ]
+    const path = usePathname();
+    useEffect(() => {
+        console.log(path)
+    }, [path]);
+
     return (
         <div className='border shadow-md h-screen p-5'>
             <Image priority={true} src={'/logo.svg'}
@@ -47,12 +53,12 @@ function SideNav() {
 
             {menuList.map((menu, index) => (
                 <Link key={menu.id} href={menu.path}>
-                    <h2 className='flex items-center gap-3 text-md p-4
-                    text-slate-500 hover:bg-primary
-                    hover:text-white
-                    cursor-pointer
-                    rounded-lg
-                    my-2'>
+                    <h2 className={`flex items-center gap-3 text-md p-4
+                        text-slate-500 hover:bg-primary
+                        hover:text-white
+                        cursor-pointer
+                        rounded-lg
+                        my-2 ${path==menu.path&&'bg-primary text-white'}`}>
                         <menu.icon/>
                         {menu.name}
                     </h2>

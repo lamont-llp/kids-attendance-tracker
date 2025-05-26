@@ -4,17 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Create kid page with AddNewKid form.">
-      <change afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/types/Kid.ts" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Create Kid List Table.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/kid/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/kid/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/layout.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/layout.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/GlobalApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/GlobalApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -114,7 +107,7 @@
       <workItem from="1748111192150" duration="6831000" />
       <workItem from="1748122556387" duration="2676000" />
       <workItem from="1748245808451" duration="7925000" />
-      <workItem from="1748288509190" duration="9241000" />
+      <workItem from="1748288509190" duration="10033000" />
     </task>
     <task id="LOCAL-00001" summary="Create kid page with AddNewKid form.">
       <option name="closed" value="true" />
@@ -124,7 +117,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748010134151</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Create Kid List Table.">
+      <option name="closed" value="true" />
+      <created>1748298952499</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748298952499</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -132,6 +133,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Create kid page with AddNewKid form." />
-    <option name="LAST_COMMIT_MESSAGE" value="Create kid page with AddNewKid form." />
+    <MESSAGE value="Create Kid List Table." />
+    <option name="LAST_COMMIT_MESSAGE" value="Create Kid List Table." />
   </component>
 </project>

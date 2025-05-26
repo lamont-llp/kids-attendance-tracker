@@ -52,7 +52,7 @@ function KidListTable({ kidList }: KidListTableProps) {
                     rowData={rowData}
                     columnDefs={colDefs}
                     pagination={true}
-                    paginationPageSize={10}
+                    paginationPageSize={20}
                     paginationPageSizeSelector={true}
                     quickFilterText={searchInput}
                     />
