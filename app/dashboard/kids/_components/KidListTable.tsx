@@ -3,20 +3,54 @@ import { AgGridReact } from 'ag-grid-react';
 import { themeQuartz } from 'ag-grid-community';
 import { ModuleRegistry, AllCommunityModule, ColDef } from 'ag-grid-community';
 import {Kid} from "@/types/Kid";
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 import {Button} from "@/components/ui/button";
 import {Search, Trash} from "lucide-react";
-
+import GlobalApi from "@/app/services/GlobalApi";
+import {toast} from "sonner";
 
 interface KidListTableProps {
     kidList?: Kid[];
+    refreshData: () => void; // Add refreshData to the props interface
 }
 
-function KidListTable({ kidList }: KidListTableProps) {
+function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Single parameter object
     ModuleRegistry.registerModules([AllCommunityModule]);
 
-    const CustomButtons = (props: Element) => {
-      return <Button variant="destructive"><Trash/></Button>
+    const CustomButtons = (props: any) => {
+        return (
+            <AlertDialog>
+                <AlertDialogTrigger asChild>
+                    <Button variant="destructive"><Trash/></Button>
+                </AlertDialogTrigger>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            This action cannot be undone. This will permanently delete the record
+                            and remove the data from our servers.
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancel</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => DeleteRecord(props.data?.id)}>Continue</AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
+        )
     }
+
     const [colDefs, setColDefs] = useState<ColDef[]>([
         { field: "id", filter: true },
         { field: "name", filter: true },
@@ -35,6 +69,15 @@ function KidListTable({ kidList }: KidListTableProps) {
         }
     }, [kidList]);
 
+    const DeleteRecord = (id: number) => {
+        GlobalApi.DeleteKidRecord(id).then(res => {
+            if (res) {
+                toast('Record deleted successfully!')
+                refreshData()
+            }
+        })
+    }
+
     return (
         <div>
             <div className="mt-2 mb-2">
@@ -45,7 +88,7 @@ function KidListTable({ kidList }: KidListTableProps) {
                     <Search/>
                     <input type={"text"} placeholder={"Search for..."
                     } className="outline-none w-full"
-                    onChange={(event) => setSearchInput(event.target.value)}/>
+                           onChange={(event) => setSearchInput(event.target.value)}/>
                 </div>
                 <AgGridReact<Kid>
                     theme={themeQuartz}
@@ -55,10 +98,10 @@ function KidListTable({ kidList }: KidListTableProps) {
                     paginationPageSize={20}
                     paginationPageSizeSelector={true}
                     quickFilterText={searchInput}
-                    />
+                />
             </div>
         </div>
-);
+    );
 }
 
 export default KidListTable;

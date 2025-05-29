@@ -27,7 +27,7 @@ function Kid() {
                 <AddNewKid/>
             </h2>
 
-            <KidListTable kidList={kidList} />
+            <KidListTable kidList={kidList} refreshData={GetAllKids} />
         </div>
     )
 }

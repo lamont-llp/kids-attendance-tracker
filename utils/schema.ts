@@ -1,4 +1,4 @@
-import { int, mysqlTable, serial, varchar, timestamp } from 'drizzle-orm/mysql-core';
+import {int, mysqlTable, serial, varchar, timestamp, boolean} from 'drizzle-orm/mysql-core';
 import {relations} from "drizzle-orm";
 
 const timestamps = {
@@ -18,6 +18,14 @@ export const Kids = mysqlTable('kids', {
     address: varchar('address',{ length: 50 }),
     contact: varchar('contact',{ length: 11}),
     ...timestamps
+})
+
+export const Attendance = mysqlTable('attendance', {
+    id: serial("id").primaryKey(),
+    kidId: int('kidId').notNull(),
+    present: boolean('present').default(false),
+    day: int('day').notNull(),
+    date: varchar('date',{ length: 20 }).notNull(),
 })
 
 // Create relations

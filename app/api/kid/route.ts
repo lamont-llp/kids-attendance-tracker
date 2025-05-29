@@ -1,7 +1,8 @@
 // app/api/kid/route.ts
 import { db } from '@/utils';
 import { Kids } from '@/utils/schema';
-import { NextResponse } from 'next/server';
+import {NextRequest, NextResponse} from 'next/server';
+import {eq} from "drizzle-orm";
 
 export async function POST(req: Request) {
     try {
@@ -34,5 +35,22 @@ export async function GET(req: Request) {
     catch (error) {
         console.log('Error getting kids: ', error);
         return NextResponse.json({ message: 'Server error', error }, { status: 500});
+    }
+}
+
+export async function DELETE(req: NextRequest) {
+    const searchParams = req.nextUrl.searchParams;
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: 'ID is required' }, { status: 400 });
+    }
+
+    try {
+        const result = await db.delete(Kids).where(eq(Kids.id, parseInt(id)));
+        return NextResponse.json(result);
+    } catch (error) {
+        console.error('Error deleting kid:', error);
+        return NextResponse.json({ error: 'Failed to delete record' }, { status: 500 });
     }
 }
