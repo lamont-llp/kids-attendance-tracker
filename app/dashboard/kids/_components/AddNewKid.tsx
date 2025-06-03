@@ -24,8 +24,13 @@ import GlobalApi from "@/app/services/GlobalApi";
 import {CreateKidRequest, AgeGroup} from "@/app/services/GlobalApi";
 import {toast} from "sonner";
 import {LoaderIcon} from "lucide-react";
+import {Kid} from "@/types/Kid";
 
-function AddNewKid() {
+interface AddNewKidProps {
+    refreshData: () => void; // Add refreshData to the props interface
+}
+
+function AddNewKid({refreshData}: AddNewKidProps) {
     const [open, setOpen] = useState(false)
     const [ageGroups, setAgeGroups] = useState<AgeGroup[]>([])
     const [loading, setLoading] = useState<boolean>(false)
@@ -48,6 +53,7 @@ function AddNewKid() {
             // Reset form or close modal
             setLoading(false);
             reset();
+            refreshData();
             setOpen(false);
         } catch (error) {
             console.error("Error creating kid:", error);
