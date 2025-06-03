@@ -22,7 +22,7 @@ const GetAllKids = () => axios.get('/api/kid');
 
 const DeleteKidRecord = (id: number) => axios.delete(`/api/kid?id=${id}`);
 
-const GetAttendanceList = (ageGroup: string, month: any)=> axios.get(`/api/attendance?ageGroup=${ageGroup}&month=${month}`);
+const GetAttendanceList = (ageGroup: string | undefined, month: any)=> axios.get(`/api/attendance?ageGroup=${ageGroup}&month=${month}`);
 
 const MarkAttendance = (data: any) => axios.post('/api/attendance', data);
 

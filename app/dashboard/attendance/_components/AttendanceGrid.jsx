@@ -4,6 +4,7 @@ import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import {toast} from "sonner";
+import {getUniqueRecord} from "../../../services/service";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -24,7 +25,7 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
 
     useEffect(() => {
         if (attendanceList) {
-            const userList = getUniqueRecord();
+            const userList = getUniqueRecord(attendanceList);
             console.log(userList);
             setRowData(userList)
 
@@ -51,23 +52,6 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
         return result?true:false
     }
 
-    /**
-     * Used to get Distinct user list
-     * @returns {*[]}
-     */
-    const getUniqueRecord = () => {
-      const uniqueRecord = [];
-      const existingUser = new Set();
-
-      attendanceList?.forEach(record => {
-          if (!existingUser.has(record.kidId)) {
-              existingUser.add(record.kidId);
-              uniqueRecord.push(record);
-          }
-      })
-
-        return uniqueRecord;
-    }
 
     /**
      * Used to mark kid attendance
@@ -101,7 +85,6 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
 
     return (
         <div>
-            <h3>Attendance Grid</h3>
             {rowData && rowData.length > 0 ? (
                 <div style={{ height: 500 }}>
                     <AgGridReact
@@ -114,7 +97,7 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
                     />
                 </div>
             ) : (
-                <div>No attendance data available</div>
+                <div className='text-destructive'>No attendance data available</div>
             )}
         </div>
 
