@@ -4,16 +4,17 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Fix SideNav.tsx show active page.">
-      <change afterPath="$PROJECT_DIR$/app/dashboard/attendance/page.js" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Implement Kid delete functionality.">
+      <change afterPath="$PROJECT_DIR$/app/_components/AgeGroupSelect.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/_components/MonthSelection.jsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/api/attendance/route.ts" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/dashboard/attendance/_components/AttendanceGrid.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/kid/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/kid/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/attendance/page.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/attendance/page.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/services/GlobalApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/GlobalApi.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/schema.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/index.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,29 +42,29 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "Node.js.next.config.ts.executor": "Debug",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
-    "js.debugger.nextJs.config.created.client": "true",
-    "js.debugger.nextJs.config.created.server": "true",
-    "last_opened_file_path": "C:/Users/Lamont/WebstormProjects/kids-attendance-tracker/public",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_interpreter_path": "node",
-    "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "preferences.pluginManager",
-    "ts.external.directory.path": "C:\\Users\\Lamont\\WebstormProjects\\kids-attendance-tracker\\node_modules\\typescript\\lib",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;Node.js.next.config.ts.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lamont/WebstormProjects/kids-attendance-tracker/public&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Lamont\\WebstormProjects\\kids-attendance-tracker\\node_modules\\typescript\\lib&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\Lamont\WebstormProjects\kids-attendance-tracker\public" />
@@ -115,7 +116,11 @@
       <workItem from="1748245808451" duration="7925000" />
       <workItem from="1748288509190" duration="14718000" />
       <workItem from="1748463880479" duration="6030000" />
-      <workItem from="1748478972572" duration="3233000" />
+      <workItem from="1748478972572" duration="9275000" />
+      <workItem from="1748610124488" duration="14350000" />
+      <workItem from="1748849352510" duration="7993000" />
+      <workItem from="1748949827680" duration="324000" />
+      <workItem from="1748950277575" duration="3965000" />
     </task>
     <task id="LOCAL-00001" summary="Create kid page with AddNewKid form.">
       <option name="closed" value="true" />
@@ -141,7 +146,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748299681709</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Implement Kid delete functionality.">
+      <option name="closed" value="true" />
+      <created>1748482406796</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748482406796</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -151,6 +164,7 @@
     <MESSAGE value="Create kid page with AddNewKid form." />
     <MESSAGE value="Create Kid List Table." />
     <MESSAGE value="Fix SideNav.tsx show active page." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix SideNav.tsx show active page." />
+    <MESSAGE value="Implement Kid delete functionality." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implement Kid delete functionality." />
   </component>
 </project>
