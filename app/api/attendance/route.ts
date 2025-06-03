@@ -44,3 +44,37 @@ export async function GET( req: NextRequest ){
         return NextResponse.json({ error: error });
     }
 }
+
+export async function POST( req: NextRequest, res: NextResponse ) {
+    const data = await req.json();
+    const result = await db.insert(Attendance).values({
+        kidId: data.kidId,
+        present: data.present,
+        day: data.day,
+        date: data.date,
+    })
+
+    return NextResponse.json(result);
+}
+
+export async function DELETE( req: NextRequest ){
+
+    const searchParams = req.nextUrl.searchParams;
+    const kidId = searchParams.get('kidId');
+    const date = searchParams.get("date");
+    const day = searchParams.get("day");
+
+    if (!kidId || !day || !date) {
+        throw new Error('kidId, day, and date are required');
+    }
+    const result = await db.delete(Attendance)
+        .where(
+            and(
+                eq(Attendance.kidId, Number(kidId)),
+                eq(Attendance.day, Number(day)),
+                eq(Attendance.date, date)
+            )
+        )
+
+    return NextResponse.json(result);
+}

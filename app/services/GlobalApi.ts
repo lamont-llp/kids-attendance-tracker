@@ -24,10 +24,16 @@ const DeleteKidRecord = (id: number) => axios.delete(`/api/kid?id=${id}`);
 
 const GetAttendanceList = (ageGroup: string, month: any)=> axios.get(`/api/attendance?ageGroup=${ageGroup}&month=${month}`);
 
+const MarkAttendance = (data: any) => axios.post('/api/attendance', data);
+
+const MarkAbsent = (kidId: number, day: any, date: any) => axios.delete('/api/attendance?kidId='+kidId+'&day=' + day+'&date=' + date);
+
 export default {
     GetAllAgeGroups,
     CreateNewKid,
     GetAllKids,
     DeleteKidRecord,
     GetAttendanceList,
+    MarkAttendance,
+    MarkAbsent,
 };

@@ -2,6 +2,8 @@ import React, {useEffect, useState} from 'react'
 import { AgGridReact } from 'ag-grid-react'; // React Data Grid Component
 import { AllCommunityModule, ModuleRegistry } from 'ag-grid-community';
 import moment from "moment";
+import GlobalApi from "../../../services/GlobalApi";
+import {toast} from "sonner";
 
 // Register all Community features
 ModuleRegistry.registerModules([AllCommunityModule]);
@@ -10,8 +12,8 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
 
     const [rowData, setRowData] = useState([])
     const [colDefs, setColDefs] = useState([
-    { field: 'kidId'},
-    { field: 'name'},
+    { field: 'kidId', filter: true},
+    { field: 'name',  filter: true },
     ])
 
     const daysInMonth = (year, month) => new Date(year, month+1, 0).getDate();
@@ -38,6 +40,12 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
         }
     }, [attendanceList]);
 
+    /**
+     * Used to check if user is present or not
+     * @param kidId
+     * @param day
+     * @returns {boolean}
+     */
     const isPresent = (kidId, day) => {
         const result = attendanceList.find(item => item.day == day && item.kidId  == kidId)
         return result?true:false
@@ -61,6 +69,35 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
         return uniqueRecord;
     }
 
+    /**
+     * Used to mark kid attendance
+     * @param day
+     * @param kidId
+     * @param presentStatus
+     */
+    const onMarkAttendance = (day, kidId, presentStatus) => {
+
+        const date = moment(selectedMonth).format('MM/yyyy');
+        if (presentStatus)
+        {
+            const data = {
+                day: day,
+                kidId: kidId,
+                present:  presentStatus,
+                date: date,
+            }
+
+            GlobalApi.MarkAttendance(data).then(response => {
+                console.log('Mark attendance', response);
+                toast("Kid Id: " + kidId + " Marked as present")
+            })
+        }
+        else {
+            GlobalApi.MarkAbsent(kidId, day, date).then(response => {
+                toast("Kid Id: " + kidId +  " Marked as absent")
+            })
+        }
+    }
 
     return (
         <div>
@@ -70,6 +107,10 @@ function AttendanceGrid({attendanceList}, selectedMonth) {
                     <AgGridReact
                         rowData={rowData}
                         columnDefs={colDefs}
+                        onCellValueChanged={(e) => onMarkAttendance(e.colDef.field, e.data.kidId, e.newValue)}
+                        pagination={true}
+                        paginationPageSize={20}
+                        paginationPageSizeSelector={true}
                     />
                 </div>
             ) : (
