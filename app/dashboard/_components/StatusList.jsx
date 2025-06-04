@@ -18,13 +18,14 @@ function StatusList({attendanceList}) {
             const today = moment().format('D');
             const percentage = (attendanceList.length / (totalKids.length * Number(today)) * 100)
             console.log(percentage)
+            setPresentPerc(percentage)
         }
     }, [attendanceList])
     return (
         <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-6'>
             <Card icon={<GraduationCap/>} title='Total Kids' value={totalKid} />
-            <Card icon={<TrendingUp/>} title='Total Present' value={presentPerc.toFixed(1)+'%'} />
-            <Card icon={<TrendingDown/>} title='Total Absent' value={(100-presentPerc.toFixed(1)+'%')} />
+            <Card icon={<TrendingUp/>} title='Total Present' value={Number(presentPerc.toFixed(1))+'%'} />
+            <Card icon={<TrendingDown/>} title='Total Absent' value={(100-Number(presentPerc)).toFixed(1)+'%'} />
         </div>
     )
 }

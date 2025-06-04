@@ -2,7 +2,7 @@
  * Used to get Distinct user list
  * @returns {*[]}
  */
-export const getUniqueRecord = (attendanceList) => {
+export const getUniqueRecord = ({attendanceList}) => {
     console.log('getUniqueRecord - received:', attendanceList, 'Type:', typeof attendanceList, 'IsArray:', Array.isArray(attendanceList));
 
     const uniqueRecord = [];

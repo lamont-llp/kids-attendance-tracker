@@ -7,16 +7,21 @@ import AgeGroupSelect from "@/app/_components/AgeGroupSelect";
 import GlobalApi from "@/app/services/GlobalApi";
 import moment from "moment";
 import StatusList from "@/app/dashboard/_components/StatusList";
+import BarChartComponent from "@/app/dashboard/_components/BarChartComponent";
+import PieChartComponent from "@/app/dashboard/_components/PieChartComponent";
 
 function Dashboard() {
     const { setTheme } = useTheme()
     const [selectedMonth, setSelectedMonth] = useState(new Date());
     const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("3-5yrs");
     const [attendanceList, setAttendanceList] = useState([])
+    const [totalPresentData, setTotalPresentData] = useState([])
 
     useEffect(() => {
         setTheme('system')
+        GetTotalPresentCountByDay();
         getKidAttendance();
+
     },[selectedMonth, selectedAgeGroup]);
 
     /**
@@ -35,6 +40,12 @@ function Dashboard() {
             })
     }
 
+    const GetTotalPresentCountByDay = () => {
+        GlobalApi.TotalPresentCountByDay(moment(selectedMonth).format('MM/yyyy'), selectedAgeGroup).then(response  => {
+            setTotalPresentData(response.data);
+        })
+    }
+
     return (
         <div className='p-10'>
             <div className='flex items-center justify-between'>
@@ -46,6 +57,15 @@ function Dashboard() {
             </div>
 
             <StatusList attendanceList={attendanceList} />
+
+            <div className='grid grid-cols-1  md:grid-cols-3 gap-5'>
+                <div className='md:col-span-2'>
+                    <BarChartComponent attendanceList={attendanceList} totalPresentData={totalPresentData} />
+                </div>
+                <div>
+                    <PieChartComponent attendanceList={attendanceList} />
+                </div>
+            </div>
         </div>
     )
 }
