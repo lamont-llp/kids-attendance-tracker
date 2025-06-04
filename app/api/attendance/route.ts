@@ -1,7 +1,7 @@
 import {db} from "@/utils";
 import {Attendance, Kids} from "@/utils/schema";
 import {and, eq, or, isNull} from "drizzle-orm";
-import {NextRequest, NextResponse} from "next/server";
+import {type NextRequest, NextResponse} from "next/server";
 
 export async function GET( req: NextRequest ){
 
