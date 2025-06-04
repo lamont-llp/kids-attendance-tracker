@@ -1,7 +1,7 @@
 import {db} from "@/utils";
 import {Attendance, Kids} from "@/utils/schema";
 import {and, eq, or, isNull} from "drizzle-orm";
-import {type NextRequest, NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
 export async function GET( req: NextRequest ){
 
@@ -45,7 +45,7 @@ export async function GET( req: NextRequest ){
     }
 }
 
-export async function POST( req: NextRequest, res: NextResponse ) {
+export async function POST( req: NextRequest ) {
     const data = await req.json();
     const result = await db.insert(Attendance).values({
         kidId: data.kidId,
