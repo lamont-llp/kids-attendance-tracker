@@ -4,17 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Add StatusList.jsx to Dashboard.">
-      <change afterPath="$PROJECT_DIR$/app/api/dashboard/route.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions.">
+      <change afterPath="$PROJECT_DIR$/app/services/service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/_components/StatusList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/StatusList.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/GlobalApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/GlobalApi.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/service.js" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/service.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -120,7 +117,7 @@
       <workItem from="1748610124488" duration="14350000" />
       <workItem from="1748849352510" duration="7993000" />
       <workItem from="1748949827680" duration="324000" />
-      <workItem from="1748950277575" duration="31506000" />
+      <workItem from="1748950277575" duration="34702000" />
     </task>
     <task id="LOCAL-00001" summary="Create kid page with AddNewKid form.">
       <option name="closed" value="true" />
@@ -202,7 +199,15 @@
       <option name="project" value="LOCAL" />
       <updated>1748976962715</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions.">
+      <option name="closed" value="true" />
+      <created>1749022599361</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1749022599361</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -219,7 +224,8 @@
     <MESSAGE value="Update primary color to orange." />
     <MESSAGE value="Update primary color to orange (light mode)." />
     <MESSAGE value="Add StatusList.jsx to Dashboard." />
-    <option name="LAST_COMMIT_MESSAGE" value="Add StatusList.jsx to Dashboard." />
+    <MESSAGE value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

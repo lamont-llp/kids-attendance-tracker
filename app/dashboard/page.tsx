@@ -12,7 +12,7 @@ import PieChartComponent from "@/app/dashboard/_components/PieChartComponent";
 
 function Dashboard() {
     const { setTheme } = useTheme()
-    const [selectedMonth, setSelectedMonth] = useState(new Date());
+    const [selectedMonth, setSelectedMonth] = useState(moment(new Date()));
     const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("3-5yrs");
     const [attendanceList, setAttendanceList] = useState([])
     const [totalPresentData, setTotalPresentData] = useState([])
@@ -30,8 +30,8 @@ function Dashboard() {
     const getKidAttendance = () => {
         GlobalApi.GetAttendanceList(selectedAgeGroup, moment(selectedMonth).format('MM/yyyy'))
             .then(response => {
-                console.log('API Response:', response.data);
-                console.log('Is response.data an array?', Array.isArray(response.data));
+                //console.log('API Response:', response.data);
+                //console.log('Is response.data an array?', Array.isArray(response.data));
                 setAttendanceList(response.data || [])
             })
             .catch(error => {

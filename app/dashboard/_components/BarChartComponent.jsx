@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react'
 import {Bar, BarChart, CartesianGrid, Legend, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
-import {getUniqueRecord} from "@/app/services/service";
+import {getUniqueRecord, getUniqueRecordSafe} from "@/app/services/service";
 
 function BarChartComponent(attendanceList, totalPresentData) {
 
@@ -10,7 +10,7 @@ function BarChartComponent(attendanceList, totalPresentData) {
         formatAttendanceListCount()
     }, [attendanceList || totalPresentData]);
     const formatAttendanceListCount = () => {
-        const totalKids = getUniqueRecord(attendanceList);
+        const totalKids = getUniqueRecordSafe(attendanceList);
 
         const result = totalPresentData?.map((item => ({
             day: item.day,
@@ -18,7 +18,7 @@ function BarChartComponent(attendanceList, totalPresentData) {
             absentCount: Number(totalKids?.length)-Number(item.presentCount)
         })));
 
-        console.log(result);
+        //console.log(result);
         setData(result);
     }
     return (

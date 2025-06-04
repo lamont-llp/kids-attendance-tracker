@@ -1,19 +1,19 @@
 import React, {useEffect, useState} from 'react'
 import {Pie, PieChart, ResponsiveContainer} from "recharts";
-import {getUniqueRecord} from "@/app/services/service";
+import {getUniqueRecord, getUniqueRecordSafe} from "@/app/services/service";
 import moment from "moment/moment";
 
 function PieChartComponent({attendanceList}) {
 
     const [data, setData] = useState([])
     useEffect(() => {
-        console.log('StatusList - attendanceList:', attendanceList, 'Type:', typeof attendanceList, 'IsArray:', Array.isArray(attendanceList));
+        //console.log('StatusList - attendanceList:', attendanceList, 'Type:', typeof attendanceList, 'IsArray:', Array.isArray(attendanceList));
 
         if (attendanceList && Array.isArray(attendanceList) && attendanceList.length > 0) {
-            const totalKids = getUniqueRecord(attendanceList);
+            const totalKids = getUniqueRecordSafe(attendanceList);
             const today = moment().format('D');
             const percentage = (attendanceList.length / (totalKids.length * Number(today)) * 100)
-            console.log(percentage)
+            //console.log(percentage)
             setData([
                 {
                     name: 'Total Present',

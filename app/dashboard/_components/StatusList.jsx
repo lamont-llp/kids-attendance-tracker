@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import {getUniqueRecord} from "@/app/services/service";
+import {getUniqueRecord, getUniqueRecordSafe} from "@/app/services/service";
 import moment from "moment";
 import Card from "@/app/dashboard/_components/Card";
 import {GraduationCap, TrendingDown, TrendingUp} from "lucide-react";
@@ -9,15 +9,15 @@ function StatusList({attendanceList}) {
     const [presentPerc, setPresentPerc] = useState(0);
 
     useEffect(() => {
-        console.log('StatusList - attendanceList:', attendanceList, 'Type:', typeof attendanceList, 'IsArray:', Array.isArray(attendanceList));
+        //console.log('StatusList - attendanceList:', attendanceList, 'Type:', typeof attendanceList, 'IsArray:', Array.isArray(attendanceList));
 
         if (attendanceList && Array.isArray(attendanceList) && attendanceList.length > 0) {
-            const totalKids = getUniqueRecord(attendanceList);
+            const totalKids = getUniqueRecordSafe(attendanceList);
             setTotalKid(totalKids.length);
 
             const today = moment().format('D');
             const percentage = (attendanceList.length / (totalKids.length * Number(today)) * 100)
-            console.log(percentage)
+            //console.log(percentage)
             setPresentPerc(percentage)
         }
     }, [attendanceList])
