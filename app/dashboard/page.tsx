@@ -19,7 +19,11 @@ function Dashboard() {
     const [totalPresentData, setTotalPresentData] = useState([])
 
     useEffect(() => {
-        setTheme('system')
+    // Only set default theme once on component mount
+    setTheme('system')
+}, []);
+
+    useEffect(() => {
         GetTotalPresentCountByDay();
         getKidAttendance();
     }, [selectedMonth, selectedAgeGroup]);
