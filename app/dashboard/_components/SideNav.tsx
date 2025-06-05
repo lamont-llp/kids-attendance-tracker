@@ -71,7 +71,7 @@ function SideNav() {
 
                 ) : (
                     // Optional fallback image or element
-                    <div className="w-[35px] h-[35px] bg-gray-200 rounded-full"></div>
+                    <div className="w-[35px] h-[35px] bg-gray-300 rounded-full"></div>
                 )}
                 <div>
                     <h2 className='text-sm font-bold'>{user?.given_name}</h2>
