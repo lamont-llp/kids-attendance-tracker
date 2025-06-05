@@ -11,12 +11,13 @@ function Header() {
         <div className='p-4 shadow-sm border flex justify-between'>
             <div>
                 <ModeToggle/>
-            </div>
-            { user && user.picture ?(
+                { user && user.picture ?(
                 <div>
                     <Image src={user?.picture} width={35} height={35} alt='user' className='rounded-full' />
                 </div>
             )  : null   }
+            </div>
+            
         </div>
     )
 }
