@@ -97,7 +97,7 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
 
   return (
     <div>
-      {rowData && rowData.length > 0 ? (
+      {attendanceList ? (
         <div style={{ height: 500 }}>
           <AgGridReact
             rowData={rowData}
