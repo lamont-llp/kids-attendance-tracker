@@ -15,23 +15,23 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
     { field: "kidId", filter: true },
     { field: "name", filter: true },
   ]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
-  const numberOfDays = daysInMonth(
-    moment(selectedMonth).format("yyyy"),
-    moment(selectedMonth).format("MM")
-  );
-  console.log(numberOfDays);
+  const numberOfDays = selectedMonth
+    ? daysInMonth(
+        moment(selectedMonth).format("yyyy"),
+        moment(selectedMonth).format("MM") - 1
+      )
+    : 0;
+
   const daysArrays = Array.from({ length: numberOfDays }, (_, i) => i + 1);
-  console.log(daysArrays);
 
   useEffect(() => {
-    if (attendanceList && Array.isArray(attendanceList)) {
-      const userList = getUniqueRecord({ attendanceList });
-      console.log(userList);
-      setRowData(userList);
+    setIsLoading(true);
 
-      // Create all column definitions at once
+    // Create column definitions regardless of attendance data
+    if (selectedMonth) {
       const newColDefs = [
         { field: "kidId", filter: true },
         { field: "name", filter: true },
@@ -42,6 +42,15 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
         })),
       ];
       setColDefs(newColDefs);
+    }
+
+    // Process attendance data if available
+    if (
+      attendanceList &&
+      Array.isArray(attendanceList) &&
+      attendanceList.length > 0
+    ) {
+      const userList = getUniqueRecord({ attendanceList });
 
       // Update user attendance data
       const updatedUserList = userList.map((obj) => {
@@ -52,8 +61,37 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
         return newObj;
       });
       setRowData(updatedUserList);
+    } else {
+      // If no attendance data, fetch all kids to show empty grid
+      GlobalApi.GetAllKids()
+        .then((response) => {
+          if (response.data && Array.isArray(response.data)) {
+            // Create empty attendance records for all kids
+            const emptyAttendance = response.data.map((kid) => {
+              const record = {
+                kidId: kid.id,
+                name: kid.name,
+              };
+              // Add empty attendance for each day
+              daysArrays.forEach((day) => {
+                record[day] = false;
+              });
+              return record;
+            });
+            setRowData(emptyAttendance);
+          }
+        })
+        .catch((error) => {
+          console.error("Error fetching kids:", error);
+          setRowData([]);
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
     }
-  }, [attendanceList]);
+
+    setIsLoading(false);
+  }, [attendanceList, selectedMonth]);
 
   /**
    * Used to check if user is present or not
@@ -62,6 +100,8 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
    * @returns {boolean}
    */
   const isPresent = (kidId, day) => {
+    if (!attendanceList || !Array.isArray(attendanceList)) return false;
+
     const result = attendanceList.find(
       (item) => item.day == day && item.kidId == kidId
     );
@@ -75,6 +115,8 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
    * @param presentStatus
    */
   const onMarkAttendance = (day, kidId, presentStatus) => {
+    if (!selectedMonth) return;
+
     const date = moment(selectedMonth).format("MM/yyyy");
     if (presentStatus) {
       const data = {
@@ -97,7 +139,9 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
 
   return (
     <div>
-      {attendanceList ? (
+      {isLoading ? (
+        <div>Loading attendance data...</div>
+      ) : (
         <div style={{ height: 500 }}>
           <AgGridReact
             rowData={rowData}
@@ -110,8 +154,6 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
             paginationPageSizeSelector={true}
           />
         </div>
-      ) : (
-        <div className="text-destructive">No attendance data available</div>
       )}
     </div>
   );
