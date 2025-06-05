@@ -9,8 +9,8 @@ import moment from "moment";
 import AttendanceGrid from "./_components/AttendanceGrid";
 
 function Attendance() {
-    const [selectedMonth, setSelectedMonth] = useState()
-    const [selectedAgeGroup, setSelectedAgeGroup] = useState()
+    const [selectedMonth, setSelectedMonth] = useState(moment(new Date()).format('MM/YYYY'))
+    const [selectedAgeGroup, setSelectedAgeGroup] = useState("3-5yrs")
     const [attendanceList, setAttendanceList] = useState()
 
     /**
