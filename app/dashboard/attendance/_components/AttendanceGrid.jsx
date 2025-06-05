@@ -31,20 +31,27 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
       console.log(userList);
       setRowData(userList);
 
-      daysArrays.forEach((date) => {
-        setColDefs((prevData) => [
-          ...prevData,
-          {
-            field: date.toString(),
-            width: 50,
-            editable: true,
-          },
-        ]);
+      // Create all column definitions at once
+      const newColDefs = [
+        { field: "kidId", filter: true },
+        { field: "name", filter: true },
+        ...daysArrays.map((date) => ({
+          field: date.toString(),
+          width: 50,
+          editable: true,
+        })),
+      ];
+      setColDefs(newColDefs);
 
-        userList.forEach((obj) => {
-          obj[date] = isPresent(obj.kidId, date);
+      // Update user attendance data
+      const updatedUserList = userList.map((obj) => {
+        const newObj = { ...obj };
+        daysArrays.forEach((date) => {
+          newObj[date] = isPresent(obj.kidId, date);
         });
+        return newObj;
       });
+      setRowData(updatedUserList);
     }
   }, [attendanceList]);
 
