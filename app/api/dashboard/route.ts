@@ -1,9 +1,9 @@
 import {db} from "../../../utils";
 import {Attendance, Kids} from "../../../utils/schema";
 import {and, desc, eq, sql} from "drizzle-orm";
-import {NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 
-export async function GET(req){
+export async function GET(req: NextRequest){
     const searchParams = req.nextUrl.searchParams;
     const date = searchParams.get('date');
     const ageGroup = searchParams.get('ageGroup');
