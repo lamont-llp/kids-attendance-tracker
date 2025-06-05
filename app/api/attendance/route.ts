@@ -57,24 +57,29 @@ export async function POST( req: NextRequest ) {
     return NextResponse.json(result);
 }
 
-export async function DELETE( req: NextRequest ){
-
+export async function DELETE(req: NextRequest) {
+  try {
     const searchParams = req.nextUrl.searchParams;
     const kidId = searchParams.get('kidId');
     const date = searchParams.get("date");
     const day = searchParams.get("day");
 
     if (!kidId || !day || !date) {
-        throw new Error('kidId, day, and date are required');
+      return NextResponse.json({ error: 'kidId, day, and date are required' }, { status: 400 });
     }
+    
     const result = await db.delete(Attendance)
-        .where(
-            and(
-                eq(Attendance.kidId, Number(kidId)),
-                eq(Attendance.day, Number(day)),
-                eq(Attendance.date, date)
-            )
+      .where(
+        and(
+          eq(Attendance.kidId, Number(kidId)),
+          eq(Attendance.day, Number(day)),
+          eq(Attendance.date, date)
         )
+      );
 
     return NextResponse.json(result);
+  } catch (error) {
+    console.error('Error deleting attendance:', error);
+    return NextResponse.json({ error: 'Failed to delete attendance record' }, { status: 500 });
+  }
 }
