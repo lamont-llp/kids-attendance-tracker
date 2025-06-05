@@ -26,8 +26,8 @@ function AttendanceGrid({ attendanceList, selectedMonth }) {
   console.log(daysArrays);
 
   useEffect(() => {
-    if (attendanceList) {
-      const userList = getUniqueRecord(attendanceList);
+    if (attendanceList && Array.isArray(attendanceList)) {
+      const userList = getUniqueRecord({ attendanceList });
       console.log(userList);
       setRowData(userList);
 
