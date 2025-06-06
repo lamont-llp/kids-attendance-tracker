@@ -65,7 +65,13 @@ function AttendanceGrid({
   const sundays = useMemo(() => {
     if (!selectedMonth) return [];
 
-    const monthMoment = moment(selectedMonth);
+    // Ensure proper date format for moment
+    const monthMoment = moment(selectedMonth, "MM/YYYY");
+    if (!monthMoment.isValid()) {
+      console.error("Invalid date format:", selectedMonth);
+      return [];
+    }
+
     const year = monthMoment.year();
     const month = monthMoment.month(); // 0-indexed month
 
