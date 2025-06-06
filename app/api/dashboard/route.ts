@@ -12,8 +12,8 @@ export async function GET(req: NextRequest){
         day: Attendance.day,
         presentCount: sql`count(${Attendance.day})`
     }).from(Attendance)
-        .leftJoin(Kids, and (eq(Attendance.kidId, Kids.id), eq(Attendance.date, date)))
-        .where(eq(Kids.age, ageGroup))
+        .leftJoin(Kids, and(eq(Attendance.kidId, Kids.id), date ? eq(Attendance.date, date) : undefined))
+        .where(ageGroup ? eq(Kids.age, ageGroup) : undefined)
         .groupBy(Attendance.day)
         .orderBy(desc(Attendance.day))
         .limit(7)
