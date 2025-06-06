@@ -12,8 +12,12 @@ import { addMonths } from "date-fns";
 import { useState } from "react";
 import moment from "moment";
 
-function MonthSelection({ selectedMonth }) {
-  const today = new Date();
+interface MonthSelectionProps {
+  selectedMonth: (value: string) => void;
+}
+
+function MonthSelection({ selectedMonth }: MonthSelectionProps) {
+  const today = moment(new Date()).format("MM/YYYY");
   const nextMonths = addMonths(new Date(), 0);
   const [month, setMonth] = useState(nextMonths);
 
@@ -34,9 +38,11 @@ function MonthSelection({ selectedMonth }) {
             mode="single"
             defaultMonth={month}
             selected={month}
-            onSelect={(date) => {
-              setMonth(date);
-              selectedMonth(date);
+            onSelect={(date: any) => {
+              if (date) {
+                setMonth(date);
+                selectedMonth(date);
+              }
             }}
             className="rounded-md border"
           />
