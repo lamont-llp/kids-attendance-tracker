@@ -88,7 +88,7 @@ function AttendanceGrid({
         { field: "name", filter: true },
         ...sundays.map((day) => ({
           field: day.toString(),
-          width: 50,
+          width: 100,
           editable: true,
           headerName: moment(selectedMonth).date(day).format("ddd D"), // Optional: Format header as "Sun 1"
         })),
