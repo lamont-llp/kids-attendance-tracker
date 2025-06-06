@@ -10,16 +10,16 @@ import { Button } from "../../components/ui/button";
 import { CalendarDays } from "lucide-react";
 import { addMonths } from "date-fns";
 import { useState } from "react";
-import moment from "moment";
+import moment, { Moment } from "moment";
+import { Dispatch, SetStateAction } from "react";
 
 interface MonthSelectionProps {
-  selectedMonth: (value: string) => void;
+  selectedMonth: any;
 }
 
 function MonthSelection({ selectedMonth }: MonthSelectionProps) {
-  const today = moment(new Date()).format("MM/YYYY");
   const nextMonths = addMonths(new Date(), 0);
-  const [month, setMonth] = useState(nextMonths);
+  const [month, setMonth] = useState<Date>(nextMonths);
 
   return (
     <div>
@@ -38,10 +38,13 @@ function MonthSelection({ selectedMonth }: MonthSelectionProps) {
             mode="single"
             defaultMonth={month}
             selected={month}
-            onSelect={(date: any) => {
+            onSelect={(date: Date | undefined) => {
               if (date) {
                 setMonth(date);
-                selectedMonth(date);
+                // Handle both function types
+                if (typeof selectedMonth === "function") {
+                  selectedMonth(date);
+                }
               }
             }}
             className="rounded-md border"
