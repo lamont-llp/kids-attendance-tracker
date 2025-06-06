@@ -22,7 +22,7 @@ interface AttendanceItem {
 
 interface AttendanceGridProps {
   attendanceList?: AttendanceItem[];
-  selectedMonth?: Date;
+  selectedMonth?: string;
 }
 
 interface RowData {

@@ -88,7 +88,7 @@ function AttendancePage() {
       {/* Kid Attendance Grid */}
       <AttendanceGrid
         attendanceList={attendanceList}
-        selectedMonth={moment(selectedMonth).toDate()}
+        selectedMonth={selectedMonth}
       />
     </div>
   );
