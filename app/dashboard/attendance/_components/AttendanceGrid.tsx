@@ -10,7 +10,6 @@ import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
-import "./attendanceGrid.css";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -39,19 +38,24 @@ function AttendanceGrid({
   const [rowData, setRowData] = useState<RowData[]>([]);
   const [colDefs, setColDefs] = useState<ColDef[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+  const [windowWidth, setWindowWidth] = useState<number>(0);
+  const [isClient, setIsClient] = useState<boolean>(false);
 
   // Track window resize for responsive behavior
   useEffect(() => {
+    // Set initial window width on client side
+    setIsClient(true);
+    setWindowWidth(window.innerWidth);
+
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // Device breakpoints
-  const isMobile = windowWidth < 768;
-  const isTablet = windowWidth >= 768 && windowWidth < 1024;
-  const isDesktop = windowWidth >= 1024;
+  // Device breakpoints - use desktop as fallback for SSR
+  const isMobile = isClient && windowWidth < 768;
+  const isTablet = isClient && windowWidth >= 768 && windowWidth < 1024;
+  const isDesktop = !isClient || windowWidth >= 1024; // Default to desktop for SSR
 
   // Helper function to get Sundays in a month
   const getSundaysInMonth = (year: number, month: number): number[] => {
@@ -90,6 +94,29 @@ function AttendanceGrid({
 
   // Responsive column definitions
   const getResponsiveColDefs = useMemo((): ColDef[] => {
+    // Don't generate responsive columns until client-side hydration
+    if (!isClient) {
+      return [
+        {
+          field: "kidId",
+          headerName: "ID",
+          filter: true,
+          width: 80,
+          maxWidth: 100,
+          sortable: true,
+        },
+        {
+          field: "name",
+          headerName: "Student Name",
+          filter: true,
+          minWidth: 150,
+          flex: 1,
+          resizable: true,
+          sortable: true,
+        },
+      ];
+    }
+
     const baseColumns: ColDef[] = [
       {
         field: "name",
@@ -138,7 +165,15 @@ function AttendanceGrid({
     }
 
     return baseColumns;
-  }, [selectedMonth, sundays, isMobile, isTablet, isDesktop, windowWidth]);
+  }, [
+    selectedMonth,
+    sundays,
+    isMobile,
+    isTablet,
+    isDesktop,
+    windowWidth,
+    isClient,
+  ]);
 
   useEffect(() => {
     setColDefs(getResponsiveColDefs);
@@ -226,8 +261,8 @@ function AttendanceGrid({
 
   return (
     <div className="w-full">
-      {/* Mobile-specific info panel */}
-      {isMobile && sundays.length > 2 && (
+      {/* Only show responsive features after client-side hydration */}
+      {isClient && isMobile && sundays.length > 2 && (
         <div className="p-3 bg-gray-100 mb-3 rounded text-xs font-medium text-gray-700">
           <span className="font-semibold">Note:</span> Showing first 2 Sundays.
           Total Sundays this month: {sundays.length}
@@ -246,13 +281,13 @@ function AttendanceGrid({
         <div
           className={`
           ${
-            isMobile
+            isClient && isMobile
               ? "h-[calc(100vh-250px)] min-h-[300px] max-h-[500px]"
-              : isTablet
+              : isClient && isTablet
               ? "h-[calc(100vh-220px)] min-h-[400px] max-h-[600px]"
               : "h-[calc(100vh-200px)] min-h-[400px] max-h-[800px]"
           }
-          ${isMobile ? "-mx-2 sm:mx-0" : ""}
+          ${isClient && isMobile ? "-mx-2 sm:mx-0" : ""}
           ag-grid-responsive
         `}
         >
