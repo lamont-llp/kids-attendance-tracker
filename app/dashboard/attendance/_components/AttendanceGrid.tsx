@@ -37,7 +37,13 @@ function AttendanceGrid({
 }: AttendanceGridProps) {
   const [rowData, setRowData] = useState<RowData[]>([]);
   const [colDefs, setColDefs] = useState<ColDef[]>([
-    { field: "kidId", filter: true },
+    {
+      field: "kidId",
+      filter: true,
+      minWidth: 150,
+      flex: 1, // Takes available space
+      resizable: true,
+    },
     { field: "name", filter: true },
   ]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -89,6 +95,8 @@ function AttendanceGrid({
         ...sundays.map((day) => ({
           field: day.toString(),
           width: 100,
+          maxWidth: 120,
+          hide: window.innerWidth < 768, // Hide on mobile
           editable: true,
           headerName: moment(selectedMonth).date(day).format("ddd D"), // Optional: Format header as "Sun 1"
         })),
@@ -171,7 +179,13 @@ function AttendanceGrid({
       {isLoading ? (
         <div>Loading attendance data...</div>
       ) : (
-        <div style={{ height: 500 }}>
+        <div
+          style={{
+            height: "calc(100vh - 200px)", // Adjust based on your layout
+            minHeight: "400px",
+            maxHeight: "800px",
+          }}
+        >
           <AgGridReact
             rowData={rowData}
             columnDefs={colDefs}
@@ -185,6 +199,19 @@ function AttendanceGrid({
             pagination={true}
             paginationPageSize={20}
             paginationPageSizeSelector={true}
+            // Responsive features
+            suppressHorizontalScroll={false}
+            suppressColumnVirtualisation={true}
+            autoSizeStrategy={{
+              type: "fitGridWidth",
+              defaultMinWidth: 100,
+            }}
+            onGridReady={(params) => {
+              params.api.sizeColumnsToFit();
+            }}
+            onGridSizeChanged={(params) => {
+              params.api.sizeColumnsToFit();
+            }}
           />
         </div>
       )}
