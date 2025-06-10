@@ -10,6 +10,7 @@ import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
+import "./attendanceGrid.css";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -36,17 +37,21 @@ function AttendanceGrid({
   selectedMonth,
 }: AttendanceGridProps) {
   const [rowData, setRowData] = useState<RowData[]>([]);
-  const [colDefs, setColDefs] = useState<ColDef[]>([
-    {
-      field: "kidId",
-      filter: true,
-      minWidth: 150,
-      flex: 1, // Takes available space
-      resizable: true,
-    },
-    { field: "name", filter: true },
-  ]);
+  const [colDefs, setColDefs] = useState<ColDef[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [windowWidth, setWindowWidth] = useState<number>(window.innerWidth);
+
+  // Track window resize for responsive behavior
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  // Device breakpoints
+  const isMobile = windowWidth < 768;
+  const isTablet = windowWidth >= 768 && windowWidth < 1024;
+  const isDesktop = windowWidth >= 1024;
 
   // Helper function to get Sundays in a month
   const getSundaysInMonth = (year: number, month: number): number[] => {
@@ -71,7 +76,6 @@ function AttendanceGrid({
   const sundays = useMemo(() => {
     if (!selectedMonth) return [];
 
-    // Ensure proper date format for moment
     const monthMoment = moment(selectedMonth, "MM/YYYY");
     if (!monthMoment.isValid()) {
       console.error("Invalid date format:", selectedMonth);
@@ -79,30 +83,69 @@ function AttendanceGrid({
     }
 
     const year = monthMoment.year();
-    const month = monthMoment.month(); // 0-indexed month
+    const month = monthMoment.month();
 
     return getSundaysInMonth(year, month);
   }, [selectedMonth]);
 
+  // Responsive column definitions
+  const getResponsiveColDefs = useMemo((): ColDef[] => {
+    const baseColumns: ColDef[] = [
+      {
+        field: "name",
+        headerName: "Student Name",
+        filter: true,
+        minWidth: isMobile ? 120 : 150,
+        flex: isMobile ? 2 : 1,
+        resizable: true,
+        pinned: isMobile ? "left" : undefined, // Pin name column on mobile
+        sortable: true,
+      },
+    ];
+
+    // Add kidId column only for desktop
+    if (isDesktop) {
+      baseColumns.unshift({
+        field: "kidId",
+        headerName: "ID",
+        filter: true,
+        width: 80,
+        maxWidth: 100,
+        sortable: true,
+      });
+    }
+
+    if (selectedMonth && sundays.length > 0) {
+      // For mobile: show only first 2-3 Sundays to prevent horizontal overflow
+      const visibleSundays = isMobile ? sundays.slice(0, 2) : sundays;
+
+      const sundayColumns: ColDef[] = visibleSundays.map((day) => ({
+        field: day.toString(),
+        headerName: isMobile
+          ? moment(selectedMonth).date(day).format("D") // Just day number on mobile
+          : moment(selectedMonth).date(day).format("ddd D"), // Full format on larger screens
+        width: isMobile ? 60 : 80,
+        maxWidth: isMobile ? 80 : 120,
+        minWidth: isMobile ? 50 : 70,
+        editable: true,
+        cellRenderer: "agCheckboxCellRenderer",
+        cellEditor: "agCheckboxCellEditor",
+        sortable: false,
+        resizable: !isMobile,
+      }));
+
+      baseColumns.push(...sundayColumns);
+    }
+
+    return baseColumns;
+  }, [selectedMonth, sundays, isMobile, isTablet, isDesktop, windowWidth]);
+
+  useEffect(() => {
+    setColDefs(getResponsiveColDefs);
+  }, [getResponsiveColDefs]);
+
   useEffect(() => {
     setIsLoading(true);
-
-    // Create column definitions for Sundays
-    if (selectedMonth) {
-      const newColDefs: ColDef[] = [
-        { field: "kidId", filter: true },
-        { field: "name", filter: true },
-        ...sundays.map((day) => ({
-          field: day.toString(),
-          width: 100,
-          maxWidth: 120,
-          hide: window.innerWidth < 768, // Hide on mobile
-          editable: true,
-          headerName: moment(selectedMonth).date(day).format("ddd D"), // Optional: Format header as "Sun 1"
-        })),
-      ];
-      setColDefs(newColDefs);
-    }
 
     // Process attendance data
     if (attendanceList && attendanceList.length > 0) {
@@ -174,17 +217,44 @@ function AttendanceGrid({
     }
   };
 
+  // Get responsive pagination size
+  const getPaginationSize = (): number => {
+    if (isMobile) return 10;
+    if (isTablet) return 15;
+    return 20;
+  };
+
   return (
-    <div>
+    <div className="w-full">
+      {/* Mobile-specific info panel */}
+      {isMobile && sundays.length > 2 && (
+        <div className="p-3 bg-gray-100 mb-3 rounded text-xs font-medium text-gray-700">
+          <span className="font-semibold">Note:</span> Showing first 2 Sundays.
+          Total Sundays this month: {sundays.length}
+        </div>
+      )}
+
       {isLoading ? (
-        <div>Loading attendance data...</div>
+        <div
+          className={`flex justify-center items-center h-48 ${
+            isMobile ? "text-sm" : "text-base"
+          }`}
+        >
+          Loading attendance data...
+        </div>
       ) : (
         <div
-          style={{
-            height: "calc(100vh - 200px)", // Adjust based on your layout
-            minHeight: "400px",
-            maxHeight: "800px",
-          }}
+          className={`
+          ${
+            isMobile
+              ? "h-[calc(100vh-250px)] min-h-[300px] max-h-[500px]"
+              : isTablet
+              ? "h-[calc(100vh-220px)] min-h-[400px] max-h-[600px]"
+              : "h-[calc(100vh-200px)] min-h-[400px] max-h-[800px]"
+          }
+          ${isMobile ? "-mx-2 sm:mx-0" : ""}
+          ag-grid-responsive
+        `}
         >
           <AgGridReact
             rowData={rowData}
@@ -197,20 +267,39 @@ function AttendanceGrid({
               )
             }
             pagination={true}
-            paginationPageSize={20}
-            paginationPageSizeSelector={true}
+            paginationPageSize={getPaginationSize()}
+            paginationPageSizeSelector={!isMobile} // Hide on mobile
             // Responsive features
             suppressHorizontalScroll={false}
             suppressColumnVirtualisation={true}
             autoSizeStrategy={{
               type: "fitGridWidth",
-              defaultMinWidth: 100,
+              defaultMinWidth: isMobile ? 50 : 100,
             }}
+            // Mobile-specific optimizations
+            suppressTouch={false}
+            suppressScrollOnNewData={true}
+            animateRows={!isMobile} // Disable animations on mobile for better performance
+            suppressCellFocus={isMobile} // Prevents zoom on mobile input focus
+            // Grid event handlers
             onGridReady={(params) => {
-              params.api.sizeColumnsToFit();
+              // Delay sizing to ensure proper rendering
+              setTimeout(() => {
+                params.api.sizeColumnsToFit();
+              }, 100);
             }}
             onGridSizeChanged={(params) => {
               params.api.sizeColumnsToFit();
+            }}
+            // Row and cell styling
+            rowHeight={isMobile ? 35 : 40}
+            headerHeight={isMobile ? 35 : 40}
+            // Additional responsive props
+            suppressMenuHide={false}
+            defaultColDef={{
+              sortable: true,
+              filter: !isMobile, // Disable filters on mobile to save space
+              resizable: !isMobile,
             }}
           />
         </div>
