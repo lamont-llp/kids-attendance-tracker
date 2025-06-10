@@ -144,16 +144,16 @@ function AttendanceGrid({
 
     if (selectedMonth && sundays.length > 0) {
       // For mobile: show only first 2-3 Sundays to prevent horizontal overflow
-      const visibleSundays = isMobile ? sundays.slice(0, 2) : sundays;
+      const visibleSundays = isMobile ? sundays.slice(0, 4) : sundays;
 
       const sundayColumns: ColDef[] = visibleSundays.map((day) => ({
         field: day.toString(),
         headerName: isMobile
           ? moment(selectedMonth).date(day).format("D") // Just day number on mobile
           : moment(selectedMonth).date(day).format("ddd D"), // Full format on larger screens
-        width: isMobile ? 60 : 80,
+        width: isMobile ? 60 : 90,
         maxWidth: isMobile ? 80 : 120,
-        minWidth: isMobile ? 50 : 70,
+        minWidth: isMobile ? 50 : 80,
         editable: true,
         cellRenderer: "agCheckboxCellRenderer",
         cellEditor: "agCheckboxCellEditor",
@@ -262,9 +262,9 @@ function AttendanceGrid({
   return (
     <div className="w-full">
       {/* Only show responsive features after client-side hydration */}
-      {isClient && isMobile && sundays.length > 2 && (
+      {isClient && isMobile && sundays.length > 4 && (
         <div className="p-3 bg-gray-100 mb-3 rounded text-xs font-medium text-gray-700">
-          <span className="font-semibold">Note:</span> Showing first 2 Sundays.
+          <span className="font-semibold">Note:</span> Showing first 4 Sundays.
           Total Sundays this month: {sundays.length}
         </div>
       )}
