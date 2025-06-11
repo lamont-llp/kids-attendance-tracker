@@ -5,15 +5,11 @@ import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
-import { useKindeBrowserClient } from "@kinde-oss/kinde-auth-nextjs";
 import {
-  LayoutIcon,
-  GraduationCap,
-  Hand,
-  Settings,
-  X,
-  User,
-} from "lucide-react";
+  LogoutLink,
+  useKindeBrowserClient,
+} from "@kinde-oss/kinde-auth-nextjs";
+import { LayoutIcon, GraduationCap, Hand, LogOut, X, User } from "lucide-react";
 
 function SideNav() {
   const { user } = useKindeBrowserClient();
@@ -125,6 +121,9 @@ function SideNav() {
               <p className="text-xs text-muted-foreground truncate">
                 {user.email}
               </p>
+              <LogoutLink>
+                <LogOut />
+              </LogoutLink>
             </div>
           </div>
         </div>
