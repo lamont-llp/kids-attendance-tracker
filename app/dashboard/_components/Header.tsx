@@ -36,9 +36,7 @@ function Header() {
         <div className="flex-1 md:flex-initial"></div>
 
         <div className="flex items-center gap-2">
-          <LogoutLink>
-            <LogOut />
-          </LogoutLink>
+
           <Button
             variant="ghost"
             size="icon"
@@ -52,9 +50,13 @@ function Header() {
             )}
           </Button>
 
-          <Button variant="ghost" size="icon" aria-label="Notifications">
-            <Bell className="h-5 w-5" />
-          </Button>
+          <LogoutLink>
+            <LogOut />
+          </LogoutLink>
+
+          {/*<Button variant="ghost" size="icon" aria-label="Notifications">
+            <Bell className="h-5 w-5"/>
+          </Button>*/}
         </div>
       </div>
     </header>

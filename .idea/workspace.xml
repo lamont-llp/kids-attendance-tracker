@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="change dashboard theme.">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="update gitignore">
+      <change afterPath="$PROJECT_DIR$/app/kiosk/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/attendance/_components/AttendanceGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/attendance/_components/AttendanceGrid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -214,7 +214,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749674380946</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="refactor: enhance Kids page UI with shadcn Card components and improve styling&#10;&#10;- Wrap KidListTable in shadcn/ui Card for better visual consistency  &#10;- Adjust table styling for optimized layout and improved margin  &#10;- Update import paths for improved maintainability  &#10;- Extend package.json with Jest configurations for testing setup">
+      <option name="closed" value="true" />
+      <created>1749677688392</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1749677688392</updated>
+    </task>
+    <task id="LOCAL-00014" summary="update gitignore">
+      <option name="closed" value="true" />
+      <created>1749678494086</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1749678494086</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -244,7 +260,9 @@
     <MESSAGE value="Add StatusList.jsx to Dashboard." />
     <MESSAGE value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
     <MESSAGE value="change dashboard theme." />
-    <option name="LAST_COMMIT_MESSAGE" value="change dashboard theme." />
+    <MESSAGE value="refactor: enhance Kids page UI with shadcn Card components and improve styling&#10;&#10;- Wrap KidListTable in shadcn/ui Card for better visual consistency  &#10;- Adjust table styling for optimized layout and improved margin  &#10;- Update import paths for improved maintainability  &#10;- Extend package.json with Jest configurations for testing setup" />
+    <MESSAGE value="update gitignore" />
+    <option name="LAST_COMMIT_MESSAGE" value="update gitignore" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
