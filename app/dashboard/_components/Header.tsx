@@ -4,7 +4,8 @@
 import React from "react";
 import { useTheme } from "next-themes";
 import { Button } from "@/components/ui/button";
-import { Menu, Bell, Moon, Sun } from "lucide-react";
+import { Menu, Bell, Moon, Sun, LogOut } from "lucide-react";
+import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
 
 function Header() {
   const { theme, setTheme } = useTheme();
@@ -35,6 +36,9 @@ function Header() {
         <div className="flex-1 md:flex-initial"></div>
 
         <div className="flex items-center gap-2">
+          <LogoutLink>
+            <LogOut />
+          </LogoutLink>
           <Button
             variant="ghost"
             size="icon"

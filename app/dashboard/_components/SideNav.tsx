@@ -121,9 +121,6 @@ function SideNav() {
               <p className="text-xs text-muted-foreground truncate">
                 {user.email}
               </p>
-              <LogoutLink>
-                <LogOut />
-              </LogoutLink>
             </div>
           </div>
         </div>
