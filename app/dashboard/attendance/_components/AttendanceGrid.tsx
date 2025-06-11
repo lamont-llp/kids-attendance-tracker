@@ -9,7 +9,7 @@ import {
 import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
-import { getUniqueRecord } from "../../../services/service";
+import { getUniqueRecord } from "@/app/services/service";
 import { Search } from "lucide-react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);

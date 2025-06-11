@@ -83,7 +83,7 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
             <div className="mt-2 mb-2">
                 <h2 className="bg-secondary border p-3 w-40 rounded-lg">Total Kids: {kidList?.length}</h2>
             </div>
-            <div style={{ height: 500 }}>
+            <div style={{ height: 940, margin: 'auto' }}>
                 <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
                     <Search/>
                     <input type={"text"} placeholder={"Search for..."

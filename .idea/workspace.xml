@@ -4,12 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions.">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="change dashboard theme.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/Card.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/Card.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/attendance/_components/AttendanceGrid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/attendance/_components/AttendanceGrid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +48,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "js.debugger.nextJs.config.created.client": "true",
     "js.debugger.nextJs.config.created.server": "true",
+    "junie.onboarding.icon.badge.shown": "true",
     "last_opened_file_path": "C:/Users/Lamont/WebstormProjects/kids-attendance-tracker/public",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -88,7 +89,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
+        <option value="bundled-js-predefined-d6986cc7102b-b26f3e71634d-JavaScript-WS-251.26094.131" />
       </set>
     </attachedChunks>
   </component>
@@ -205,7 +206,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749022599361</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="change dashboard theme.">
+      <option name="closed" value="true" />
+      <created>1749674380946</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1749674380946</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -234,7 +243,8 @@
     <MESSAGE value="Update primary color to orange (light mode)." />
     <MESSAGE value="Add StatusList.jsx to Dashboard." />
     <MESSAGE value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
-    <option name="LAST_COMMIT_MESSAGE" value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
+    <MESSAGE value="change dashboard theme." />
+    <option name="LAST_COMMIT_MESSAGE" value="change dashboard theme." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
