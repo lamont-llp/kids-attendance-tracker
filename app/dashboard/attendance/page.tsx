@@ -5,14 +5,15 @@ import MonthSelection from "../../_components/MonthSelection";
 import AgeGroupSelect from "../../_components/AgeGroupSelect";
 import GlobalApi from "../../services/GlobalApi";
 import moment from "moment";
-import AttendanceGrid from "./_components/AttendanceGrid";
+import AttendanceGrid, {
+  searchInput,
+  setSearchInput,
+} from "./_components/AttendanceGrid";
 import { toast } from "sonner";
 import { Attendance } from "@/types/Attendance";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, UsersIcon, SearchIcon, Search } from "lucide-react";
-
-const [searchInput, setSearchInput] = useState("");
 
 interface ApiResponse {
   data: Attendance[];

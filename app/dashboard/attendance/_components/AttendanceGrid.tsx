@@ -12,6 +12,7 @@ import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
+export const [searchInput, setSearchInput] = useState("");
 
 interface AttendanceItem {
   kidId: number;
