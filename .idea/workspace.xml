@@ -4,7 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions.">
+      <change afterPath="$PROJECT_DIR$/app/services/service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/StatusList.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/StatusList.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/service.js" beforeDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -20,6 +28,9 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -30,8 +41,16 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
     &quot;Node.js.next.config.ts.executor&quot;: &quot;Debug&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.client&quot;: &quot;true&quot;,
+    &quot;js.debugger.nextJs.config.created.server&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Lamont/WebstormProjects/kids-attendance-tracker/public&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -39,11 +58,15 @@
     &quot;nodejs_interpreter_path&quot;: &quot;node&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/Applications/WebStorm.app/Contents/plugins/javascript-plugin/jsLanguageServicesImpl/external&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\Lamont\\WebstormProjects\\kids-attendance-tracker\\node_modules\\typescript\\lib&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Lamont\WebstormProjects\kids-attendance-tracker\public" />
+      <recent name="C:\Users\Lamont\WebstormProjects\kids-attendance-tracker" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/app/api/auth/[kindeAuth]" />
       <recent name="$PROJECT_DIR$" />
@@ -67,7 +90,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-js-predefined-d6986cc7102b-76f8388c3a79-JavaScript-WS-243.24978.60" />
+        <option value="bundled-js-predefined-d6986cc7102b-6a121458b545-JavaScript-WS-251.25410.117" />
       </set>
     </attachedChunks>
   </component>
@@ -80,10 +103,139 @@
       <option name="presentableId" value="Default" />
       <updated>1747575472822</updated>
       <workItem from="1747575473987" duration="12671000" />
+      <workItem from="1747772410315" duration="7388000" />
+      <workItem from="1747866429133" duration="291000" />
+      <workItem from="1747866787565" duration="428000" />
+      <workItem from="1747867259738" duration="161000" />
+      <workItem from="1747995585354" duration="12292000" />
+      <workItem from="1748111192150" duration="6831000" />
+      <workItem from="1748122556387" duration="2676000" />
+      <workItem from="1748245808451" duration="7925000" />
+      <workItem from="1748288509190" duration="14718000" />
+      <workItem from="1748463880479" duration="6030000" />
+      <workItem from="1748478972572" duration="9275000" />
+      <workItem from="1748610124488" duration="14350000" />
+      <workItem from="1748849352510" duration="7993000" />
+      <workItem from="1748949827680" duration="324000" />
+      <workItem from="1748950277575" duration="34702000" />
     </task>
+    <task id="LOCAL-00001" summary="Create kid page with AddNewKid form.">
+      <option name="closed" value="true" />
+      <created>1748010134151</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1748010134151</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Create Kid List Table.">
+      <option name="closed" value="true" />
+      <created>1748298952499</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1748298952499</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Fix SideNav.tsx show active page.">
+      <option name="closed" value="true" />
+      <created>1748299681709</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1748299681709</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Implement Kid delete functionality.">
+      <option name="closed" value="true" />
+      <created>1748482406796</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1748482406796</updated>
+    </task>
+    <task id="LOCAL-00005" summary="Create Attendance page and AttendanceGrid.jsx component.">
+      <option name="closed" value="true" />
+      <created>1748954730893</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1748954730893</updated>
+    </task>
+    <task id="LOCAL-00006" summary="Implement mark attendance routes.">
+      <option name="closed" value="true" />
+      <created>1748959080120</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1748959080120</updated>
+    </task>
+    <task id="LOCAL-00007" summary="Fix refreshData when new kid added.">
+      <option name="closed" value="true" />
+      <created>1748959995638</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1748959995638</updated>
+    </task>
+    <task id="LOCAL-00008" summary="Update primary color to orange.">
+      <option name="closed" value="true" />
+      <created>1748975974444</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1748975974444</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Update primary color to orange (light mode).">
+      <option name="closed" value="true" />
+      <created>1748976190773</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1748976190773</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Add StatusList.jsx to Dashboard.">
+      <option name="closed" value="true" />
+      <created>1748976962715</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1748976962715</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions.">
+      <option name="closed" value="true" />
+      <created>1749022599361</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1749022599361</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Create kid page with AddNewKid form." />
+    <MESSAGE value="Create Kid List Table." />
+    <MESSAGE value="Fix SideNav.tsx show active page." />
+    <MESSAGE value="Implement Kid delete functionality." />
+    <MESSAGE value="Create Attendance page and AttendanceGrid.jsx component." />
+    <MESSAGE value="Implement mark attendance routes." />
+    <MESSAGE value="Fix refreshData when new kid added." />
+    <MESSAGE value="Update primary color to orange." />
+    <MESSAGE value="Update primary color to orange (light mode)." />
+    <MESSAGE value="Add StatusList.jsx to Dashboard." />
+    <MESSAGE value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
+    <option name="LAST_COMMIT_MESSAGE" value="Create and add BarChartComponent.jsx ad PieChartComponent.jsx to Dashboard.&#10;&#10;TODO: fix broken attendance percentage functions." />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/app/api/attendance/route.ts</url>
+          <properties lambdaOrdinal="-1" />
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

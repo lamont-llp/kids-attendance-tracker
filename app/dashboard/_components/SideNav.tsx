@@ -1,79 +1,132 @@
-"use client"
+// SideNav.tsx
+"use client";
 
-import React from 'react'
 import Image from "next/image";
-import {GraduationCap, Hand, LayoutIcon, Settings} from "lucide-react";
-import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import {
+  LogoutLink,
+  useKindeBrowserClient,
+} from "@kinde-oss/kinde-auth-nextjs";
+import { LayoutIcon, GraduationCap, Hand, LogOut, X, User } from "lucide-react";
 
 function SideNav() {
+  const { user } = useKindeBrowserClient();
+  const menuList = [
+    {
+      id: 1,
+      name: "Dashboard",
+      icon: LayoutIcon,
+      path: "/dashboard",
+    },
+    {
+      id: 2,
+      name: "Kids",
+      icon: GraduationCap,
+      path: "/dashboard/kids",
+    },
+    {
+      id: 3,
+      name: "Attendance",
+      icon: Hand,
+      path: "/dashboard/attendance",
+    },
+    /*{
+      id: 4,
+      name: "Settings",
+      icon: Settings,
+      path: "/dashboard/settings",
+    },*/
+  ];
+  const path = usePathname();
 
-    const {user} = useKindeBrowserClient();
-    const menuList = [
-        {
-            id: 1,
-            name:  "Dashboard",
-            icon:LayoutIcon,
-            path: "/dashboard",
-        },
-        {
-            id: 2,
-            name: "Kids",
-            icon:GraduationCap,
-            path: '/dashboard/kids',
-        },
-        {
-            id: 3,
-            name: "Attendance",
-            icon:Hand,
-            path: '/dashboard/attendance',
-        },
-        {
-            id: 4,
-            name: "Settings",
-            icon:Settings,
-            path: '/dashboard/settings',
-        }
-    ]
-    return (
-        <div className='border shadow-md h-screen p-5'>
-            <Image priority={true} src={'/logo.svg'}
-                   width={120}
-                   height={100}
-                   className='w-1/2 h-auto'
-                   alt='logo' />
+  const closeSidebar = () => {
+    const sidebar = document.getElementById("sidebar");
+    const overlay = document.getElementById("sidebar-overlay");
+    if (sidebar && overlay) {
+      sidebar.classList.add("-translate-x-full");
+      overlay.classList.add("opacity-0", "pointer-events-none");
+    }
+  };
 
-            <hr className='my-5'></hr>
-
-            {menuList.map((menu, index) => (
-                <Link key={menu.id} href={menu.path}>
-                    <h2 className='flex items-center gap-3 text-md p-4
-                    text-slate-500 hover:bg-primary
-                    hover:text-white
-                    cursor-pointer
-                    rounded-lg
-                    my-2'>
-                        <menu.icon/>
-                        {menu.name}
-                    </h2>
-                </Link>
-            ))}
-
-            <div className='flex gap-2 items-center bottom-5 fixed'>
-                {user && user.picture ? (
-                    <Image src={user?.picture} width={35} height={35} alt="user" className="rounded-full" />
-
-                ) : (
-                    // Optional fallback image or element
-                    <div className="w-[35px] h-[35px] bg-gray-200 rounded-full"></div>
-                )}
-                <div>
-                    <h2 className='text-sm font-bold'>{user?.given_name}</h2>
-                    <h2 className='text-xs text-slate-400'>{user?.email}</h2>
-                </div>
-            </div>
+  return (
+    <div className="bg-card h-full flex flex-col border-r">
+      {/* Header with logo and close button */}
+      <div className="p-4 border-b">
+        <div className="flex items-center justify-between">
+          <Image
+            priority={true}
+            src={"/logo.svg"}
+            width={120}
+            height={100}
+            className="w-28 h-auto"
+            alt="logo"
+          />
+          {/* Close button for mobile */}
+          <button
+            onClick={closeSidebar}
+            className="md:hidden p-2 rounded-lg hover:bg-muted transition-colors"
+            aria-label="Close sidebar"
+          >
+            <X size={20} />
+          </button>
         </div>
-    )
+      </div>
+
+      {/* Navigation Menu */}
+      <nav className="flex-1 px-3 py-4 overflow-y-auto">
+        <div className="space-y-1">
+          {menuList.map((menu) => (
+            <Link key={menu.id} href={menu.path} onClick={closeSidebar}>
+              <div
+                className={`flex items-center gap-3 text-sm p-3
+                                rounded-md
+                                transition-colors
+                                ${
+                                  path === menu.path
+                                    ? "bg-primary text-primary-foreground"
+                                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                }`}
+              >
+                <menu.icon className="w-4 h-4 flex-shrink-0" />
+                <span>{menu.name}</span>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </nav>
+
+      {/* User profile section */}
+      {user && (
+        <div className="border-t p-4">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-full bg-muted flex items-center justify-center">
+              {user.picture ? (
+                <Image
+                  src={user.picture}
+                  alt={user.given_name || "User"}
+                  width={32}
+                  height={32}
+                  className="rounded-full"
+                />
+              ) : (
+                <User className="w-4 h-4 text-muted-foreground" />
+              )}
+            </div>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium truncate">
+                {user.given_name} {user.family_name}
+              </p>
+              <p className="text-xs text-muted-foreground truncate">
+                {user.email}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 
-export default SideNav
+export default SideNav;
