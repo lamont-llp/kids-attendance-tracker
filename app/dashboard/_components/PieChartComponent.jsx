@@ -18,20 +18,20 @@ function PieChartComponent({attendanceList}) {
                 {
                     name: 'Total Present',
                     value: Number(percentage.toFixed(1)),
-                    fill: '#4c8cf8'
+                    fill: '#2a2a2a'
                 },
                 {
                     name: 'Total Absent',
                     value: (100-Number(percentage)).toFixed(1),
-                    fill: '#1fed61'
+                    fill: '#eeeeee'
                 },
             ])
         }
     }, [attendanceList])
 
     return (
-        <div className='border p-5 rounded-lg'>
-            <h2 className='font-bold text-lg'>Monthly Attendance</h2>
+        <div className='border p-5 rounded-lg bg-chart-1 dark:bg-secondary'>
+            <h2 className='font-bold text-lg text-primary-foreground dark:text-accent-foreground'>Monthly Attendance</h2>
             <ResponsiveContainer width={'100%'} height={300}>
                 <PieChart width={730} height={250}>
                     <Pie data={data} dataKey="value" nameKey="name" cx="50%" cy="50%" innerRadius={60} outerRadius={80} label />
