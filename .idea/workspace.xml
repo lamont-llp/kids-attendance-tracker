@@ -4,18 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/_components/AgeGroupSelect.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/AgeGroupSelect.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/attendance/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/attendance/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/dashboard/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/dashboard/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/attendance/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/attendance/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/schema.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -244,7 +237,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749679979489</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations">
+      <option name="closed" value="true" />
+      <created>1749684196758</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1749684196759</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -277,7 +278,8 @@
     <MESSAGE value="refactor: enhance Kids page UI with shadcn Card components and improve styling&#10;&#10;- Wrap KidListTable in shadcn/ui Card for better visual consistency  &#10;- Adjust table styling for optimized layout and improved margin  &#10;- Update import paths for improved maintainability  &#10;- Extend package.json with Jest configurations for testing setup" />
     <MESSAGE value="update gitignore" />
     <MESSAGE value="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency" />
+    <MESSAGE value="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

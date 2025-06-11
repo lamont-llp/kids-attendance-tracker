@@ -48,12 +48,13 @@ function Dashboard() {
         })
     }
 
+    let age;
     return (
         <div className='p-4 sm:p-6 lg:p-8 xl:p-10 space-y-6'>
             {/* Header Section */}
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
                 <div>
-                    <h1 className='font-bold text-2xl sm:text-3xl text-primary dark:text-primary'>
+                    <h1 className='font-bold text-2xl sm:text-3xl text-primary dark:text-foreground'>
                         Dashboard
                     </h1>
                     <p className='text-sm text-primary dark:text-primary mt-1'>
@@ -67,7 +68,7 @@ function Dashboard() {
                         <MonthSelection selectedMonth={setSelectedMonth} />
                     </div>
                     <div className="w-full xs:w-auto">
-                        <AgeGroupSelect selectedAgeGroup={setSelectedAgeGroup} />
+                        <AgeGroupSelect age={age} selectedAgeGroup={setSelectedAgeGroup} />
                     </div>
                 </div>
             </div>
@@ -81,8 +82,8 @@ function Dashboard() {
             <div className='grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6'>
                 {/* Bar Chart - Takes 2 columns on xl screens */}
                 <div className='xl:col-span-2'>
-                    <div className="bg-white dark:bg-primary rounded-lg border shadow-sm p-4 sm:p-6">
-                        <h3 className="text-lg font-semibold text-primary dark:text-secondary mb-4">
+                    <div className="bg-white dark:bg-card rounded-lg border shadow-sm p-4 sm:p-6">
+                        <h3 className="text-lg font-semibold text-primary dark:text-foreground mb-4">
                             Attendance Trends
                         </h3>
                         <div className="h-[300px] sm:h-[400px]">
@@ -96,8 +97,8 @@ function Dashboard() {
                 
                 {/* Pie Chart - Takes 1 column */}
                 <div className='xl:col-span-1'>
-                    <div className="bg-white dark:bg-primary rounded-lg border shadow-sm p-4 sm:p-6">
-                        <h3 className="text-lg font-semibold text-primary dark:text-secondary mb-4">
+                    <div className="bg-white dark:bg-card rounded-lg border shadow-sm p-4 sm:p-6">
+                        <h3 className="text-lg font-semibold text-primary dark:text-foreground mb-4">
                             Attendance Distribution
                         </h3>
                         <div className="h-[300px] sm:h-[400px] items-center justify-center">

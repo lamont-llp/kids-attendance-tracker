@@ -36,7 +36,7 @@ function BarChartComponent({ attendanceList, totalPresentData }) {
   };
 
   return (
-    <div className="border p-5 rounded-lg bg-chart-1 dark:bg-secondary">
+    <div className="border p-5 rounded-lg bg-chart-1 dark:bg-accent">
       <h2 className="font-bold text-lg text-primary-foreground dark:text-accent-foreground">Daily Attendance</h2>
       <ResponsiveContainer width="100%" height={300}>
         <BarChart width={730} height={250} data={data}>
@@ -45,8 +45,8 @@ function BarChartComponent({ attendanceList, totalPresentData }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="presentCount" fill="#111111" />
-          <Bar dataKey="absentCount" fill="#eeeeee" />
+          <Bar dataKey="presentCount" fill="var(--chart-1)" />
+          <Bar dataKey="absentCount" fill="var(--primary-foreground)" />
         </BarChart>
       </ResponsiveContainer>
     </div>
