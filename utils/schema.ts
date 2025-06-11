@@ -11,7 +11,7 @@ export const ageGroup = mysqlTable('age_group', {
   group: varchar({ length: 10 }).notNull()
 });
 
-export const guardians = mysqlTable('guardians', {
+export const Guardians = mysqlTable('guardians', {
   id: serial().primaryKey(),
   name: varchar('name', { length: 50 }).notNull(),
   contact: varchar('contact', { length: 11 }).notNull(),
@@ -37,14 +37,14 @@ export const Attendance = mysqlTable('attendance', {
 })
 
 // Define relations
-export const guardiansRelations = relations(guardians, ({ many }) => ({
+export const guardiansRelations = relations(Guardians, ({ many }) => ({
   kids: many(Kids),
 }));
 
 export const kidsRelations = relations(Kids, ({ one }) => ({
-  guardian: one(guardians, {
+  guardian: one(Guardians, {
     fields: [Kids.guardian_id],
-    references: [guardians.id],
+    references: [Guardians.id],
   }),
 }));
 

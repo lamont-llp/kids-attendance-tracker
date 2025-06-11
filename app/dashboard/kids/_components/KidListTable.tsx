@@ -19,6 +19,7 @@ import {Button} from "@/components/ui/button";
 import {Search, Trash} from "lucide-react";
 import GlobalApi from "@/app/services/GlobalApi";
 import {toast} from "sonner";
+import { getAgeGroupFromAge } from "@/app/_components/AgeGroupSelect";
 
 interface KidListTableProps {
     kidList?: Kid[];
@@ -54,9 +55,19 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
     const [colDefs, setColDefs] = useState<ColDef[]>([
         { field: "id", filter: true },
         { field: "name", filter: true },
-        { field: "age", filter: true },
-        { field: "address", filter: true },
+        { 
+            field: "age", 
+            headerName: "Age", 
+            filter: true,
+            valueFormatter: (params) => {
+                const age = params.value;
+                const ageGroup = getAgeGroupFromAge(age);
+                return `${age} (${ageGroup})`;
+            }
+        },
+        { field: "guardian", filter: true },
         { field: "contact", filter: true },
+        { field: "address", filter: true },
         { field: 'action', cellRenderer: CustomButtons}
     ]);
 

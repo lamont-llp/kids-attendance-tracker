@@ -20,7 +20,7 @@ function AttendancePage() {
   const [selectedMonth, setSelectedMonth] = useState<string>(
     moment(new Date()).format("MM/YYYY")
   );
-  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("3-5yrs");
+  const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("2-5yrs");
   const [attendanceList, setAttendanceList] = useState<
     Attendance[] | undefined
   >(undefined);

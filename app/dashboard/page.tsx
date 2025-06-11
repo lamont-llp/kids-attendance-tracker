@@ -14,7 +14,7 @@ import PieChartComponent from "@/app/dashboard/_components/PieChartComponent";
 function Dashboard() {
     const { setTheme } = useTheme()
     const [selectedMonth, setSelectedMonth] = useState(moment(new Date()));
-    const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("3-5yrs");
+    const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("2-5yrs");
     const [attendanceList, setAttendanceList] = useState([])
     const [totalPresentData, setTotalPresentData] = useState([])
 

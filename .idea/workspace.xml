@@ -4,12 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="update gitignore">
-      <change afterPath="$PROJECT_DIR$/app/kiosk/layout.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/Header.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/Header.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/_components/AgeGroupSelect.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/_components/AgeGroupSelect.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/attendance/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/attendance/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/dashboard/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/dashboard/route.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/attendance/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/attendance/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/AddNewKid.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pnpm-lock.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pnpm-lock.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/schema.ts" beforeDir="false" afterPath="$PROJECT_DIR$/utils/schema.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -230,7 +236,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749678494086</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency">
+      <option name="closed" value="true" />
+      <created>1749679979489</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1749679979489</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -262,7 +276,8 @@
     <MESSAGE value="change dashboard theme." />
     <MESSAGE value="refactor: enhance Kids page UI with shadcn Card components and improve styling&#10;&#10;- Wrap KidListTable in shadcn/ui Card for better visual consistency  &#10;- Adjust table styling for optimized layout and improved margin  &#10;- Update import paths for improved maintainability  &#10;- Extend package.json with Jest configurations for testing setup" />
     <MESSAGE value="update gitignore" />
-    <option name="LAST_COMMIT_MESSAGE" value="update gitignore" />
+    <MESSAGE value="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

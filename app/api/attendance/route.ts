@@ -1,7 +1,25 @@
 import {db} from "@/utils";
 import {Attendance, Kids} from "@/utils/schema";
-import {and, eq, or, isNull} from "drizzle-orm";
+import {and, eq, or, isNull, between, sql} from "drizzle-orm";
 import {NextRequest, NextResponse} from "next/server";
+
+/**
+ * Gets the age range for a given age group
+ * @param ageGroup The age group (e.g., "2-5yrs", "6-9yrs", "10-13yrs")
+ * @returns An object with min and max age values
+ */
+function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
+    switch(ageGroup) {
+        case "2-5yrs":
+            return { min: 2, max: 5 };
+        case "6-9yrs":
+            return { min: 6, max: 9 };
+        case "10-13yrs":
+            return { min: 10, max: 13 };
+        default:
+            return { min: 0, max: 0 }; // Default case, should not happen
+    }
+}
 
 export async function GET( req: NextRequest ){
 
@@ -15,19 +33,28 @@ export async function GET( req: NextRequest ){
         if (!ageGroup || !month) {
             return NextResponse.json({ error: 'Missing required parameters' });
         }
+    // Get the age range for the selected age group
+    const { min, max } = getAgeRangeFromGroup(ageGroup);
+
     const result = await db.select({
         name: Kids.name,
         present: Attendance.present,
         day: Attendance.day,
         date: Attendance.date,
-        ageGroup: Kids.age,
+        age: Kids.age, // Now storing actual age
         kidId: Kids.id,
         attendanceId: Attendance.id,
     }).from(Kids)
         .leftJoin(Attendance, eq(Kids.id, Attendance.kidId))
         .where(
             and(
-                eq(Kids.age, ageGroup),
+                // Filter by age range instead of exact age group match
+                between(
+                    // Convert string age to number for comparison
+                    sql`CAST(${Kids.age} AS UNSIGNED)`, 
+                    min, 
+                    max
+                ),
                 or(
                     eq(Attendance.date, month),
                     isNull(Attendance.date)
@@ -67,7 +94,7 @@ export async function DELETE(req: NextRequest) {
     if (!kidId || !day || !date) {
       return NextResponse.json({ error: 'kidId, day, and date are required' }, { status: 400 });
     }
-    
+
     const result = await db.delete(Attendance)
       .where(
         and(

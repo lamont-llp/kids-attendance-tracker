@@ -25,6 +25,7 @@ import {CreateKidRequest, AgeGroup} from "@/app/services/GlobalApi";
 import {toast} from "sonner";
 import {LoaderIcon} from "lucide-react";
 import {Kid} from "@/types/Kid";
+import AgeGroupSelect, { getAgeGroupFromAge } from "@/app/_components/AgeGroupSelect";
 
 interface AddNewKidProps {
     refreshData: () => void; // Add refreshData to the props interface
@@ -34,24 +35,34 @@ function AddNewKid({refreshData}: AddNewKidProps) {
     const [open, setOpen] = useState(false)
     const [ageGroups, setAgeGroups] = useState<AgeGroup[]>([])
     const [loading, setLoading] = useState<boolean>(false)
+    const [kidAge, setKidAge] = useState<string>("")
+    const [ageGroup, setAgeGroup] = useState<string>("")
     const methods = useForm<CreateKidRequest>();
     const { handleSubmit, register, reset, formState: { errors } } = methods;
 
 
     const onSubmit = async (data: CreateKidRequest) => {
         setLoading(true);
-        if (!data.name || !data.age) {
-            toast("Name and Age Group are required");
+        if (!data.name || !kidAge) {
+            toast("Name and Age are required");
             return;
         }
 
         try {
-            const response = await GlobalApi.CreateNewKid(data)
+            // Use the actual numeric age and the determined age group
+            const kidData = {
+                ...data,
+                age: kidAge // Store the actual numeric age
+            };
+
+            const response = await GlobalApi.CreateNewKid(kidData)
             console.log("Kid created:", response.data);
             toast("Kid successfully added!");
 
             // Reset form or close modal
             setLoading(false);
+            setKidAge("");
+            setAgeGroup("");
             reset();
             refreshData();
             setOpen(false);
@@ -94,15 +105,24 @@ function AddNewKid({refreshData}: AddNewKidProps) {
                                                    {...register('name', { required: true })}/>
                                         </FormControl>
                                     </FormItem>
+                                    <FormItem className='py-2'>
+                                        <FormLabel>Age</FormLabel>
+                                        <Input 
+                                            type="number" 
+                                            placeholder="Eg. 4"
+                                            value={kidAge}
+                                            onChange={(e) => setKidAge(e.target.value)}
+                                            min="2"
+                                            max="13"
+                                        />
+                                    </FormItem>
                                     <FormItem className='flex flex-col py-2'>
-                                        <FormLabel>Select Age Group</FormLabel>
+                                        <FormLabel>Age Group (automatically determined)</FormLabel>
                                         <FormControl>
-                                            <select className='p-3 border rounded-lg'
-                                                    {...register('age', { required: true })}>
-                                                {ageGroups.map((item, index) => (
-                                                    <option key={index} value={item.group}>{item.group}</option>
-                                                ))}
-                                            </select>
+                                            <AgeGroupSelect 
+                                                age={kidAge} 
+                                                selectedAgeGroup={setAgeGroup} 
+                                            />
                                         </FormControl>
                                     </FormItem>
                                     <FormItem className='py-2'>
