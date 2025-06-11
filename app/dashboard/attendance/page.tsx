@@ -10,7 +10,9 @@ import { toast } from "sonner";
 import { Attendance } from "@/types/Attendance";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { CalendarIcon, UsersIcon, SearchIcon } from "lucide-react";
+import { CalendarIcon, UsersIcon, SearchIcon, Search } from "lucide-react";
+
+const [searchInput, setSearchInput] = useState("");
 
 interface ApiResponse {
   data: Attendance[];
@@ -89,6 +91,16 @@ function AttendancePage() {
                 <CalendarIcon className="h-4 w-4 text-muted-foreground" />
                 <MonthSelection selectedMonth={handleMonthSelection} />
               </div>
+            </div>
+
+            <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
+              <Search />
+              <input
+                type={"text"}
+                placeholder={"Search for..."}
+                className="outline-none w-full"
+                onChange={(event) => setSearchInput(event.target.value)}
+              />
             </div>
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
