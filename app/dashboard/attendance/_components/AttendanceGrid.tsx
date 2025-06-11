@@ -10,6 +10,7 @@ import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
+import { Search } from "lucide-react";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -40,6 +41,7 @@ function AttendanceGrid({
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [isClient, setIsClient] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState("");
 
   // Track window resize for responsive behavior
   useEffect(() => {
@@ -261,6 +263,15 @@ function AttendanceGrid({
 
   return (
     <div className="w-full">
+      <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
+        <Search />
+        <input
+          type={"text"}
+          placeholder={"Search for..."}
+          className="outline-none w-full"
+          onChange={(event) => setSearchInput(event.target.value)}
+        />
+      </div>
       {/* Only show responsive features after client-side hydration */}
       {isClient && isMobile && sundays.length > 4 && (
         <div className="p-3 bg-gray-100 mb-3 rounded text-xs font-medium text-gray-700">
