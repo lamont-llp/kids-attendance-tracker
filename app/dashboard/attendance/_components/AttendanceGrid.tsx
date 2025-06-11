@@ -10,8 +10,6 @@ import moment from "moment";
 import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
-import { Search } from "lucide-react";
-import { searchInput } from "../page";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -25,6 +23,7 @@ interface AttendanceItem {
 interface AttendanceGridProps {
   attendanceList?: AttendanceItem[];
   selectedMonth?: string;
+  searchInput?: string;
 }
 
 interface RowData {
@@ -338,7 +337,6 @@ function AttendanceGrid({
               filter: !isMobile, // Disable filters on mobile to save space
               resizable: !isMobile,
             }}
-            quickFilterText={searchInput}
           />
         </div>
       )}

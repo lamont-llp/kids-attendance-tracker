@@ -12,7 +12,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, UsersIcon, SearchIcon, Search } from "lucide-react";
 
-export const [searchInput, setSearchInput] = useState("");
+const [searchInput, setSearchInput] = useState("");
 
 interface ApiResponse {
   data: Attendance[];
@@ -132,6 +132,7 @@ function AttendancePage() {
           <AttendanceGrid
             attendanceList={attendanceList}
             selectedMonth={selectedMonth}
+            searchInput={searchInput}
           />
         </CardContent>
       </Card>
