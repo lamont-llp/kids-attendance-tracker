@@ -11,6 +11,7 @@ import GlobalApi from "../../../services/GlobalApi";
 import { toast } from "sonner";
 import { getUniqueRecord } from "../../../services/service";
 import { Search } from "lucide-react";
+import { searchInput } from "../page";
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -337,6 +338,7 @@ function AttendanceGrid({
               filter: !isMobile, // Disable filters on mobile to save space
               resizable: !isMobile,
             }}
+            quickFilterText={searchInput}
           />
         </div>
       )}
