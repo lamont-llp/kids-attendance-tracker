@@ -5,15 +5,12 @@ import MonthSelection from "../../_components/MonthSelection";
 import AgeGroupSelect from "../../_components/AgeGroupSelect";
 import GlobalApi from "../../services/GlobalApi";
 import moment from "moment";
-import AttendanceGrid, {
-  searchInput,
-  setSearchInput,
-} from "./_components/AttendanceGrid";
 import { toast } from "sonner";
 import { Attendance } from "@/types/Attendance";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, UsersIcon, SearchIcon, Search } from "lucide-react";
+import AttendanceGrid from "./_components/AttendanceGrid";
 
 interface ApiResponse {
   data: Attendance[];
@@ -94,16 +91,6 @@ function AttendancePage() {
               </div>
             </div>
 
-            <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
-              <Search />
-              <input
-                type={"text"}
-                placeholder={"Search for..."}
-                className="outline-none w-full"
-                onChange={(event) => setSearchInput(event.target.value)}
-              />
-            </div>
-
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <label className="text-sm font-medium">Age Group</label>
               <div className="flex items-center gap-2">
@@ -133,7 +120,6 @@ function AttendancePage() {
           <AttendanceGrid
             attendanceList={attendanceList}
             selectedMonth={selectedMonth}
-            searchInput={searchInput}
           />
         </CardContent>
       </Card>
