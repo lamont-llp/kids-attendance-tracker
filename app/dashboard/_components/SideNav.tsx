@@ -36,12 +36,12 @@ function SideNav() {
       icon: Hand,
       path: "/dashboard/attendance",
     },
-    {
+    /*{
       id: 4,
       name: "Settings",
       icon: Settings,
       path: "/dashboard/settings",
-    },
+    },*/
   ];
   const path = usePathname();
 
