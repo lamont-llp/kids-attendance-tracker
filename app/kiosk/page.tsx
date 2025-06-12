@@ -7,8 +7,6 @@ import GlobalApi from "@/app/services/GlobalApi";
 import { toast } from "sonner";
 import { Search, CheckCircle } from "lucide-react";
 import moment from "moment";
-import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
-import {redirect} from "next/navigation";
 
 interface Kid {
   id: number;
@@ -26,15 +24,6 @@ const KioskPage = async () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [checkedInKids, setCheckedInKids] = useState<number[]>([]);
 
-  // Check a user role
-    const { getPermission } = useKindeBrowserClient();
-    const permission = getPermission("check-in:kid");
-
-    if (!permission?.isGranted) {
-      return redirect('/api/auth/login?post_login_redirect_url=/kiosk')
-    }
-
-
   // Fetch all kids on component mount
   useEffect(() => {
     fetchAllKids();
@@ -45,7 +34,7 @@ const KioskPage = async () => {
     if (searchInput.trim() === '') {
       setFilteredKids([]);
     } else {
-      const filtered = kidsList.filter(kid => 
+      const filtered = kidsList.filter(kid =>
         kid.name.toLowerCase().includes(searchInput.toLowerCase())
       );
       setFilteredKids(filtered);
@@ -124,9 +113,9 @@ const KioskPage = async () => {
                 onChange={(e) => setSearchInput(e.target.value)}
               />
               {searchInput && (
-                <Button 
-                  variant="ghost" 
-                  size="sm" 
+                <Button
+                  variant="ghost"
+                  size="sm"
                   onClick={clearSearch}
                   className="ml-2"
                 >
