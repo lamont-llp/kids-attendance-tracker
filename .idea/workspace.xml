@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Feat: User Role-Based Redirection for Admins and Guests">
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Fix: remove className from ModeToggle.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/kiosk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -274,7 +275,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749737328052</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Fix: remove className from ModeToggle.">
+      <option name="closed" value="true" />
+      <created>1749737465819</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1749737465819</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -312,7 +321,8 @@
     <MESSAGE value="Add auth to kiosk page." />
     <MESSAGE value="Fix Type Error: Missing 'age' Property in Type Definition" />
     <MESSAGE value="Feat: User Role-Based Redirection for Admins and Guests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Feat: User Role-Based Redirection for Admins and Guests" />
+    <MESSAGE value="Fix: remove className from ModeToggle." />
+    <option name="LAST_COMMIT_MESSAGE" value="Fix: remove className from ModeToggle." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

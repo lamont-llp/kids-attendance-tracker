@@ -41,20 +41,24 @@ const KioskPage = async () => {
     }
   }, [searchInput, kidsList]);
 
-  // Fetch all kids from the API
-  const fetchAllKids = async () => {
+  /**
+   * Fetch all kids from the API
+   */
+  const fetchAllKids = () => {
     setIsLoading(true);
-    try {
-      const response = await GlobalApi.GetAllKids();
-      if (response.data && Array.isArray(response.data)) {
-        setKidsList(response.data);
-      }
-    } catch (error) {
-      console.error("Error fetching kids:", error);
-      toast.error("Failed to load kids data");
-    } finally {
-      setIsLoading(false);
-    }
+    GlobalApi.GetAllKids()
+        .then(response => {
+          if (response.data && Array.isArray(response.data)) {
+            setKidsList(response.data);
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching kids:", error);
+          toast.error("Failed to load kids data");
+        })
+        .finally(() => {
+          setIsLoading(false);
+        });
   };
 
   // Handle check-in for a kid
