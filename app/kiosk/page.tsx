@@ -7,6 +7,8 @@ import GlobalApi from "@/app/services/GlobalApi";
 import { toast } from "sonner";
 import { Search, CheckCircle } from "lucide-react";
 import moment from "moment";
+import {useKindeBrowserClient} from "@kinde-oss/kinde-auth-nextjs";
+import {redirect} from "next/navigation";
 
 interface Kid {
   id: number;
@@ -17,12 +19,21 @@ interface Kid {
   guardian_id?: number;
 }
 
-const KioskPage = () => {
+const KioskPage = async () => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [kidsList, setKidsList] = useState<Kid[]>([]);
   const [filteredKids, setFilteredKids] = useState<Kid[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [checkedInKids, setCheckedInKids] = useState<number[]>([]);
+
+  // Check a user role
+    const { getPermission } = useKindeBrowserClient();
+    const permission = getPermission("check-in:kid");
+
+    if (!permission?.isGranted) {
+      return redirect('/api/auth/login?post_login_redirect_url=/kiosk')
+    }
+
 
   // Fetch all kids on component mount
   useEffect(() => {

@@ -45,8 +45,8 @@ function BarChartComponent({ attendanceList, totalPresentData }) {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="presentCount" fill="var(--chart-1)" />
-          <Bar dataKey="absentCount" fill="var(--primary-foreground)" />
+          <Bar dataKey="presentCount" fill="var(--background)" />
+          <Bar dataKey="absentCount" fill="var(--secondary-foreground)" />
         </BarChart>
       </ResponsiveContainer>
     </div>

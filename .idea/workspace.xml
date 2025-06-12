@@ -4,11 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="style: change bar and pie chart colors.">
+      <change afterPath="$PROJECT_DIR$/app/middleware.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/kiosk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +247,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749684196759</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="style: change bar and pie chart colors.">
+      <option name="closed" value="true" />
+      <created>1749685628856</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1749685628856</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -279,7 +289,8 @@
     <MESSAGE value="update gitignore" />
     <MESSAGE value="feat: add Kids Check-In page with search and attendance functionality&#10;&#10;- Implement KioskPage with search and check-in capabilities&#10;- Introduce layout for Kiosk section with Header component&#10;- Update Header component to reposition LogoutLink for improved UI consistency" />
     <MESSAGE value="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: improve age group functionality in Kids module&#10;&#10;- Add dynamic age group selection in AddNewKid form&#10;- Automatically determine and display age groups based on input age&#10;- Update attendance filtering to use age ranges instead of exact groups&#10;- Enhance KidListTable to display age alongside age group&#10;- Include utilities for age group and range calculations" />
+    <MESSAGE value="style: change bar and pie chart colors." />
+    <option name="LAST_COMMIT_MESSAGE" value="style: change bar and pie chart colors." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

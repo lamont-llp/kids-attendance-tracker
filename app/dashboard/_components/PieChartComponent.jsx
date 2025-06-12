@@ -23,7 +23,7 @@ function PieChartComponent({attendanceList}) {
                 {
                     name: 'Total Absent',
                     value: (100-Number(percentage)).toFixed(1),
-                    fill: 'var(--primary-foreground)'
+                    fill: 'var(--secondary-foreground)'
                 },
             ])
         }
