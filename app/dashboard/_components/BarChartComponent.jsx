@@ -11,13 +11,28 @@ import {
 } from "recharts";
 import { getUniqueRecord, getUniqueRecordSafe } from "@/app/services/service";
 
-// Fix: Properly destructure props
+// Custom Tooltip Component
+const CustomTooltip = ({ active, payload, label }) => {
+  if (active && payload && payload.length) {
+    return (
+        <div className="bg-card/95 backdrop-blur-sm border border-border/50 rounded-lg p-3 shadow-lg">
+          <p className="text-sm font-medium text-foreground mb-2">{`Day ${label}`}</p>
+          {payload.map((entry, index) => (
+              <p key={index} className="text-sm" style={{ color: entry.color }}>
+                <span className="font-medium">{entry.name}:</span> {entry.value}
+              </p>
+          ))}
+        </div>
+    );
+  }
+  return null;
+};
+
 function BarChartComponent({ attendanceList, totalPresentData }) {
   const [data, setData] = useState([]);
 
   useEffect(() => {
     formatAttendanceListCount();
-    // Fix: Proper dependency array
   }, [attendanceList, totalPresentData]);
 
   const formatAttendanceListCount = () => {
@@ -36,20 +51,50 @@ function BarChartComponent({ attendanceList, totalPresentData }) {
   };
 
   return (
-    <div className="border p-5 rounded-lg bg-chart-1 dark:bg-accent">
-      <h2 className="font-bold text-lg text-primary-foreground dark:text-accent-foreground">Daily Attendance</h2>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart width={730} height={250} data={data}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="day" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="presentCount" fill="var(--background)" />
-          <Bar dataKey="absentCount" fill="var(--secondary-foreground)" />
+      <ResponsiveContainer width="100%" height="100%">
+        <BarChart
+            data={data}
+            margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+            barCategoryGap="20%"
+        >
+          <CartesianGrid
+              strokeDasharray="3 3"
+              stroke="var(--border)"
+              strokeOpacity={0.3}
+          />
+          <XAxis
+              dataKey="day"
+              tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--border)' }}
+              tickLine={{ stroke: 'var(--border)' }}
+          />
+          <YAxis
+              tick={{ fill: 'var(--muted-foreground)', fontSize: 12 }}
+              axisLine={{ stroke: 'var(--border)' }}
+              tickLine={{ stroke: 'var(--border)' }}
+          />
+          <Tooltip content={<CustomTooltip />} />
+          <Legend
+              wrapperStyle={{
+                paddingTop: '20px',
+                fontSize: '14px',
+                color: 'var(--foreground)'
+              }}
+          />
+          <Bar
+              dataKey="presentCount"
+              name="Present"
+              fill="var(--success)"
+              radius={[4, 4, 0, 0]}
+          />
+          <Bar
+              dataKey="absentCount"
+              name="Absent"
+              fill="var(--warning)"
+              radius={[4, 4, 0, 0]}
+          />
         </BarChart>
       </ResponsiveContainer>
-    </div>
   );
 }
 

@@ -4,10 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="fix: remove async from Kiosk page.">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="fix: loading spinner">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -300,7 +301,23 @@
       <option name="project" value="LOCAL" />
       <updated>1749738904275</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="feat: update SideNav and loading UI&#10;&#10;- Add the &quot;Check-in&quot; option with the &quot;ClipboardCheck&quot; icon to SideNav.&#10;- Enhance loading screen with spinner for better UX.">
+      <option name="closed" value="true" />
+      <created>1749740809370</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1749740809370</updated>
+    </task>
+    <task id="LOCAL-00025" summary="fix: loading spinner">
+      <option name="closed" value="true" />
+      <created>1749741029063</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1749741029063</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -341,7 +358,9 @@
     <MESSAGE value="Fix: remove className from ModeToggle." />
     <MESSAGE value="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern." />
     <MESSAGE value="fix: remove async from Kiosk page." />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: remove async from Kiosk page." />
+    <MESSAGE value="feat: update SideNav and loading UI&#10;&#10;- Add the &quot;Check-in&quot; option with the &quot;ClipboardCheck&quot; icon to SideNav.&#10;- Enhance loading screen with spinner for better UX." />
+    <MESSAGE value="fix: loading spinner" />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: loading spinner" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

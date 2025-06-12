@@ -19,9 +19,9 @@ function Dashboard() {
     const [totalPresentData, setTotalPresentData] = useState([])
 
     useEffect(() => {
-    // Only set default theme once on component mount
-    setTheme('system')
-}, []);
+        // Only set default theme once on component mount
+        setTheme('system')
+    }, []);
 
     useEffect(() => {
         GetTotalPresentCountByDay();
@@ -50,20 +50,20 @@ function Dashboard() {
 
     let age;
     return (
-        <div className='p-4 sm:p-6 lg:p-8 xl:p-10 space-y-6'>
+        <div className='p-4 sm:p-6 lg:p-8 xl:p-10 space-y-6 min-h-screen bg-gradient-to-br from-background via-background to-secondary/10'>
             {/* Header Section */}
             <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
                 <div>
-                    <h1 className='font-bold text-2xl sm:text-3xl text-primary dark:text-foreground'>
+                    <h1 className='font-bold text-3xl sm:text-4xl bg-gradient-to-r from-primary to-info bg-clip-text text-transparent'>
                         Dashboard
                     </h1>
-                    <p className='text-sm text-primary dark:text-primary mt-1'>
-                        Welcome back! Here's your attendance overview.
+                    <p className='text-sm text-muted-foreground mt-2 font-medium'>
+                        Welcome back! Here's your attendance overview for {moment(selectedMonth).format('MMMM YYYY')}.
                     </p>
                 </div>
-                
+
                 {/* Controls */}
-                <div className='flex flex-col xs:flex-row gap-2 sm:gap-4 w-full sm:w-auto'>
+                <div className='flex flex-col xs:flex-row gap-3 sm:gap-4 w-full sm:w-auto'>
                     <div className="w-full xs:w-auto">
                         <MonthSelection selectedMonth={setSelectedMonth} />
                     </div>
@@ -79,32 +79,73 @@ function Dashboard() {
             </div>
 
             {/* Charts Section */}
-            <div className='grid grid-cols-1 xl:grid-cols-3 gap-4 sm:gap-6'>
+            <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
                 {/* Bar Chart - Takes 2 columns on xl screens */}
                 <div className='xl:col-span-2'>
-                    <div className="bg-white dark:bg-card rounded-lg border shadow-sm p-4 sm:p-6">
-                        <h3 className="text-lg font-semibold text-primary dark:text-foreground mb-4">
-                            Attendance Trends
-                        </h3>
-                        <div className="h-[300px] sm:h-[400px]">
-                            <BarChartComponent 
-                                attendanceList={attendanceList} 
-                                totalPresentData={totalPresentData} 
+                    <div className="bg-card/80 backdrop-blur-sm dark:bg-card/90 rounded-xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-3 h-6 bg-gradient-to-b from-primary to-info rounded-full"></div>
+                            <h3 className="text-xl font-semibold text-foreground">
+                                Daily Attendance Trends
+                            </h3>
+                        </div>
+                        <div className="h-[350px] sm:h-[400px]">
+                            <BarChartComponent
+                                attendanceList={attendanceList}
+                                totalPresentData={totalPresentData}
                             />
                         </div>
                     </div>
                 </div>
-                
+
                 {/* Pie Chart - Takes 1 column */}
                 <div className='xl:col-span-1'>
-                    <div className="bg-white dark:bg-card rounded-lg border shadow-sm p-4 sm:p-6">
-                        <h3 className="text-lg font-semibold text-primary dark:text-foreground mb-4">
-                            Attendance Distribution
-                        </h3>
-                        <div className="h-[300px] sm:h-[400px] items-center justify-center">
+                    <div className="bg-card/80 backdrop-blur-sm dark:bg-card/90 rounded-xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 p-6">
+                        <div className="flex items-center gap-3 mb-6">
+                            <div className="w-3 h-6 bg-gradient-to-b from-success to-warning rounded-full"></div>
+                            <h3 className="text-xl font-semibold text-foreground">
+                                Monthly Distribution
+                            </h3>
+                        </div>
+                        <div className="h-[350px] sm:h-[400px] flex items-center justify-center">
                             <PieChartComponent attendanceList={attendanceList} />
                         </div>
                     </div>
+                </div>
+            </div>
+
+            {/* Additional Info Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div className="bg-gradient-to-br from-primary/10 to-info/10 dark:from-primary/20 dark:to-info/20 rounded-lg p-4 border border-primary/20">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-primary rounded-full"></div>
+                        <span className="text-sm font-medium text-muted-foreground">Average Daily</span>
+                    </div>
+                    <p className="text-2xl font-bold text-primary mt-1">85%</p>
+                </div>
+
+                <div className="bg-gradient-to-br from-success/10 to-success/5 dark:from-success/20 dark:to-success/10 rounded-lg p-4 border border-success/20">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-success rounded-full"></div>
+                        <span className="text-sm font-medium text-muted-foreground">Peak Day</span>
+                    </div>
+                    <p className="text-2xl font-bold text-success mt-1">95%</p>
+                </div>
+
+                <div className="bg-gradient-to-br from-warning/10 to-warning/5 dark:from-warning/20 dark:to-warning/10 rounded-lg p-4 border border-warning/20">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-warning rounded-full"></div>
+                        <span className="text-sm font-medium text-muted-foreground">Low Day</span>
+                    </div>
+                    <p className="text-2xl font-bold text-warning mt-1">65%</p>
+                </div>
+
+                <div className="bg-gradient-to-br from-info/10 to-info/5 dark:from-info/20 dark:to-info/10 rounded-lg p-4 border border-info/20">
+                    <div className="flex items-center gap-2">
+                        <div className="w-2 h-2 bg-info rounded-full"></div>
+                        <span className="text-sm font-medium text-muted-foreground">Trend</span>
+                    </div>
+                    <p className="text-2xl font-bold text-info mt-1">↗ +5%</p>
                 </div>
             </div>
         </div>
