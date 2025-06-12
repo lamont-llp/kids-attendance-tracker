@@ -26,7 +26,7 @@ export default function Home() {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
-                <ModeToggle className="mb-4" />
+                <ModeToggle />
                 <h2 className="text-2xl font-bold mb-4">Loading...</h2>
                 <Button disabled>Please wait</Button>
             </div>
