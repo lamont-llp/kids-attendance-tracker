@@ -9,7 +9,7 @@ import {
   LogoutLink,
   useKindeBrowserClient,
 } from "@kinde-oss/kinde-auth-nextjs";
-import { LayoutIcon, GraduationCap, Hand, LogOut, X, User } from "lucide-react";
+import { LayoutIcon, GraduationCap, Hand, ClipboardCheck, X, User } from "lucide-react";
 
 function SideNav() {
   const { user } = useKindeBrowserClient();
@@ -32,12 +32,12 @@ function SideNav() {
       icon: Hand,
       path: "/dashboard/attendance",
     },
-    /*{
+    {
       id: 4,
-      name: "Settings",
-      icon: Settings,
-      path: "/dashboard/settings",
-    },*/
+      name: "Check-in",
+      icon: ClipboardCheck,
+      path: "/kiosk",
+    },
   ];
   const path = usePathname();
 

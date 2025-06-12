@@ -26,10 +26,12 @@ export default function Home() {
     return (
         <div className="flex items-center justify-center min-h-screen">
             <div className="text-center">
-                <ModeToggle />
-                <h2 className="text-2xl font-bold mb-4">Loading...</h2>
-                <Button disabled>Please wait</Button>
+                <svg className="mr-3 size-5 animate-spin ..." viewBox="0 0 24 24">
+                    {"!-- ... --"}
+                </svg>
+                    <h2 className="text-2xl font-bold mb-4">Loading...</h2>
+                    <Button disabled>Please wait</Button>
             </div>
         </div>
-    );
+);
 }

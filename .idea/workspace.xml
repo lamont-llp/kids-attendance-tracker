@@ -4,8 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern.">
-      <change beforePath="$PROJECT_DIR$/app/kiosk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="fix: remove async from Kiosk page.">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/SideNav.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -290,7 +292,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749738710860</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="fix: remove async from Kiosk page.">
+      <option name="closed" value="true" />
+      <created>1749738904275</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1749738904275</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -330,7 +340,8 @@
     <MESSAGE value="Feat: User Role-Based Redirection for Admins and Guests" />
     <MESSAGE value="Fix: remove className from ModeToggle." />
     <MESSAGE value="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern." />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern." />
+    <MESSAGE value="fix: remove async from Kiosk page." />
+    <option name="LAST_COMMIT_MESSAGE" value="fix: remove async from Kiosk page." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
