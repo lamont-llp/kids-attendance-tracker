@@ -17,7 +17,7 @@ interface Kid {
   guardian_id?: number;
 }
 
-const KioskPage = async () => {
+const KioskPage = () => {
   const [searchInput, setSearchInput] = useState<string>('');
   const [kidsList, setKidsList] = useState<Kid[]>([]);
   const [filteredKids, setFilteredKids] = useState<Kid[]>([]);

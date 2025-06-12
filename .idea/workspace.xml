@@ -4,8 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Fix: remove className from ModeToggle.">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern.">
       <change beforePath="$PROJECT_DIR$/app/kiosk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -283,7 +282,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749737465819</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern.">
+      <option name="closed" value="true" />
+      <created>1749738710860</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1749738710860</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -322,7 +329,8 @@
     <MESSAGE value="Fix Type Error: Missing 'age' Property in Type Definition" />
     <MESSAGE value="Feat: User Role-Based Redirection for Admins and Guests" />
     <MESSAGE value="Fix: remove className from ModeToggle." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fix: remove className from ModeToggle." />
+    <MESSAGE value="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern." />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: rewrite fetchAllKids function to use the Promise-based .then()/.catch()/.finally() pattern." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
