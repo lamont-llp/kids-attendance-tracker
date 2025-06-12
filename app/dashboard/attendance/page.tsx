@@ -95,7 +95,7 @@ function AttendancePage() {
               <label className="text-sm font-medium">Age Group</label>
               <div className="flex items-center gap-2">
                 <UsersIcon className="h-4 w-4 text-muted-foreground" />
-                <AgeGroupSelect selectedAgeGroup={handleAgeGroupSelection} />
+                <AgeGroupSelect age={undefined} selectedAgeGroup={handleAgeGroupSelection} />
               </div>
             </div>
 
