@@ -4,11 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="restyling the theme. TODO: PieChartComponent.">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="Improve Pie Chart styling.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -325,7 +323,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749744170147</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="Improve Pie Chart styling.">
+      <option name="closed" value="true" />
+      <created>1749798960535</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1749798960535</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -343,7 +349,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Create Kid List Table." />
     <MESSAGE value="Fix SideNav.tsx show active page." />
     <MESSAGE value="Implement Kid delete functionality." />
     <MESSAGE value="Create Attendance page and AttendanceGrid.jsx component." />
@@ -368,7 +373,8 @@
     <MESSAGE value="feat: update SideNav and loading UI&#10;&#10;- Add the &quot;Check-in&quot; option with the &quot;ClipboardCheck&quot; icon to SideNav.&#10;- Enhance loading screen with spinner for better UX." />
     <MESSAGE value="fix: loading spinner" />
     <MESSAGE value="restyling the theme. TODO: PieChartComponent." />
-    <option name="LAST_COMMIT_MESSAGE" value="restyling the theme. TODO: PieChartComponent." />
+    <MESSAGE value="Improve Pie Chart styling." />
+    <option name="LAST_COMMIT_MESSAGE" value="Improve Pie Chart styling." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

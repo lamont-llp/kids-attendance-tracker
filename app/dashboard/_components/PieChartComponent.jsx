@@ -65,19 +65,10 @@ function PieChartComponent({attendanceList}) {
     };
 
     return (
-        <div className='relative overflow-hidden border border-border rounded-lg shadow-lg bg-gradient-to-br from-card via-card to-muted/20 dark:from-card dark:via-card dark:to-accent/10'>
-            {/* Header with gradient background */}
-            <div className="bg-gradient-to-r from-primary/10 via-info/10 to-primary/10 px-6 py-4 border-b border-border/50">
-                <h2 className='font-bold text-xl text-foreground flex items-center gap-2'>
-                    <div className="w-2 h-6 bg-gradient-to-b from-chart-2 to-chart-3 rounded-full"></div>
-                    Monthly Attendance Overview
-                </h2>
-                <p className="text-muted-foreground text-sm mt-1">Current month attendance distribution</p>
-            </div>
-
-            {/* Chart container with enhanced styling */}
-            <div className="p-6">
-                <ResponsiveContainer width={'100%'} height={350}>
+        <div className="w-full h-full flex flex-col">
+            {/* Main Chart Container */}
+            <div className="flex-1 flex items-center justify-center">
+                <ResponsiveContainer width={'100%'} height={'100%'}>
                     <PieChart>
                         {/* Define gradients */}
                         <defs>
@@ -99,11 +90,11 @@ function PieChartComponent({attendanceList}) {
                             cy="50%"
                             labelLine={false}
                             label={renderCustomLabel}
-                            innerRadius={70}
-                            outerRadius={120}
-                            paddingAngle={2}
+                            innerRadius={60}
+                            outerRadius={100}
+                            paddingAngle={3}
                             stroke="var(--background)"
-                            strokeWidth={3}
+                            strokeWidth={2}
                         >
                             {data.map((entry, index) => (
                                 <Cell
@@ -118,35 +109,31 @@ function PieChartComponent({attendanceList}) {
 
                         <Legend
                             verticalAlign="bottom"
-                            height={36}
+                            height={30}
                             iconType="circle"
                             wrapperStyle={{
-                                paddingTop: '20px',
-                                fontSize: '14px',
+                                paddingTop: '10px',
+                                fontSize: '13px',
                                 fontWeight: '500'
                             }}
                         />
                     </PieChart>
                 </ResponsiveContainer>
-
-                {/* Summary statistics */}
-                <div className="grid grid-cols-2 gap-4 mt-6 pt-4 border-t border-border/50">
-                    {data.map((item, index) => (
-                        <div key={index} className="text-center p-3 rounded-lg bg-muted/30 dark:bg-accent/20">
-                            <div className="text-2xl font-bold" style={{color: item.fill}}>
-                                {item.value}%
-                            </div>
-                            <div className="text-sm text-muted-foreground font-medium">
-                                {item.name}
-                            </div>
-                        </div>
-                    ))}
-                </div>
             </div>
 
-            {/* Decorative elements */}
-            <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-primary/5 to-transparent rounded-full -translate-y-16 translate-x-16"></div>
-            <div className="absolute bottom-0 left-0 w-24 h-24 bg-gradient-to-tr from-info/5 to-transparent rounded-full translate-y-12 -translate-x-12"></div>
+            {/* Compact Summary Statistics */}
+            <div className="grid grid-cols-2 gap-3 mt-4 pt-4 border-t border-border/30">
+                {data.map((item, index) => (
+                    <div key={index} className="text-center p-2 rounded-md bg-muted/20 dark:bg-accent/10">
+                        <div className="text-lg font-bold" style={{color: item.fill}}>
+                            {item.value}%
+                        </div>
+                        <div className="text-xs text-muted-foreground font-medium">
+                            {item.name}
+                        </div>
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }
