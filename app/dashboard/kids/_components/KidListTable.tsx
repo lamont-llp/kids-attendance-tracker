@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
-import { themeQuartz } from 'ag-grid-community';
+import { themeAlpine } from 'ag-grid-community';
 import { ModuleRegistry, AllCommunityModule, ColDef } from 'ag-grid-community';
 import {Kid} from "@/types/Kid";
 import {
@@ -72,6 +72,12 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
     ]);
 
     const [rowData, setRowData] = useState<Kid[]>([]);
+    const defaultColDef = {
+        editable: true,
+        flex: 1,
+        minWidth: 100,
+        filter: true,
+    };
     const [searchInput, setSearchInput] = useState('')
 
     useEffect(() => {
@@ -94,7 +100,7 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
             <div className="mt-2 mb-2">
                 <h2 className="bg-secondary border p-3 w-40 rounded-lg">Total Kids: {kidList?.length}</h2>
             </div>
-            <div style={{ height: 940, margin: 'auto' }}>
+            <div style={{ height: 940, margin: 'auto', display: "flex", flexDirection: "column" }}>
                 <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
                     <Search/>
                     <input type={"text"} placeholder={"Search for..."
@@ -102,9 +108,10 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
                            onChange={(event) => setSearchInput(event.target.value)}/>
                 </div>
                 <AgGridReact<Kid>
-                    theme={themeQuartz}
+                    theme={themeAlpine}
                     rowData={rowData}
                     columnDefs={colDefs}
+                    defaultColDef={defaultColDef}
                     pagination={true}
                     paginationPageSize={20}
                     paginationPageSizeSelector={true}

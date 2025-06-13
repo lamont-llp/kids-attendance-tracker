@@ -28,8 +28,8 @@ function Kid() {
                 <AddNewKid refreshData={GetAllKids}/>
             </h2>
 
-            <Card className="overflow-hidden">
-                <CardContent className="p-0 h-dvh">
+            <Card className="overflow-hidden mt-2">
+                <CardContent className="p-2 h-dvh">
             <KidListTable kidList={kidList} refreshData={GetAllKids} />
                 </CardContent>
             </Card>

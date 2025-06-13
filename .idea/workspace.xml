@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="fix: loading spinner">
+    <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="restyling the theme. TODO: PieChartComponent.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/BarChartComponent.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/dashboard/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/globals.css" beforeDir="false" afterPath="$PROJECT_DIR$/app/globals.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/_components/PieChartComponent.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/_components/KidListTable.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/dashboard/kids/page.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -317,7 +317,15 @@
       <option name="project" value="LOCAL" />
       <updated>1749741029063</updated>
     </task>
-    <option name="localTasksCounter" value="26" />
+    <task id="LOCAL-00026" summary="restyling the theme. TODO: PieChartComponent.">
+      <option name="closed" value="true" />
+      <created>1749744170147</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1749744170147</updated>
+    </task>
+    <option name="localTasksCounter" value="27" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -335,7 +343,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Create kid page with AddNewKid form." />
     <MESSAGE value="Create Kid List Table." />
     <MESSAGE value="Fix SideNav.tsx show active page." />
     <MESSAGE value="Implement Kid delete functionality." />
@@ -360,7 +367,8 @@
     <MESSAGE value="fix: remove async from Kiosk page." />
     <MESSAGE value="feat: update SideNav and loading UI&#10;&#10;- Add the &quot;Check-in&quot; option with the &quot;ClipboardCheck&quot; icon to SideNav.&#10;- Enhance loading screen with spinner for better UX." />
     <MESSAGE value="fix: loading spinner" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix: loading spinner" />
+    <MESSAGE value="restyling the theme. TODO: PieChartComponent." />
+    <option name="LAST_COMMIT_MESSAGE" value="restyling the theme. TODO: PieChartComponent." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
