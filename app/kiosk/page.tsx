@@ -141,6 +141,7 @@ const KioskPage = () => {
                         <div>
                           <h3 className="font-semibold text-lg">{kid.name}</h3>
                           <p className="text-sm text-gray-500">Age: {kid.age}</p>
+                          <p className="text-sm text-gray-500">Contact: {kid.contact}</p>
                         </div>
                         <Button
                           onClick={() => handleCheckIn(kid)}
