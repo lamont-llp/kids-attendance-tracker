@@ -115,39 +115,39 @@ function Dashboard() {
             </div>
 
             {/* Additional Info Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div className="bg-gradient-to-br from-primary/10 to-info/10 dark:from-primary/20 dark:to-info/20 rounded-lg p-4 border border-primary/20">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-primary rounded-full"></div>
-                        <span className="text-sm font-medium text-muted-foreground">Average Daily</span>
-                    </div>
-                    <p className="text-2xl font-bold text-primary mt-1">85%</p>
-                </div>
+            {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">*/}
+            {/*    <div className="bg-gradient-to-br from-primary/10 to-info/10 dark:from-primary/20 dark:to-info/20 rounded-lg p-4 border border-primary/20">*/}
+            {/*        <div className="flex items-center gap-2">*/}
+            {/*            <div className="w-2 h-2 bg-primary rounded-full"></div>*/}
+            {/*            <span className="text-sm font-medium text-muted-foreground">Average Daily</span>*/}
+            {/*        </div>*/}
+            {/*        <p className="text-2xl font-bold text-primary mt-1">85%</p>*/}
+            {/*    </div>*/}
 
-                <div className="bg-gradient-to-br from-success/10 to-success/5 dark:from-success/20 dark:to-success/10 rounded-lg p-4 border border-success/20">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-success rounded-full"></div>
-                        <span className="text-sm font-medium text-muted-foreground">Peak Day</span>
-                    </div>
-                    <p className="text-2xl font-bold text-success mt-1">95%</p>
-                </div>
+            {/*    <div className="bg-gradient-to-br from-success/10 to-success/5 dark:from-success/20 dark:to-success/10 rounded-lg p-4 border border-success/20">*/}
+            {/*        <div className="flex items-center gap-2">*/}
+            {/*            <div className="w-2 h-2 bg-success rounded-full"></div>*/}
+            {/*            <span className="text-sm font-medium text-muted-foreground">Peak Day</span>*/}
+            {/*        </div>*/}
+            {/*        <p className="text-2xl font-bold text-success mt-1">95%</p>*/}
+            {/*    </div>*/}
 
-                <div className="bg-gradient-to-br from-warning/10 to-warning/5 dark:from-warning/20 dark:to-warning/10 rounded-lg p-4 border border-warning/20">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-warning rounded-full"></div>
-                        <span className="text-sm font-medium text-muted-foreground">Low Day</span>
-                    </div>
-                    <p className="text-2xl font-bold text-warning mt-1">65%</p>
-                </div>
+            {/*    <div className="bg-gradient-to-br from-warning/10 to-warning/5 dark:from-warning/20 dark:to-warning/10 rounded-lg p-4 border border-warning/20">*/}
+            {/*        <div className="flex items-center gap-2">*/}
+            {/*            <div className="w-2 h-2 bg-warning rounded-full"></div>*/}
+            {/*            <span className="text-sm font-medium text-muted-foreground">Low Day</span>*/}
+            {/*        </div>*/}
+            {/*        <p className="text-2xl font-bold text-warning mt-1">65%</p>*/}
+            {/*    </div>*/}
 
-                <div className="bg-gradient-to-br from-info/10 to-info/5 dark:from-info/20 dark:to-info/10 rounded-lg p-4 border border-info/20">
-                    <div className="flex items-center gap-2">
-                        <div className="w-2 h-2 bg-info rounded-full"></div>
-                        <span className="text-sm font-medium text-muted-foreground">Trend</span>
-                    </div>
-                    <p className="text-2xl font-bold text-info mt-1">↗ +5%</p>
-                </div>
-            </div>
+            {/*    <div className="bg-gradient-to-br from-info/10 to-info/5 dark:from-info/20 dark:to-info/10 rounded-lg p-4 border border-info/20">*/}
+            {/*        <div className="flex items-center gap-2">*/}
+            {/*            <div className="w-2 h-2 bg-info rounded-full"></div>*/}
+            {/*            <span className="text-sm font-medium text-muted-foreground">Trend</span>*/}
+            {/*        </div>*/}
+            {/*        <p className="text-2xl font-bold text-info mt-1">↗ +5%</p>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
         </div>
     )
 }
