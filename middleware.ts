@@ -24,12 +24,13 @@ export async function middleware(request: Request) {
     }
 
     // If user is on kiosk but has admin permissions, redirect to dashboard
-    if (path.startsWith('/kiosk') && (!hasCheckInPermission || isAdmin)) {
-        return NextResponse.redirect(new URL('/dashboard', request.url));
-    }
+    // if (path.startsWith('/kiosk') && (!hasCheckInPermission || isAdmin)) {
+    //     return NextResponse.redirect(new URL('/dashboard', request.url));
+    // }
 }
 
 // See "Matching Paths" below to learn more
+// '/kiosk/:path*', '/kiosk'
 export const config = {
-    matcher: ['/dashboard/:path*', '/kiosk/:path*', '/kiosk'],
+    matcher: ['/dashboard/:path*'],
 }
