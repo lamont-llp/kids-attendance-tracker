@@ -22,7 +22,14 @@ const GetAllKids = () => axios.get('/api/kid');
 
 const DeleteKidRecord = (id: number) => axios.delete(`/api/kid?id=${id}`);
 
-const GetAttendanceList = (ageGroup: string | undefined, month: any)=> axios.get(`/api/attendance?ageGroup=${ageGroup}&month=${month}`);
+const GetAttendanceList = (ageGroup: string | undefined, month: any)=> {
+  // If ageGroup is undefined, use a default value or make it optional in the API call
+  const ageGroupParam = ageGroup ? `ageGroup=${ageGroup}` : '';
+  const monthParam = `month=${month}`;
+  const queryString = ageGroupParam ? `${ageGroupParam}&${monthParam}` : monthParam;
+
+  return axios.get(`/api/attendance?${queryString}`);
+};
 
 const MarkAttendance = (data: any) => axios.post('/api/attendance', data);
 

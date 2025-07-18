@@ -27,7 +27,42 @@ const KioskPage = () => {
   // Fetch all kids on component mount
   useEffect(() => {
     fetchAllKids();
+    fetchTodayCheckIns();
   }, []);
+
+  /**
+   * Fetch already checked-in kids for today
+   */
+  const fetchTodayCheckIns = async () => {
+    try {
+      setIsLoading(true);
+      const today = new Date();
+      const day = today.getDate();
+      const date = moment(today).format("DD/MM/yyyy");
+
+      // You might need to create a new API endpoint for this
+      // For now we'll use the existing attendance endpoint
+      const response = await GlobalApi.GetAttendanceList(undefined, date);
+
+      if (response.data && Array.isArray(response.data)) {
+        // Filter to only include present kids for today's date and day
+        const todayCheckins = response.data.filter(record => 
+          record.present && 
+          Number(record.day) === day && 
+          record.date === date
+        );
+
+        // Extract the kid IDs of those already checked in
+        const checkedInKidIds = todayCheckins.map(record => record.kidId);
+        setCheckedInKids(checkedInKidIds);
+      }
+    } catch (error) {
+      console.error("Error fetching today's check-ins:", error);
+      toast.error("Failed to load today's attendance data");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   // Filter kids based on search input
   useEffect(() => {
@@ -62,32 +97,71 @@ const KioskPage = () => {
   };
 
   // Handle check-in for a kid
-  const handleCheckIn = (kid: Kid) => {
+  const handleCheckIn = async (kid: Kid) => {
+    if (!kid.id || !kid.name) {
+      toast.error("Invalid kid data");
+      return;
+    }
+
     const today = new Date();
+    const currentHour = today.getHours();
+
+    // Example operating hours check (7 AM to 8 PM)
+    if (currentHour < 7 || currentHour > 20) {
+      toast.error("Check-in is only available during operating hours (7 AM - 8   PM)");
+      return;
+    }
+
     const day = today.getDate();
-    const date = moment(today).format("MM/yyyy");
+    const date = moment(today).format("DD/MM/yyyy"); // Include day in date format
 
     const data = {
       day: day.toString(),
       kidId: kid.id,
       present: true,
       date: date,
+      timestamp: today.toISOString(), // Add timestamp for precise tracking
     };
 
-    setIsLoading(true);
-    GlobalApi.MarkAttendance(data)
-      .then(() => {
+    const retryCount = 3;
+    let attempts = 0;
+
+    const attemptCheckIn = async (): Promise<void> => {
+      try {
+        setIsLoading(true);
+        const response = await GlobalApi.MarkAttendance(data);
+
+        // Successfully checked in
         toast.success(`${kid.name} has been checked in successfully!`);
-        setCheckedInKids([...checkedInKids, kid.id]);
-      })
-      .catch((error) => {
+        setCheckedInKids(prev => [...prev, kid.id]);
+
+              } catch (error: any) {
         console.error("Error checking in:", error);
-        toast.error(`Failed to check in ${kid.name}`);
-      })
-      .finally(() => {
+
+        // Check if this is a 409 Conflict response (already checked in)
+        if (error.response && error.response.status === 409) {
+          toast.error(`${kid.name} is already checked in for today`);
+          // Update the UI to show the kid as checked in
+          setCheckedInKids(prev => [...prev, kid.id]);
+          return;
+        }
+
+        if (attempts < retryCount) {
+          attempts++;
+          toast.error(`Retrying check-in... (Attempt ${attempts}/${retryCount})`);
+          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second between retries
+          return attemptCheckIn();
+        }
+
+        toast.error(`Failed to check in ${kid.name}. Please try again later.`);
+      } finally {
         setIsLoading(false);
-      });
+      }
+    };
+
+    await attemptCheckIn();
   };
+
 
   // Clear search input
   const clearSearch = () => {

@@ -30,8 +30,31 @@ export async function GET( req: NextRequest ){
 
         console.log('API received:', { ageGroup, month });
 
-        if (!ageGroup || !month) {
-            return NextResponse.json({ error: 'Missing required parameters' });
+        if (!month) {
+            return NextResponse.json({ error: 'Missing required month parameter' });
+        }
+
+        // For kiosk check-in verification, we may not have an ageGroup
+        // If ageGroup is missing, return all attendance records for the month
+        if (!ageGroup) {
+            const result = await db.select({
+                name: Kids.name,
+                present: Attendance.present,
+                day: Attendance.day,
+                date: Attendance.date,
+                age: Kids.age,
+                kidId: Kids.id,
+                attendanceId: Attendance.id,
+            }).from(Kids)
+                .leftJoin(Attendance, eq(Kids.id, Attendance.kidId))
+                .where(
+                    or(
+                        eq(Attendance.date, month),
+                        isNull(Attendance.date)
+                    )
+                );
+
+            return NextResponse.json(result);
         }
     // Get the age range for the selected age group
     const { min, max } = getAgeRangeFromGroup(ageGroup);
@@ -73,15 +96,46 @@ export async function GET( req: NextRequest ){
 }
 
 export async function POST( req: NextRequest ) {
-    const data = await req.json();
-    const result = await db.insert(Attendance).values({
-        kidId: data.kidId,
-        present: data.present,
-        day: data.day,
-        date: data.date,
-    })
+    try {
+        const data = await req.json();
 
-    return NextResponse.json(result);
+        // Check if the kid is already checked in for this day and date
+        const existingAttendance = await db.select()
+            .from(Attendance)
+            .where(
+                and(
+                    eq(Attendance.kidId, data.kidId),
+                    eq(Attendance.day, data.day),
+                    eq(Attendance.date, data.date),
+                    eq(Attendance.present, true)
+                )
+            );
+
+        // If an attendance record already exists, return conflict status
+        if (existingAttendance.length > 0) {
+            return NextResponse.json(
+                { error: 'Kid already checked in for today' },
+                { status: 409 }
+            );
+        }
+
+        // If no existing record, create a new attendance record
+        const result = await db.insert(Attendance).values({
+            kidId: data.kidId,
+            present: data.present,
+            day: data.day,
+            date: data.date,
+            // Add timestamp if it's included in the schema
+        });
+
+        return NextResponse.json(result);
+    } catch (error) {
+        console.error('Error marking attendance:', error);
+        return NextResponse.json(
+            { error: 'Failed to mark attendance' },
+            { status: 500 }
+        );
+    }
 }
 
 export async function DELETE(req: NextRequest) {
