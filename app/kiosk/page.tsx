@@ -45,7 +45,7 @@ const KioskPage = () => {
       const response = await GlobalApi.GetAttendanceList(undefined, date);
 
       if (response.data && Array.isArray(response.data)) {
-        // Filter to only include present kids for today's date and day
+        // Filter to only include present kids for today's date
         const todayCheckins = response.data.filter(record => 
           record.present && 
           Number(record.day) === day && 
