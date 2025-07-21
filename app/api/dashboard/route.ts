@@ -10,6 +10,8 @@ import {NextRequest, NextResponse} from "next/server";
  */
 function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
     switch(ageGroup) {
+        case "All":
+            return { min: 2, max: 13};
         case "2-5yrs":
             return { min: 2, max: 5 };
         case "6-9yrs":

@@ -21,11 +21,11 @@ export default function Home() {
                 <svg className="text-primary mr-3 size-5 animate-spin ..." viewBox="0 0 24 24">
                     {"<!-- ... -->"}
                 </svg>
-                <h2 className="text-2xl font-bold mb-4">Login as Guest</h2>
+                <h2 className="text-3xl font-bold mb-4">Login as Guest or Admin</h2>
                 <div className="mb-4">
-                    <Button className={"text-3xl hover:animate-pulse"} onClick={loginAsGuest}>Guest</Button>
+                    <Button className={"text-2xl hover:animate-pulse"} onClick={loginAsGuest}>Guest</Button>
                 </div>
-                <div className="mb-4">
+                <div className="mb-5 text-2xl">
                     <Button onClick={loginAsAdmin} variant={"outline"}>Admin</Button>
                 </div>
 
