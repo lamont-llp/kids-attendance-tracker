@@ -20,7 +20,7 @@ export default function Home() {
             className="flex items-center justify-center min-h-screen bg-cover bg-center" 
             style={{ backgroundImage: "url('/background_img.jpeg')", backgroundPosition: "center top -50px"}}>
           <div className="text-center z-10 pt-50">
-            <h1 className="text-5xl font-bold mb-6 text-white">Welcome to EOM Kids Ministry</h1>
+            <h1 className="text-5xl font-bold mb-6 text-white">Welcome to EOM Kids</h1>
             <h2 className="text-3xl font-bold mb-4 text-white">Please Select your login type</h2>
             <div className="mb-4">
               <Button
