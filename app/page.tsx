@@ -43,7 +43,7 @@ export default function Home() {
         <img 
             src="/logo.jpeg"
             alt="EOM Kids Ministry Logo"
-            className="absolute bottom-4 right-4 w-24 h-auto"
+            className="absolute bottom-4 right-4 w-30 h-auto"
         />
         </div>
     );

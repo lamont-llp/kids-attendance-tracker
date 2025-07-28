@@ -28,6 +28,10 @@ const KioskPage = () => {
   useEffect(() => {
     fetchAllKids();
     fetchTodayCheckIns();
+
+    // Pick a random background color for the card
+    const randomIndex = Math.floor(Math.random() * backgroundColors.length);
+    setCardColor(backgroundColors[randomIndex]);
   }, []);
 
   /**
@@ -169,11 +173,35 @@ const KioskPage = () => {
     setFilteredKids([]);
   };
 
+  const backgroundColors = [
+    'bg-blue-100',
+    'bg-green-100',
+    'bg-yellow-100',
+    'bg-red-100',
+    'bg-purple-100',
+  ];
+  const [cardColor, setCardColor] = useState("bg-white")
+
   return (
-    <div className="min-h-screen bg-gray-50 p-4 md:p-8">
-      <Card className="max-w-4xl mx-auto">
+    <div
+      className="min-h-screen bg-gray-50 p-8 md:p-30"
+      style={{
+        backgroundImage: "url('/check in.jpeg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+        backgroundAttachment: 'fixed',
+      }}
+    >
+      <img
+        src="/logo.jpeg"
+        alt="Logo"
+        className="fixed bottom-4 right-4 w-20 h0auto cursor-pointer"
+        style={{ zIndex:100}}
+      />
+      <Card className="max-w-4xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
         <CardHeader className="text-center">
-          <CardTitle className="text-3xl font-bold">Kids Check-In</CardTitle>
+          <CardTitle className="text-3xl font-bold">Check-In station for Awesome Kids!</CardTitle>
           <p className="text-muted-foreground mt-2">
             Search for your child's name and check them in
           </p>
@@ -181,7 +209,7 @@ const KioskPage = () => {
         <CardContent>
           {/* Search Input */}
           <div className="relative mb-8">
-            <div className="flex items-center border-2 rounded-lg p-3 shadow-sm">
+            <div className="flex items-center border-2 border-blue-400 bg-blue-100 rounded-lg p-3 shadow-md">
               <Search className="h-5 w-5 text-gray-400 mr-2" />
               <input
                 type="text"
@@ -195,7 +223,7 @@ const KioskPage = () => {
                   variant="ghost"
                   size="sm"
                   onClick={clearSearch}
-                  className="ml-2"
+                  className="ml- text-blue-600 hover:text-blue-800"
                 >
                   Clear
                 </Button>
