@@ -6,9 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="8f2cf752-4810-44d3-85fa-ea771bdb4fb7" name="Changes" comment="feat: enhance login options and add admin page&#10;&#10;- Replace automatic redirection with explicit login buttons for Guest and Admin on the home page.&#10;- Create a new Admin page with authentication and redirection logic.&#10;- Update middleware to simplify kiosk and dashboard path handling.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/api/attendance/route.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/attendance/route.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/kiosk/page.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/kiosk/page.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/services/GlobalApi.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/GlobalApi.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
