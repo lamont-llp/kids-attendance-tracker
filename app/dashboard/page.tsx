@@ -10,10 +10,12 @@ import moment from "moment";
 import StatusList from "@/app/dashboard/_components/StatusList";
 import BarChartComponent from "@/app/dashboard/_components/BarChartComponent";
 import PieChartComponent from "@/app/dashboard/_components/PieChartComponent";
+import DailyAttendanceList from './_components/DailyAttendanceList';
 
 function Dashboard() {
     const { setTheme } = useTheme()
     const [selectedMonth, setSelectedMonth] = useState(moment(new Date()));
+    const [selectedDate, setSelectedDate] = useState(moment(new Date()));
     const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("2-5yrs");
     const [attendanceList, setAttendanceList] = useState([])
     const [totalPresentData, setTotalPresentData] = useState([])
@@ -76,6 +78,11 @@ function Dashboard() {
             {/* Status Cards */}
             <div className="w-full">
                 <StatusList attendanceList={attendanceList} />
+            </div>
+
+            {/* Daily Attendance List */}
+            <div className="w-full">
+                <DailyAttendanceList attendanceList={attendanceList} selectedDate={selectedDate} />
             </div>
 
             {/* Charts Section */}
