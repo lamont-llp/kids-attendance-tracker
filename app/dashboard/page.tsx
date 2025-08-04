@@ -20,6 +20,17 @@ function Dashboard() {
     const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("2-5yrs");
     const [attendanceList, setAttendanceList] = useState([])
     const [totalPresentData, setTotalPresentData] = useState([])
+    const [kidList, setKidList] = useState([]);
+
+    /**
+     * Used to Get All Kids
+     */
+    const GetAllKids = () => {
+        GlobalApi.GetAllKids().then(res => {
+            setKidList(res.data);
+            console.log(res.data);
+        })
+    }
 
     useEffect(() => {
         // Only set default theme once on component mount
@@ -29,6 +40,7 @@ function Dashboard() {
     useEffect(() => {
         GetTotalPresentCountByDay();
         getKidAttendance();
+        GetAllKids();
     }, [selectedMonth, selectedAgeGroup]);
 
     /**
@@ -65,20 +77,22 @@ function Dashboard() {
                     </p>
                 </div>
 
-                {/* Controls */}
+                {/* Controls *
                 <div className='flex flex-col xs:flex-row gap-3 sm:gap-4 w-full sm:w-auto'>
                     <div className="w-full xs:w-auto">
                         <MonthSelection selectedMonth={setSelectedMonth} />
                     </div>
                     <div className="w-full xs:w-auto">
-                        <AgeGroupSelect age={age} selectedAgeGroup={setSelectedAgeGroup} />
+                        <AgeGroupSelect selectedGroup={setSelectedAgeGroup} />
                     </div>
                 </div>
+                */}
             </div>
+
 
             {/* Status Cards */}
             <div className="w-full">
-                <StatusList attendanceList={attendanceList} />
+                <StatusList kidList={kidList} />
             </div>
 
             {/* Daily Attendance List */}

@@ -83,7 +83,8 @@ export async function GET(req: NextRequest) {
                 contact: Guardians.contact,
             }
         }).from(Kids)
-            .leftJoin(Attendance, eq(Kids.id, Attendance.kidId));
+            .leftJoin(Attendance, eq(Kids.id, Attendance.kidId))
+            .leftJoin(Guardians, eq(Kids.guardian_id, Guardians.id));
 
         // Build where conditions
         const whereConditions = [eq(Attendance.date, date)];
