@@ -25,7 +25,7 @@ function isValidDateFormat(date: string): boolean {
  * @param ageGroup The age group (e.g., "2-5yrs", "6-9yrs", "10-13yrs")
  * @returns An object with min and max age values
  */
-function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
+{/*function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
     switch (ageGroup) {
         case "2-5yrs":
             return { min: 2, max: 5 };
@@ -36,7 +36,7 @@ function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
         default:
             return { min: 0, max: 0 }; // Default case, should not happen
     }
-}
+}*/}
 
 export async function GET(req: NextRequest) {
     try {
@@ -89,6 +89,7 @@ export async function GET(req: NextRequest) {
         const whereConditions = [eq(Attendance.date, date)];
 
         // Add age group filter if provided
+        {/*
         if (ageGroup) {
             const { min, max } = getAgeRangeFromGroup(ageGroup);
             whereConditions.push(
@@ -99,6 +100,7 @@ export async function GET(req: NextRequest) {
                 )
             );
         }
+        */}
 
         // Add search filter if provided
         if (search?.trim()) {

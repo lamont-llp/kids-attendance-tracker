@@ -8,7 +8,7 @@ import { NextRequest, NextResponse } from "next/server";
  * @param ageGroup The age group (e.g., "2-5yrs", "6-9yrs", "10-13yrs")
  * @returns An object with min and max age values
  */
-export function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
+function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
     switch (ageGroup) {
         case "2-5yrs":
             return { min: 2, max: 5 };
