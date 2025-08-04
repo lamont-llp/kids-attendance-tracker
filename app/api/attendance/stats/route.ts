@@ -1,8 +1,8 @@
-import {db} from "@/utils";
-import {Attendance, Kids} from "@/utils/schema";
-import {getAgeRangeFromGroup} from "@/app/api/attendance/route"
-import {and, eq, or, isNull, between, sql} from "drizzle-orm";
-import {NextRequest, NextResponse} from "next/server";
+import { db } from "@/utils";
+import { Attendance, Kids } from "@/utils/schema";
+//import { getAgeRangeFromGroup } from "@/app/api/attendance/route"
+import { and, eq, or, isNull, between, sql } from "drizzle-orm";
+import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
     try {
@@ -17,6 +17,7 @@ export async function GET(req: NextRequest) {
             );
         }
 
+        {/*
         const { min, max } = getAgeRangeFromGroup(ageGroup || 'all');
 
         // Get total kids count for age group
@@ -30,8 +31,10 @@ export async function GET(req: NextRequest) {
             );
 
         const totalKids = totalKidsResult[0]?.count || 0;
+        */}
 
         // Get daily attendance counts
+        {/*
         const dailyStats = await db.select({
             day: Attendance.day,
             presentCount: sql`COUNT(*)`.as('presentCount'),
@@ -67,6 +70,7 @@ export async function GET(req: NextRequest) {
                     Math.round((totalAttendanceRecords / numberOfSundays) * 10) / 10 : 0
             }
         });
+        */}
 
     } catch (error) {
         console.error('Stats API Error:', error);
