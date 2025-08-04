@@ -18,6 +18,7 @@ export async function POST(req: Request) {
             age: data.age,
             address: data.address || '',
             contact: data.contact || '',
+            isVisitor: data.isVisitor || false,
         }).$returningId(); // to get inserted record if needed
 
         return NextResponse.json(result[0], { status: 201 });

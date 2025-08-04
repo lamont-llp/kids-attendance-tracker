@@ -4,4 +4,5 @@ export interface Kid {
     age: number;
     address: string;
     contact: string;
+    isVisitor: boolean;
 }
