@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { themeAlpine } from 'ag-grid-community';
 import { ModuleRegistry, AllCommunityModule, ColDef } from 'ag-grid-community';
-import {Kid} from "@/types/Kid";
+import { Kid } from "@/types/Kid";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -15,11 +15,12 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 
-import {Button} from "@/components/ui/button";
-import {Search, Trash} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Search, Trash, Edit } from "lucide-react";
 import GlobalApi from "@/app/services/GlobalApi";
-import {toast} from "sonner";
-import { getAgeGroupFromAge } from "@/app/_components/AgeGroupSelect";
+import { toast } from "sonner";
+import getAgeGroupFromAge from "@/app/_components/AgeGroupSelect";
+import AddNewKid from './AddNewKid';
 
 interface KidListTableProps {
     kidList?: Kid[];
@@ -31,44 +32,41 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
 
     const CustomButtons = (props: any) => {
         return (
-            <AlertDialog>
-                <AlertDialogTrigger asChild>
-                    <Button variant="destructive"><Trash/></Button>
-                </AlertDialogTrigger>
-                <AlertDialogContent>
-                    <AlertDialogHeader>
-                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                        <AlertDialogDescription>
-                            This action cannot be undone. This will permanently delete the record
-                            and remove the data from our servers.
-                        </AlertDialogDescription>
-                    </AlertDialogHeader>
-                    <AlertDialogFooter>
-                        <AlertDialogCancel>Cancel</AlertDialogCancel>
-                        <AlertDialogAction onClick={() => DeleteRecord(props.data?.id)}>Continue</AlertDialogAction>
-                    </AlertDialogFooter>
-                </AlertDialogContent>
-            </AlertDialog>
+            <>
+                <AlertDialog>
+                    <AlertDialogTrigger asChild>
+                        <Button variant="destructive"><Trash /></Button>
+                    </AlertDialogTrigger>
+                    <AlertDialogContent>
+                        <AlertDialogHeader>
+                            <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                            <AlertDialogDescription>
+                                This action cannot be undone. This will permanently delete the record
+                                and remove the data from our servers.
+                            </AlertDialogDescription>
+                        </AlertDialogHeader>
+                        <AlertDialogFooter>
+                            <AlertDialogCancel>Cancel</AlertDialogCancel>
+                            <AlertDialogAction onClick={() => DeleteRecord(props.data?.id)}>Continue</AlertDialogAction>
+                        </AlertDialogFooter>
+                    </AlertDialogContent>
+                </AlertDialog>
+            </>
         )
     }
 
     const [colDefs, setColDefs] = useState<ColDef[]>([
-        { field: "id", filter: true },
+        { field: "id", filter: true, hide: true },
         { field: "name", filter: true },
-        { 
-            field: "age", 
-            headerName: "Age", 
+        {
+            field: "age",
+            headerName: "Age",
             filter: true,
-            valueFormatter: (params) => {
-                const age = params.value;
-                const ageGroup = getAgeGroupFromAge(age);
-                return `${age} (${ageGroup})`;
-            }
         },
-        { field: "guardian", filter: true },
         { field: "contact", filter: true },
+        { field: "guardian", filter: true },
         { field: "address", filter: true },
-        { field: 'action', cellRenderer: CustomButtons}
+        { field: 'action', cellRenderer: CustomButtons }
     ]);
 
     const [rowData, setRowData] = useState<Kid[]>([]);
@@ -102,10 +100,10 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
             </div>
             <div style={{ height: 940, margin: 'auto', display: "flex", flexDirection: "column" }}>
                 <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
-                    <Search/>
+                    <Search />
                     <input type={"text"} placeholder={"Search for..."
                     } className="outline-none w-full"
-                           onChange={(event) => setSearchInput(event.target.value)}/>
+                        onChange={(event) => setSearchInput(event.target.value)} />
                 </div>
                 <AgGridReact<Kid>
                     theme={themeAlpine}

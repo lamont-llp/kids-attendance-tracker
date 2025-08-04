@@ -5,29 +5,15 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { DayPicker } from "react-day-picker";
-import { Calendar, Search, Users, Clock } from "lucide-react";
+import { Search, Users, Clock, CalendarIcon } from "lucide-react";
 import GlobalApi from "@/app/services/GlobalApi";
 import { toast } from "sonner";
 import moment from "moment";
-
-interface AttendanceRecord {
-  id: number;
-  kidId: number;
-  present: boolean;
-  day: number;
-  date: string;
-  kid: {
-    id: number;
-    name: string;
-    age: string;
-    contact: string;
-    guardian: {
-      id: number;
-      name: string;
-      contact: string;
-    };
-  };
-}
+import { Label } from '@/components/ui/label';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { Button } from '@/components/ui/button';
+import { Calendar } from '@/components/ui/calendar';
+import { AttendanceRecord } from '@/types/Attendance';
 
 const DailyAttendance: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -71,9 +57,9 @@ const DailyAttendance: React.FC = () => {
     if (!searchTerm.trim()) {
       setFilteredData(attendanceData);
     } else {
-      const filtered = attendanceData.filter(record => 
+      const filtered = attendanceData.filter(record =>
         record.kid.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.kid.guardian.name.toLowerCase().includes(searchTerm.toLowerCase())
+        record.kid.guardian?.name?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredData(filtered);
     }
@@ -109,20 +95,31 @@ const DailyAttendance: React.FC = () => {
           {/* Controls */}
           <div className="flex flex-col sm:flex-row gap-4">
             {/* Date Picker */}
-            <div className="flex-1">
-              <label className="text-sm font-medium mb-2 block">Select Date</label>
-              <div className="border rounded-md p-3">
-                <DayPicker
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={handleDateSelect}
-                  className="w-full"
-                />
-              </div>
+            <div className="">
+              <Label className="text-sm font-medium mb-2 block">Select Date</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button
+                    variant="outline"
+                    className="w-full justify-start text-left font-normal"
+                  >
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {selectedDate ? moment(selectedDate).format("MMM D, YYYY") : "Pick a date"}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={selectedDate}
+                    onSelect={handleDateSelect}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
             </div>
 
             {/* Filters */}
-            <div className="flex-1 space-y-4">
+            <div className="flex flex-col sm:flex-row gap-4">
               {/* Age Group Filter */}
               <div>
                 <label className="text-sm font-medium mb-2 block">Age Group</label>
@@ -201,8 +198,8 @@ const DailyAttendance: React.FC = () => {
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-muted-foreground">
                           <div>Age: {record.kid.age}</div>
-                          <div>Guardian: {record.kid.guardian.name}</div>
-                          <div>Contact: {record.kid.contact}</div>
+                          <div>Guardian: {record.kid.guardian?.name || 'No guardian assigned'}</div>
+                          <div>Contact: {record.kid.contact || 'N/A'}</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
