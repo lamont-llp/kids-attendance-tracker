@@ -25,6 +25,7 @@
 *.pem
 /.idea/*
 /.cursor/*
+/.junie/*
 
 # debug
 npm-debug.log*
