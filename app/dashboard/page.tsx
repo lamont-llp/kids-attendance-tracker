@@ -11,6 +11,7 @@ import StatusList from "@/app/dashboard/_components/StatusList";
 import BarChartComponent from "@/app/dashboard/_components/BarChartComponent";
 import PieChartComponent from "@/app/dashboard/_components/PieChartComponent";
 import DailyAttendanceList from './_components/DailyAttendanceList';
+import DailyAttendance from './_components/DailyAttendance';
 
 function Dashboard() {
     const { setTheme } = useTheme()
@@ -82,7 +83,7 @@ function Dashboard() {
 
             {/* Daily Attendance List */}
             <div className="w-full">
-                <DailyAttendanceList attendanceList={attendanceList} selectedDate={selectedDate} />
+                <DailyAttendance />
             </div>
 
             {/* Charts Section */}

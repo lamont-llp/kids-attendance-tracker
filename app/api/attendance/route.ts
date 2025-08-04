@@ -16,6 +16,8 @@ function getAgeRangeFromGroup(ageGroup: string): { min: number, max: number } {
             return { min: 6, max: 9 };
         case "10-13yrs":
             return { min: 10, max: 13 };
+        case "all":
+            return { min: 0, max: 100 };
         default:
             return { min: 0, max: 0 }; // Default case, should not happen
     }
