@@ -26,6 +26,7 @@ import {toast} from "sonner";
 import {LoaderIcon} from "lucide-react";
 import {Kid} from "@/types/Kid";
 import AgeGroupSelect, { getAgeGroupFromAge } from "@/app/_components/AgeGroupSelect";
+import {Checkbox} from "@/components/ui/checkbox";
 
 interface AddNewKidProps {
     refreshData: () => void; // Add refreshData to the props interface
@@ -38,6 +39,7 @@ function AddNewKid({refreshData}: AddNewKidProps) {
     const [kidAge, setKidAge] = useState<string>("")
     const [ageGroup, setAgeGroup] = useState<string>("")
     const methods = useForm<CreateKidRequest>();
+    const [checked, setChecked] = React.useState(false)
     const { handleSubmit, register, reset, formState: { errors } } = methods;
 
 
@@ -135,6 +137,26 @@ function AddNewKid({refreshData}: AddNewKidProps) {
                                         <Input placeholder="Eg. 123 Left Street, Eldorado Park"
                                                {...register('address')}/>
                                     </FormItem>
+                                    <FormField
+                                        control={methods.control}
+                                        name="isVisitor"
+                                        render={({ field }) => (
+                                            <FormItem className="flex flex-row items-start space-x-3 space-y-0 py-2">
+                                                <FormControl>
+                                                    <Checkbox
+                                                        checked={field.value}
+                                                        onCheckedChange={field.onChange}
+                                                    />
+                                                </FormControl>
+                                                <div className="space-y-1 leading-none">
+                                                    <FormLabel>
+                                                        Visitor?
+                                                    </FormLabel>
+                                                </div>
+                                            </FormItem>
+                                        )}
+                                    />
+
 
                                     <FormItem className='flex gap-3 items-center justify-end mt-5'>
                                         <Button type="button" onClick={()=>setOpen(false)} variant="ghost">Cancel</Button>

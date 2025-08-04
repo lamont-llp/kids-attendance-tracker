@@ -25,6 +25,7 @@ export const Kids = mysqlTable('kids', {
   address: varchar('address', { length: 50 }),
   contact: varchar('contact', { length: 11 }),
   guardian_id: bigint('guardian_id', { mode: 'number', unsigned: true }),
+    isVisitor: boolean('isVisitor').default(false),
   ...timestamps
 })
 
