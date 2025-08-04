@@ -12,6 +12,7 @@ export interface CreateKidRequest {
     age: string;
     address: string;
     contact: string;
+    isVisitor: boolean;
 }
 
 const GetAllAgeGroups = () => axios.get('/api/ageGroup');
