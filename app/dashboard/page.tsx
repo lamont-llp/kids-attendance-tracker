@@ -101,8 +101,10 @@ function Dashboard() {
             </div>
 
             {/* Charts Section */}
-            <div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>
-                {/* Bar Chart - Takes 2 columns on xl screens */}
+
+            {/*<div className='grid grid-cols-1 xl:grid-cols-3 gap-6'>*/}
+            {/* Bar Chart - Takes 2 columns on xl screens */}
+            {/*
                 <div className='xl:col-span-2'>
                     <div className="bg-card/80 backdrop-blur-sm dark:bg-card/90 rounded-xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 p-6">
                         <div className="flex items-center gap-3 mb-6">
@@ -119,8 +121,10 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
+                */}
 
-                {/* Pie Chart - Takes 1 column */}
+            {/* Pie Chart - Takes 1 column */}
+            {/*
                 <div className='xl:col-span-1'>
                     <div className="bg-card/80 backdrop-blur-sm dark:bg-card/90 rounded-xl border border-border/50 shadow-lg hover:shadow-xl transition-all duration-300 p-6">
                         <div className="flex items-center gap-3 mb-6">
@@ -135,6 +139,7 @@ function Dashboard() {
                     </div>
                 </div>
             </div>
+            */}
 
             {/* Additional Info Cards */}
             {/*<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">*/}

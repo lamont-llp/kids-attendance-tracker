@@ -26,6 +26,7 @@
 /.idea/*
 /.cursor/*
 /.junie/*
+/.agent-os/*
 
 # debug
 npm-debug.log*
