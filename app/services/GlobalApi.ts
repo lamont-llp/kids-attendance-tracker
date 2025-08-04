@@ -1,6 +1,6 @@
 // lib/GlobalApi.ts
 import axios from 'axios';
-import {ageGroup} from "@/utils/schema";
+import { ageGroup } from "@/utils/schema";
 
 export interface AgeGroup {
     id: number;
@@ -23,20 +23,22 @@ const GetAllKids = () => axios.get('/api/kid');
 
 const DeleteKidRecord = (id: number) => axios.delete(`/api/kid?id=${id}`);
 
-const GetAttendanceList = (ageGroup: string | undefined, month: any)=> {
-  // If ageGroup is undefined, use a default value or make it optional in the API call
-  const ageGroupParam = ageGroup ? `ageGroup=${ageGroup}` : '';
-  const monthParam = `month=${month}`;
-  const queryString = ageGroupParam ? `${ageGroupParam}&${monthParam}` : monthParam;
+const GetAttendanceList = (ageGroup: string | undefined, month: any) => {
+    // If ageGroup is undefined, use a default value or make it optional in the API call
+    const ageGroupParam = ageGroup ? `ageGroup=${ageGroup}` : '';
+    const monthParam = `month=${month}`;
+    const queryString = ageGroupParam ? `${ageGroupParam}&${monthParam}` : monthParam;
 
-  return axios.get(`/api/attendance?${queryString}`);
+    return axios.get(`/api/attendance?${queryString}`);
 };
 
 const MarkAttendance = (data: any) => axios.post('/api/attendance', data);
 
-const MarkAbsent = (kidId: number, day: any, date: any) => axios.delete('/api/attendance?kidId='+kidId+'&day=' + day+'&date=' + date);
+const MarkAbsent = (kidId: number, day: any, date: any) => axios.delete('/api/attendance?kidId=' + kidId + '&day=' + day + '&date=' + date);
 
-const TotalPresentCountByDay = (date: any, ageGroup: string) => axios.get('/api/dashboard?date='+date+'&ageGroup='+ageGroup);
+const TotalPresentCountByDay = (date: any, ageGroup: string) => axios.get('/api/dashboard?date=' + date + '&ageGroup=' + ageGroup);
+
+const GetDailyAttendanceList = (date: any) => axios.get('/api/attendance/daily?date=' + date);
 
 export default {
     GetAllAgeGroups,
@@ -47,4 +49,5 @@ export default {
     MarkAttendance,
     MarkAbsent,
     TotalPresentCountByDay,
+    GetDailyAttendanceList
 };
