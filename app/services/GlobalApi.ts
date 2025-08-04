@@ -38,7 +38,16 @@ const MarkAbsent = (kidId: number, day: any, date: any) => axios.delete('/api/at
 
 const TotalPresentCountByDay = (date: any, ageGroup: string) => axios.get('/api/dashboard?date=' + date + '&ageGroup=' + ageGroup);
 
-const GetDailyAttendanceList = (date: any) => axios.get('/api/attendance/daily?date=' + date);
+const GetDailyAttendance = (date: string, ageGroup?: string, search?: string) => {
+    let url = `/api/attendance/daily?date=${date}`;
+    if (ageGroup) {
+        url += `&ageGroup=${ageGroup}`;
+    }
+    if (search) {
+        url += `&search=${encodeURIComponent(search)}`;
+    }
+    return axios.get(url);
+};
 
 export default {
     GetAllAgeGroups,
@@ -49,5 +58,5 @@ export default {
     MarkAttendance,
     MarkAbsent,
     TotalPresentCountByDay,
-    GetDailyAttendanceList
+    GetDailyAttendance
 };
