@@ -1,5 +1,5 @@
 import { db } from "@/utils";
-import { Attendance, Kids } from "@/utils/schema";
+import { Attendance, Guardians, Kids } from "@/utils/schema";
 import { and, eq, or, isNull, between, sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -69,8 +69,10 @@ export async function GET(req: NextRequest) {
             age: Kids.age, // Now storing actual age
             kidId: Kids.id,
             attendanceId: Attendance.id,
+            guardian_name: Guardians.name
         }).from(Kids)
             .leftJoin(Attendance, eq(Kids.id, Attendance.kidId))
+            .leftJoin(Guardians, eq(Kids.guardian_id, Guardians.id))
             .where(
                 and(
                     // Filter by age range instead of exact age group match
@@ -128,6 +130,7 @@ export async function POST(req: NextRequest) {
             day: data.day,
             date: data.date,
             // Add timestamp if it's included in the schema
+            checkInTime: data.checkInTime,
         });
 
         return NextResponse.json(result);

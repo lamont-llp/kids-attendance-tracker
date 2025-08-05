@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AgGridReact } from 'ag-grid-react';
 import { themeAlpine } from 'ag-grid-community';
 import { ModuleRegistry, AllCommunityModule, ColDef } from 'ag-grid-community';
-import { Kid } from "@/types/Kid";
+import { Kid } from "@/utils/schema";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -19,23 +19,53 @@ import { Button } from "@/components/ui/button";
 import { Search, Trash, Edit } from "lucide-react";
 import GlobalApi from "@/app/services/GlobalApi";
 import { toast } from "sonner";
-import getAgeGroupFromAge from "@/app/_components/AgeGroupSelect";
-import AddNewKid from './AddNewKid';
+import EditKid from './EditKid';
 
 interface KidListTableProps {
     kidList?: Kid[];
-    refreshData: () => void; // Add refreshData to the props interface
+    refreshData: () => void;
 }
 
-function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Single parameter object
+function KidListTable({ kidList, refreshData }: KidListTableProps) {
     ModuleRegistry.registerModules([AllCommunityModule]);
+
+    const [editDialogOpen, setEditDialogOpen] = useState(false);
+    const [selectedKid, setSelectedKid] = useState<Kid | null>(null);
+
+    const handleEditClick = (kid: Kid) => {
+        setSelectedKid(kid);
+        setEditDialogOpen(true);
+    };
+
+    const warningCellStyle = (params: any): { [key: string]: string } => {
+        const val = params.value;
+        if (!val || val === "N/A") {
+            return {
+                backgroundColor: '#ffe6e6',
+                color: '#a94442'
+            };
+        }
+        return {}; // empty object is fine
+    };
+
+
 
     const CustomButtons = (props: any) => {
         return (
-            <>
+            <div className="flex gap-2">
+                <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => handleEditClick(props.data)}
+                >
+                    <Edit className="w-4 h-4" />
+                </Button>
+
                 <AlertDialog>
                     <AlertDialogTrigger asChild>
-                        <Button variant="destructive"><Trash /></Button>
+                        <Button variant="destructive" size="sm">
+                            <Trash className="w-4 h-4" />
+                        </Button>
                     </AlertDialogTrigger>
                     <AlertDialogContent>
                         <AlertDialogHeader>
@@ -51,7 +81,7 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
                         </AlertDialogFooter>
                     </AlertDialogContent>
                 </AlertDialog>
-            </>
+            </div>
         )
     }
 
@@ -63,10 +93,23 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
             headerName: "Age",
             filter: true,
         },
-        { field: "contact", filter: true },
-        { field: "guardian", filter: true },
-        { field: "address", filter: true },
-        { field: 'action', cellRenderer: CustomButtons }
+        { field: "contact", filter: true, cellStyle: warningCellStyle, },
+        {
+            field: "guardian_name",
+            headerName: "Parent/Guardian",
+            filter: true,
+            valueGetter: (params) => params.data.guardian_name || "N/A",
+            cellStyle: warningCellStyle,
+        },
+        { field: "address", filter: true, cellStyle: warningCellStyle, },
+        {
+            field: 'action',
+            headerName: 'Actions',
+            cellRenderer: CustomButtons,
+            sortable: false,
+            filter: false,
+            width: 120,
+        }
     ]);
 
     const [rowData, setRowData] = useState<Kid[]>([]);
@@ -116,6 +159,16 @@ function KidListTable({ kidList, refreshData }: KidListTableProps) { // Fix: Sin
                     quickFilterText={searchInput}
                 />
             </div>
+
+            {/* Edit Dialog */}
+            {selectedKid && (
+                <EditKid
+                    kid={selectedKid}
+                    open={editDialogOpen}
+                    onOpenChange={setEditDialogOpen}
+                    refreshData={refreshData}
+                />
+            )}
         </div>
     );
 }
