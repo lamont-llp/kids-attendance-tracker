@@ -50,9 +50,9 @@ const KioskPage = () => {
 
       if (response.data && Array.isArray(response.data)) {
         // Filter to only include present kids for today's date
-        const todayCheckins = response.data.filter(record => 
-          record.present && 
-          Number(record.day) === day && 
+        const todayCheckins = response.data.filter(record =>
+          record.present &&
+          Number(record.day) === day &&
           record.date === date
         );
 
@@ -86,18 +86,18 @@ const KioskPage = () => {
   const fetchAllKids = () => {
     setIsLoading(true);
     GlobalApi.GetAllKids()
-        .then(response => {
-          if (response.data && Array.isArray(response.data)) {
-            setKidsList(response.data);
-          }
-        })
-        .catch(error => {
-          console.error("Error fetching kids:", error);
-          toast.error("Failed to load kids data");
-        })
-        .finally(() => {
-          setIsLoading(false);
-        });
+      .then(response => {
+        if (response.data && Array.isArray(response.data)) {
+          setKidsList(response.data);
+        }
+      })
+      .catch(error => {
+        console.error("Error fetching kids:", error);
+        toast.error("Failed to load kids data");
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
   };
 
   // Handle check-in for a kid
@@ -139,7 +139,7 @@ const KioskPage = () => {
         toast.success(`${kid.name} has been checked in successfully!`);
         setCheckedInKids(prev => [...prev, kid.id]);
 
-              } catch (error: any) {
+      } catch (error: any) {
         console.error("Error checking in:", error);
 
         // Check if this is a 409 Conflict response (already checked in)
@@ -197,7 +197,7 @@ const KioskPage = () => {
         src="/logo.jpeg"
         alt="Logo"
         className="fixed bottom-4 right-4 w-20 h0auto cursor-pointer"
-        style={{ zIndex:100}}
+        style={{ zIndex: 100 }}
       />
       <Card className="max-w-4xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
         <CardHeader className="text-center">
@@ -242,8 +242,10 @@ const KioskPage = () => {
                       <div className="flex items-center justify-between p-4">
                         <div>
                           <h3 className="font-semibold text-lg">{kid.name}</h3>
-                          <p className="text-sm text-gray-500">Age: {kid.age}</p>
-                          <p className="text-sm text-gray-500">Contact: {kid.contact}</p>
+                          <p className="text-sm text-gray-500"><b className='font-semibold text-white'>Age:</b> {kid.age}</p>
+                          <p className="text-sm text-gray-500"><b className='font-semibold text-white'>Contact:</b> {kid.contact}</p>
+                          <p className={kid.address ? 'text-sm text-gray-500' : 'bg-red-600 rounded-md'}><b className='font-semibold text-white'>Address:</b> {kid.address}</p>
+                          {/*<p className={kid.guardian_id ? 'text-sm text-gray-500' : 'bg-red-600'}><b className='font-semibold text-white'>Parent/Guardian:</b> {kid.guardian_id}</p>*/}
                         </div>
                         <Button
                           onClick={() => handleCheckIn(kid)}
