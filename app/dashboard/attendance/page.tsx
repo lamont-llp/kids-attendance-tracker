@@ -6,14 +6,14 @@ import AgeGroupSelect from "../../_components/AgeGroupSelect";
 import GlobalApi from "../../services/GlobalApi";
 import moment from "moment";
 import { toast } from "sonner";
-import { Attendance } from "@/types/Attendance";
+import { AttendanceRecord } from "@/utils/schema";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CalendarIcon, UsersIcon, SearchIcon, Search } from "lucide-react";
 import AttendanceGrid from "./_components/AttendanceGrid";
 
 interface ApiResponse {
-  data: Attendance[];
+  data: AttendanceRecord[];
 }
 
 function AttendancePage() {
@@ -22,7 +22,7 @@ function AttendancePage() {
   );
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>("2-5yrs");
   const [attendanceList, setAttendanceList] = useState<
-    Attendance[] | undefined
+    AttendanceRecord[] | undefined
   >(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 

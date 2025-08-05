@@ -24,9 +24,7 @@ import GlobalApi from "@/app/services/GlobalApi";
 import { CreateKidRequest, AgeGroup } from "@/app/services/GlobalApi";
 import { toast } from "sonner";
 import { LoaderIcon } from "lucide-react";
-import { Kid } from "@/types/Kid";
 import AgeGroupSelect from "@/app/_components/AgeGroupSelect";
-import { getAgeGroupFromAge } from '@/utils/getAgeGroup';
 import { Checkbox } from "@/components/ui/checkbox";
 
 interface AddNewKidProps {
