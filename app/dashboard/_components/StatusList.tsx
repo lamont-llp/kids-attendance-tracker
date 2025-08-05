@@ -5,8 +5,8 @@ import Card from "@/app/dashboard/_components/Card";
 import { GraduationCap, TrendingDown, TrendingUp } from "lucide-react";
 import GlobalApi from '@/app/services/GlobalApi';
 import { toast } from "sonner";
-import { AttendanceRecord } from '@/types/Attendance';
-import { Kid } from '@/types/Kid';
+import { AttendanceRecord } from '@/utils/schema';
+import { Kid } from '@/utils/schema';
 
 interface StatusListProps {
     kidList?: Kid[];
