@@ -1,3 +1,4 @@
+/*
 export interface Kid {
     id: number;
     name: string;
@@ -5,4 +6,10 @@ export interface Kid {
     address: string;
     contact: string;
     isVisitor: boolean;
+    guardian: {
+        id: number;
+        name: string;
+        contact: string
+    }
 }
+*/

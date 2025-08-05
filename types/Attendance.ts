@@ -1,3 +1,4 @@
+{/*
 export interface Attendance {
   id: number;
   kidId: number;
@@ -24,3 +25,4 @@ export interface AttendanceRecord {
     };
   };
 }
+*/}
