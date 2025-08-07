@@ -25,8 +25,10 @@
 *.pem
 /.idea/*
 /.cursor/*
+/.windsurf/*
 /.junie/*
 /.agent-os/*
+/specs/*
 
 # debug
 npm-debug.log*
