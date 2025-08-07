@@ -118,9 +118,11 @@ function SideNav() {
               <p className="text-sm font-medium truncate">
                 {user.given_name} {user.family_name}
               </p>
+              {/*
               <p className="text-xs text-muted-foreground truncate">
                 {user.email}
               </p>
+              */}
             </div>
           </div>
         </div>

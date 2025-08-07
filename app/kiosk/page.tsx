@@ -199,7 +199,7 @@ const KioskPage = () => {
         className="fixed bottom-4 right-4 w-20 h0auto cursor-pointer"
         style={{ zIndex: 100 }}
       />
-      <Card className="max-w-4xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
+      <Card className="max-w-8xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold">Check-In station for Awesome Kids!</CardTitle>
           <p className="text-muted-foreground mt-2">

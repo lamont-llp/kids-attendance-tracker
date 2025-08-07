@@ -24,6 +24,11 @@ function GuestHeader() {
   return (
     <header className="h-16 border-b bg-card flex items-center px-4">
       <div className="flex items-center justify-between w-full">
+      <div className="flex-1 min-w-0">
+              <p className="text-md font-extrabold truncate">
+                Guest User
+              </p>
+            </div>
         <Button
           variant="ghost"
           size="icon"
