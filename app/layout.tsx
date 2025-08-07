@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CareCRM-Kids",
-  description: "Kids Ministry Attendance Tracker",
+  title: "EOM Kids-in",
+  description: "Children's Church Check-in",
 };
 
 export default function RootLayout({

@@ -27,6 +27,8 @@
 /.cursor/*
 /.junie/*
 /.agent-os/*
+/.windsurf/*
+/specs/*
 
 # debug
 npm-debug.log*
