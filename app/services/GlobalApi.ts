@@ -17,9 +17,13 @@ export interface CreateKidRequest {
 
 const GetAllAgeGroups = () => axios.get('/api/ageGroup');
 
+const GetAllKids = () => axios.get('/api/kid');
+
 const CreateNewKid = (data: CreateKidRequest) => axios.post('/api/kid', data);
 
-const GetAllKids = () => axios.get('/api/kid');
+const UpdateKid = (kidData: CreateKidRequest & { id: number }) => {
+    return axios.put(`/api/kid?id=${kidData.id}`, kidData);
+}
 
 const DeleteKidRecord = (id: number) => axios.delete(`/api/kid?id=${id}`);
 
@@ -52,6 +56,7 @@ const GetDailyAttendance = (date: string, ageGroup?: string, search?: string) =>
 export default {
     GetAllAgeGroups,
     CreateNewKid,
+    UpdateKid,
     GetAllKids,
     DeleteKidRecord,
     GetAttendanceList,

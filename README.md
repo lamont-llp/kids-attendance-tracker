@@ -2,7 +2,7 @@
 
 A modern web application for tracking attendance in kids ministry programs, built with Next.js 15 and React 19.
 
-## Tech Stack
+## 🛠 Tech Stack
 
 - **Framework**: [Next.js 15](https://nextjs.org/)
 - **UI**: [React 19](https://react.dev/)
@@ -12,7 +12,7 @@ A modern web application for tracking attendance in kids ministry programs, buil
 - **Charts**: [Recharts](https://recharts.org/)
 - **Data Grid**: [AG Grid](https://www.ag-grid.com/)
 
-## Getting Started
+## 🚀 Getting Started
 
 First, run the development server:
 
@@ -28,7 +28,7 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-## Features
+## ✨ Features
 
 - Track attendance by age group
 - Visualize attendance data with charts
@@ -36,7 +36,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - User authentication and authorization
 - Responsive design for all devices
 
-## Database Commands
+## 🗄 Database Commands
 
 ```bash
 # Push schema changes to the database
@@ -46,7 +46,7 @@ npm run db:push
 npm run db:studio
 ```
 
-## Learn More
+## 📚 Learn More
 
 To learn more about the technologies used in this project:
 
@@ -57,4 +57,4 @@ To learn more about the technologies used in this project:
 
 ## Deployment
 
-This application can be easily deployed on [Vercel](https://vercel.com/) or any other hosting platform that supports Next.js.
+This app can be deployed to [Vercel](https://vercel.com/) or any platform that supports Next.js with minimal configuration.

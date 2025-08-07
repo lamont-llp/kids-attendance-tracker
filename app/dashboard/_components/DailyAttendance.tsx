@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { AttendanceRecord } from '@/types/Attendance';
+import { AttendanceRecord } from '@/utils/schema';
 
 const DailyAttendance: React.FC = () => {
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
@@ -58,8 +58,8 @@ const DailyAttendance: React.FC = () => {
       setFilteredData(attendanceData);
     } else {
       const filtered = attendanceData.filter(record =>
-        record.kid.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.kid.guardian?.name?.toLowerCase().includes(searchTerm.toLowerCase())
+        record.kid?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        record.kid?.guardian_name?.toLowerCase().includes(searchTerm.toLowerCase())
       );
       setFilteredData(filtered);
     }
@@ -189,7 +189,7 @@ const DailyAttendance: React.FC = () => {
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-2 mb-2">
-                          <h4 className="font-semibold">{record.kid.name}</h4>
+                          <h4 className="font-semibold">{record.kid?.name}</h4>
                           {record.present && (
                             <span className="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                               ✓ Present
@@ -197,9 +197,9 @@ const DailyAttendance: React.FC = () => {
                           )}
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-sm text-muted-foreground">
-                          <div>Age: {record.kid.age}</div>
-                          <div>Guardian: {record.kid.guardian?.name || 'No guardian assigned'}</div>
-                          <div>Contact: {record.kid.contact || 'N/A'}</div>
+                          <div>Age: {record.kid?.age}</div>
+                          <div>Guardian: {record.kid?.guardian_name || 'No guardian assigned'}</div>
+                          <div>Contact: {record.kid?.contact || 'N/A'}</div>
                         </div>
                       </div>
                       <div className="flex items-center gap-2 text-sm text-muted-foreground">
