@@ -13,9 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Verify pnpm installation
-        run: pnpm --version
-
       - name: Install pnpm manually (fallback)
         run: npm install -g pnpm
 
