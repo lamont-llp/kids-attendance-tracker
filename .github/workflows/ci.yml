@@ -13,14 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Verify pnpm installation
+        run: pnpm --version
+
+      - name: Install pnpm manually (fallback)
+        run: npm install -g pnpm
+
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
           cache: 'pnpm'
-
-      - name: Verify pnpm installation
-        run: pnpm --version
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4.1.0
