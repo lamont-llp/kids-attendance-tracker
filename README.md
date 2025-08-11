@@ -14,19 +14,44 @@ A modern web application for tracking attendance in kids ministry programs, buil
 
 ## 🚀 Getting Started
 
-First, run the development server:
+Prerequisites:
+- Node.js LTS >= 18
+- pnpm (package manager)
 
+Setup:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
+cp .env.local.example .env.local # then edit values
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Database:
+```bash
+# Push latest schema to your MySQL database
+pnpm db:push
+
+# Open Drizzle Studio (requires DATABASE_URL)
+pnpm db:studio
+```
+
+Run the development server:
+```bash
+pnpm dev
+```
+
+Open http://localhost:3000 in your browser.
+
+Troubleshooting:
+- Drizzle/MySQL permissions: ensure your DB user has CREATE/ALTER privileges; verify DATABASE_URL points to the correct database.
+- If db:studio fails, check that MySQL is running and DATABASE_URL is set in .env.local.
+
+### Path Aliases
+This project uses an absolute import alias `@/` that maps to the repository root (see tsconfig.json and Jest configs).
+
+Examples:
+```ts
+import { Kids } from '@/utils/schema';
+import AttendanceGrid from '@/app/dashboard/attendance/_components/AttendanceGrid';
+```
 
 ## ✨ Features
 
@@ -36,14 +61,22 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 - User authentication and authorization
 - Responsive design for all devices
 
+## 🧹 Code Style
+
+We use Prettier for formatting and ESLint for linting.
+
+- Check format: pnpm format
+- Write format: pnpm format:write
+- Lint: pnpm lint
+
 ## 🗄 Database Commands
 
 ```bash
 # Push schema changes to the database
-npm run db:push
+pnpm db:push
 
 # Open Drizzle Studio to manage database
-npm run db:studio
+pnpm db:studio
 ```
 
 ## 📚 Learn More
