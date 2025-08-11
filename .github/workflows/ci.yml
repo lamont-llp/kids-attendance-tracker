@@ -19,6 +19,9 @@ jobs:
           node-version: '18'
           cache: 'pnpm'
 
+      - name: Verify pnpm installation
+        run: pnpm --version
+
       - name: Setup pnpm
         uses: pnpm/action-setup@v4.1.0
         with:
