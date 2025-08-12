@@ -17,7 +17,6 @@ interface SmsResponse {
 export class SmsDepotService {
   private readonly baseUrl = 'https://rest.mymobileapi.com';
 
-
   private async authenticate(): Promise<string> {
     try {
       // Basic authentication
@@ -31,10 +30,9 @@ export class SmsDepotService {
           headers: {
             Authorization: `${auth}`,
           },
-        }
+        },
       );
       console.log('Authentication Response:', response.data);
-
 
       return response.data.token;
     } catch (error) {
@@ -58,13 +56,12 @@ export class SmsDepotService {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
       console.log('SMS sent to:', to);
       console.log('Response:', response.data);
       console.log('Response Status:', response.status);
       return response.data;
-
     } catch (error: any) {
       if (error.response?.status === 401) {
         throw new Error('Invalid SMS Depot credentials');
@@ -76,7 +73,11 @@ export class SmsDepotService {
     }
   }
 
-  async sendParentNotification(kidName: string, guardianContact: string, guardianName?: string): Promise<void> {
+  async sendParentNotification(
+    kidName: string,
+    guardianContact: string,
+    guardianName?: string,
+  ): Promise<void> {
     const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully.`;
     await this.sendSms(guardianContact, message);
     console.log('SMS sent to:', guardianContact);

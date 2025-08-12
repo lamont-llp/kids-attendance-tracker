@@ -1,25 +1,28 @@
 import { int, mysqlTable, varchar, timestamp, boolean } from 'drizzle-orm/mysql-core';
-import { relations } from "drizzle-orm";
+import { relations } from 'drizzle-orm';
 
 const timestamps = {
-  created_at: timestamp("created_at").defaultNow().notNull(),
-  updated_at: timestamp("updated_at").defaultNow().notNull().$onUpdate(() => new Date()),
-}
+  created_at: timestamp('created_at').defaultNow().notNull(),
+  updated_at: timestamp('updated_at')
+    .defaultNow()
+    .notNull()
+    .$onUpdate(() => new Date()),
+};
 
 export const ageGroup = mysqlTable('age_group', {
-  id: int("id").primaryKey().autoincrement(),
-  group: varchar({ length: 10 }).notNull()
+  id: int('id').primaryKey().autoincrement(),
+  group: varchar({ length: 10 }).notNull(),
 });
 
 export const Guardians = mysqlTable('guardians', {
-  id: int("id").primaryKey().autoincrement(),
+  id: int('id').primaryKey().autoincrement(),
   name: varchar('name', { length: 50 }).notNull(),
   contact: varchar('contact', { length: 11 }).notNull(),
-  ...timestamps
+  ...timestamps,
 });
 
 export const Kids = mysqlTable('kids', {
-  id: int("id").primaryKey().autoincrement(),
+  id: int('id').primaryKey().autoincrement(),
   name: varchar('name', { length: 20 }).notNull(),
   age: varchar('age', { length: 10 }).notNull(),
   address: varchar('address', { length: 50 }),
@@ -27,18 +30,20 @@ export const Kids = mysqlTable('kids', {
 
   guardian_id: int('guardian_id', { unsigned: true }).references(() => Guardians.id),
   isVisitor: boolean('isVisitor').default(false),
-  ...timestamps
-})
+  ...timestamps,
+});
 
 export const Attendance = mysqlTable('attendance', {
-  id: int("id").primaryKey().autoincrement(),
+  id: int('id').primaryKey().autoincrement(),
 
-  kidId: int('kidId', { unsigned: true }).notNull().references(() => Kids.id),
+  kidId: int('kidId', { unsigned: true })
+    .notNull()
+    .references(() => Kids.id),
   present: boolean('present').default(false),
   day: int('day').notNull(),
   date: varchar('date', { length: 20 }).notNull(),
-  checkInTime: timestamp('checkInTime', { mode: 'date' }).notNull().defaultNow()
-})
+  checkInTime: timestamp('checkInTime', { mode: 'date' }).notNull().defaultNow(),
+});
 
 // Define relations
 export const guardiansRelations = relations(Guardians, ({ many }) => ({

@@ -1,22 +1,22 @@
 // Header.tsx
-"use client";
+'use client';
 
-import React from "react";
-import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
-import { Menu, Bell, Moon, Sun, LogOut } from "lucide-react";
-import { LogoutLink } from "@kinde-oss/kinde-auth-nextjs";
+import React from 'react';
+import { useTheme } from 'next-themes';
+import { Button } from '@/components/ui/button';
+import { Menu, Bell, Moon, Sun, LogOut } from 'lucide-react';
+import { LogoutLink } from '@kinde-oss/kinde-auth-nextjs';
 
 function Header() {
   const { theme, setTheme } = useTheme();
 
   const toggleSidebar = () => {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
     if (sidebar && overlay) {
-      sidebar.classList.toggle("-translate-x-full");
-      overlay.classList.toggle("opacity-0");
-      overlay.classList.toggle("pointer-events-none");
+      sidebar.classList.toggle('-translate-x-full');
+      overlay.classList.toggle('opacity-0');
+      overlay.classList.toggle('pointer-events-none');
     }
   };
 
@@ -36,18 +36,13 @@ function Header() {
         <div className="flex-1 md:flex-initial"></div>
 
         <div className="flex items-center gap-2">
-
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+            onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
             aria-label="Toggle theme"
           >
-            {theme === "dark" ? (
-              <Sun className="h-5 w-5" />
-            ) : (
-              <Moon className="h-5 w-5" />
-            )}
+            {theme === 'dark' ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
           </Button>
 
           <LogoutLink>
