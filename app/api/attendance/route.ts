@@ -4,10 +4,7 @@ import { and, eq, or, isNull, between, sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 import { SmsDepotService } from "@/app/services/sms-depot";
 
-const smsDepotService = new SmsDepotService({
-  clientId: process.env.SMS_DEPOT_CLIENT_ID!,
-  apiSecret: process.env.SMS_DEPOT_API_SECRET!
-});
+const smsDepotService = new SmsDepotService();
 
 /**
  * Gets the age range for a given age group
@@ -145,12 +142,12 @@ export async function POST(req: NextRequest) {
             guardianContact: Kids.contact,
             guardianName: Guardians.name
         })
-        .from(Kids)
-        .leftJoin(Guardians, eq(Kids.guardian_id, Guardians.id))
-        .where(eq(Kids.id, data.kidId))
-        .limit(1);
+            .from(Kids)
+            .leftJoin(Guardians, eq(Kids.guardian_id, Guardians.id))
+            .where(eq(Kids.id, data.kidId))
+            .limit(1);
 
-        if (kidInfo.length > 0 && kidInfo[0].guardianContact) {
+        if (kidInfo.length > 0 && kidInfo[0]?.guardianContact) {
             try {
                 await smsDepotService.sendParentNotification(
                     kidInfo[0].name,
