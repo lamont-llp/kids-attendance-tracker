@@ -73,6 +73,7 @@
     "tailwindcss": "^4",
     "ts-jest": "^29.1.2",
     "tw-animate-css": "^1.3.0",
-    "typescript": "^5"
+    "typescript": "^5",
+    "whatwg-fetch": "^3.6.20"
   }
 }
