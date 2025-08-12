@@ -1,16 +1,16 @@
-import React, { useEffect, useState, useMemo } from "react";
-import { AgGridReact } from "ag-grid-react";
+import React, { useEffect, useState, useMemo } from 'react';
+import { AgGridReact } from 'ag-grid-react';
 import {
   AllCommunityModule,
   ModuleRegistry,
   ColDef,
   CellValueChangedEvent,
-} from "ag-grid-community";
-import moment from "moment";
-import GlobalApi from "../../../services/GlobalApi";
-import { toast } from "sonner";
-import { getUniqueRecord } from "@/app/services/service";
-import { Search } from "lucide-react";
+} from 'ag-grid-community';
+import moment from 'moment';
+import GlobalApi from '../../../services/GlobalApi';
+import { toast } from 'sonner';
+import { getUniqueRecord } from '@/app/services/service';
+import { Search } from 'lucide-react';
 
 ModuleRegistry.registerModules([AllCommunityModule]);
 
@@ -32,16 +32,13 @@ interface RowData {
   [key: number]: boolean;
 }
 
-function AttendanceGrid({
-  attendanceList,
-  selectedMonth,
-}: AttendanceGridProps) {
+function AttendanceGrid({ attendanceList, selectedMonth }: AttendanceGridProps) {
   const [rowData, setRowData] = useState<RowData[]>([]);
   const [colDefs, setColDefs] = useState<ColDef[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [windowWidth, setWindowWidth] = useState<number>(0);
   const [isClient, setIsClient] = useState<boolean>(false);
-  const [searchInput, setSearchInput] = useState("");
+  const [searchInput, setSearchInput] = useState('');
 
   // Track window resize for responsive behavior
   useEffect(() => {
@@ -50,8 +47,8 @@ function AttendanceGrid({
     setWindowWidth(window.innerWidth);
 
     const handleResize = () => setWindowWidth(window.innerWidth);
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
   }, []);
 
   // Device breakpoints - use desktop as fallback for SSR
@@ -82,9 +79,9 @@ function AttendanceGrid({
   const sundays = useMemo(() => {
     if (!selectedMonth) return [];
 
-    const monthMoment = moment(selectedMonth, "MM/YYYY");
+    const monthMoment = moment(selectedMonth, 'MM/YYYY');
     if (!monthMoment.isValid()) {
-      console.error("Invalid date format:", selectedMonth);
+      console.error('Invalid date format:', selectedMonth);
       return [];
     }
 
@@ -100,16 +97,16 @@ function AttendanceGrid({
     if (!isClient) {
       return [
         {
-          field: "kidId",
-          headerName: "ID",
+          field: 'kidId',
+          headerName: 'ID',
           filter: true,
           width: 80,
           maxWidth: 100,
           sortable: true,
         },
         {
-          field: "name",
-          headerName: "Student Name",
+          field: 'name',
+          headerName: 'Student Name',
           filter: true,
           minWidth: 150,
           flex: 1,
@@ -121,13 +118,13 @@ function AttendanceGrid({
 
     const baseColumns: ColDef[] = [
       {
-        field: "name",
-        headerName: "Student Name",
+        field: 'name',
+        headerName: 'Student Name',
         filter: true,
         minWidth: isMobile ? 120 : 150,
         flex: isMobile ? 2 : 1,
         resizable: true,
-        pinned: isMobile ? "left" : undefined, // Pin name column on mobile
+        pinned: isMobile ? 'left' : undefined, // Pin name column on mobile
         sortable: true,
       },
     ];
@@ -135,8 +132,8 @@ function AttendanceGrid({
     // Add kidId column only for desktop
     if (isDesktop) {
       baseColumns.unshift({
-        field: "kidId",
-        headerName: "ID",
+        field: 'kidId',
+        headerName: 'ID',
         filter: true,
         width: 80,
         maxWidth: 100,
@@ -151,14 +148,14 @@ function AttendanceGrid({
       const sundayColumns: ColDef[] = visibleSundays.map((day) => ({
         field: day.toString(),
         headerName: isMobile
-          ? moment(selectedMonth).date(day).format("D") // Just day number on mobile
-          : moment(selectedMonth).date(day).format("ddd D"), // Full format on larger screens
+          ? moment(selectedMonth).date(day).format('D') // Just day number on mobile
+          : moment(selectedMonth).date(day).format('ddd D'), // Full format on larger screens
         width: isMobile ? 60 : 90,
         maxWidth: isMobile ? 80 : 120,
         minWidth: isMobile ? 50 : 80,
         editable: true,
-        cellRenderer: "agCheckboxCellRenderer",
-        cellEditor: "agCheckboxCellEditor",
+        cellRenderer: 'agCheckboxCellRenderer',
+        cellEditor: 'agCheckboxCellEditor',
         sortable: false,
         resizable: !isMobile,
       }));
@@ -167,15 +164,7 @@ function AttendanceGrid({
     }
 
     return baseColumns;
-  }, [
-    selectedMonth,
-    sundays,
-    isMobile,
-    isTablet,
-    isDesktop,
-    windowWidth,
-    isClient,
-  ]);
+  }, [selectedMonth, sundays, isMobile, isTablet, isDesktop, windowWidth, isClient]);
 
   useEffect(() => {
     setColDefs(getResponsiveColDefs);
@@ -210,7 +199,7 @@ function AttendanceGrid({
           }
         })
         .catch((error) => {
-          console.error("Error fetching kids:", error);
+          console.error('Error fetching kids:', error);
           setRowData([]);
         })
         .finally(() => setIsLoading(false));
@@ -219,22 +208,14 @@ function AttendanceGrid({
 
   // Check if kid was present on a specific Sunday
   const isPresent = (kidId: number, day: number): boolean => {
-    return (
-      attendanceList?.some(
-        (item) => item.day === day && item.kidId === kidId
-      ) || false
-    );
+    return attendanceList?.some((item) => item.day === day && item.kidId === kidId) || false;
   };
 
   // Mark attendance handler
-  const onMarkAttendance = (
-    day: string,
-    kidId: number,
-    presentStatus: boolean
-  ): void => {
+  const onMarkAttendance = (day: string, kidId: number, presentStatus: boolean): void => {
     if (!selectedMonth) return;
 
-    const date = moment(selectedMonth).format("MM/yyyy");
+    const date = moment(selectedMonth).format('MM/yyyy');
     if (presentStatus) {
       const data = {
         day: day,
@@ -244,12 +225,12 @@ function AttendanceGrid({
       };
 
       GlobalApi.MarkAttendance(data).then((response) => {
-        console.log("Mark attendance", response);
-        toast("Kid Id: " + kidId + " Marked as present");
+        console.log('Mark attendance', response);
+        toast('Kid Id: ' + kidId + ' Marked as present');
       });
     } else {
       GlobalApi.MarkAbsent(kidId, day, date).then((response) => {
-        toast("Kid Id: " + kidId + " Marked as absent");
+        toast('Kid Id: ' + kidId + ' Marked as absent');
       });
     }
   };
@@ -266,8 +247,8 @@ function AttendanceGrid({
       <div className="p-2 rounded-lg border shadow-sm mb-4 flex gap-2 max-w-sm">
         <Search />
         <input
-          type={"text"}
-          placeholder={"Search for..."}
+          type={'text'}
+          placeholder={'Search for...'}
           className="outline-none w-full"
           onChange={(event) => setSearchInput(event.target.value)}
         />
@@ -275,16 +256,14 @@ function AttendanceGrid({
       {/* Only show responsive features after client-side hydration */}
       {isClient && isMobile && sundays.length > 4 && (
         <div className="p-3 bg-gray-100 mb-3 rounded text-xs font-medium text-gray-700">
-          <span className="font-semibold">Note:</span> Showing first 4 Sundays.
-          Total Sundays this month: {sundays.length}
+          <span className="font-semibold">Note:</span> Showing first 4 Sundays. Total Sundays this
+          month: {sundays.length}
         </div>
       )}
 
       {isLoading ? (
         <div
-          className={`flex justify-center items-center h-48 ${
-            isMobile ? "text-sm" : "text-base"
-          }`}
+          className={`flex justify-center items-center h-48 ${isMobile ? 'text-sm' : 'text-base'}`}
         >
           Loading attendance data...
         </div>
@@ -293,12 +272,12 @@ function AttendanceGrid({
           className={`
           ${
             isClient && isMobile
-              ? "h-[calc(100vh-250px)] min-h-[300px] max-h-[500px]"
+              ? 'h-[calc(100vh-250px)] min-h-[300px] max-h-[500px]'
               : isClient && isTablet
-              ? "h-[calc(100vh-220px)] min-h-[400px] max-h-[600px]"
-              : "h-[calc(100vh-200px)] min-h-[400px] max-h-[800px]"
+                ? 'h-[calc(100vh-220px)] min-h-[400px] max-h-[600px]'
+                : 'h-[calc(100vh-200px)] min-h-[400px] max-h-[800px]'
           }
-          ${isClient && isMobile ? "-mx-2 sm:mx-0" : ""}
+          ${isClient && isMobile ? '-mx-2 sm:mx-0' : ''}
           ag-grid-responsive
         `}
         >
@@ -306,11 +285,7 @@ function AttendanceGrid({
             rowData={rowData}
             columnDefs={colDefs}
             onCellValueChanged={(e: CellValueChangedEvent) =>
-              onMarkAttendance(
-                e.colDef.field as string,
-                e.data.kidId,
-                e.newValue
-              )
+              onMarkAttendance(e.colDef.field as string, e.data.kidId, e.newValue)
             }
             pagination={true}
             paginationPageSize={getPaginationSize()}
@@ -319,7 +294,7 @@ function AttendanceGrid({
             suppressHorizontalScroll={false}
             suppressColumnVirtualisation={true}
             autoSizeStrategy={{
-              type: "fitGridWidth",
+              type: 'fitGridWidth',
               defaultMinWidth: isMobile ? 50 : 100,
             }}
             // Mobile-specific optimizations

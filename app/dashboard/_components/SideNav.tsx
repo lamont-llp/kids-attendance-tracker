@@ -1,52 +1,49 @@
 // SideNav.tsx
-"use client";
+'use client';
 
-import Image from "next/image";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useEffect } from "react";
-import {
-  LogoutLink,
-  useKindeBrowserClient,
-} from "@kinde-oss/kinde-auth-nextjs";
-import { LayoutIcon, GraduationCap, Hand, ClipboardCheck, X, User } from "lucide-react";
+import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+import { LogoutLink, useKindeBrowserClient } from '@kinde-oss/kinde-auth-nextjs';
+import { LayoutIcon, GraduationCap, Hand, ClipboardCheck, X, User } from 'lucide-react';
 
 function SideNav() {
   const { user } = useKindeBrowserClient();
   const menuList = [
     {
       id: 1,
-      name: "Dashboard",
+      name: 'Dashboard',
       icon: LayoutIcon,
-      path: "/dashboard",
+      path: '/dashboard',
     },
     {
       id: 2,
-      name: "Kids",
+      name: 'Kids',
       icon: GraduationCap,
-      path: "/dashboard/kids",
+      path: '/dashboard/kids',
     },
     {
       id: 3,
-      name: "Attendance",
+      name: 'Attendance',
       icon: Hand,
-      path: "/dashboard/attendance",
+      path: '/dashboard/attendance',
     },
     {
       id: 4,
-      name: "Check-in",
+      name: 'Check-in',
       icon: ClipboardCheck,
-      path: "/kiosk",
+      path: '/kiosk',
     },
   ];
   const path = usePathname();
 
   const closeSidebar = () => {
-    const sidebar = document.getElementById("sidebar");
-    const overlay = document.getElementById("sidebar-overlay");
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('sidebar-overlay');
     if (sidebar && overlay) {
-      sidebar.classList.add("-translate-x-full");
-      overlay.classList.add("opacity-0", "pointer-events-none");
+      sidebar.classList.add('-translate-x-full');
+      overlay.classList.add('opacity-0', 'pointer-events-none');
     }
   };
 
@@ -57,7 +54,7 @@ function SideNav() {
         <div className="flex items-center justify-between">
           <Image
             priority={true}
-            src={"/logo.svg"}
+            src={'/logo.svg'}
             width={120}
             height={100}
             className="w-28 h-auto"
@@ -85,8 +82,8 @@ function SideNav() {
                                 transition-colors
                                 ${
                                   path === menu.path
-                                    ? "bg-primary text-primary-foreground"
-                                    : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                                    ? 'bg-primary text-primary-foreground'
+                                    : 'text-muted-foreground hover:bg-muted hover:text-foreground'
                                 }`}
               >
                 <menu.icon className="w-4 h-4 flex-shrink-0" />
@@ -105,7 +102,7 @@ function SideNav() {
               {user.picture ? (
                 <Image
                   src={user.picture}
-                  alt={user.given_name || "User"}
+                  alt={user.given_name || 'User'}
                   width={32}
                   height={32}
                   className="rounded-full"

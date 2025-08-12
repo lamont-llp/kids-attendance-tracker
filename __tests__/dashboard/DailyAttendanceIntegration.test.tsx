@@ -83,4 +83,4 @@ describe('Dashboard Integration - Daily Attendance', () => {
       expect(screen.getByText(/No records found for/)).toBeInTheDocument();
     });
   });
-}); 
+});

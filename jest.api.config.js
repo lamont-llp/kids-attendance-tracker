@@ -6,9 +6,12 @@ module.exports = {
   },
   testMatch: ['**/__tests__/api/**/*.test.(ts|tsx|js|jsx)'],
   transform: {
-    '^.+\\.(ts|tsx)$': ['ts-jest', {
-      tsconfig: 'tsconfig.jest.json',
-    }],
+    '^.+\\.(ts|tsx)$': [
+      'ts-jest',
+      {
+        tsconfig: 'tsconfig.jest.json',
+      },
+    ],
   },
   setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
-}; 
+};

@@ -12,9 +12,7 @@ jest.mock('@/app/services/GlobalApi', () => ({
 jest.mock('react-day-picker', () => ({
   DayPicker: ({ selected, onSelect, ...props }: any) => (
     <div data-testid="day-picker" {...props}>
-      <button onClick={() => onSelect(new Date('2024-12-19'))}>
-        Select Date
-      </button>
+      <button onClick={() => onSelect(new Date('2024-12-19'))}>Select Date</button>
     </div>
   ),
 }));
@@ -35,9 +33,9 @@ describe('Daily Attendance E2E Tests', () => {
         guardian: {
           id: 456,
           name: 'Sarah Smith',
-          contact: '555-0123'
-        }
-      }
+          contact: '555-0123',
+        },
+      },
     },
     {
       id: 2,
@@ -53,10 +51,10 @@ describe('Daily Attendance E2E Tests', () => {
         guardian: {
           id: 457,
           name: 'Mike Johnson',
-          contact: '555-0124'
-        }
-      }
-    }
+          contact: '555-0124',
+        },
+      },
+    },
   ];
 
   beforeEach(() => {
@@ -91,7 +89,7 @@ describe('Daily Attendance E2E Tests', () => {
     // Step 5: User changes age group filter
     const ageGroupSelect = screen.getByRole('combobox');
     fireEvent.click(ageGroupSelect);
-    
+
     await waitFor(() => {
       const option = screen.getByText('6-9 years');
       fireEvent.click(option);
@@ -99,11 +97,7 @@ describe('Daily Attendance E2E Tests', () => {
 
     // Step 6: New API call is made with age group filter
     await waitFor(() => {
-      expect(GetDailyAttendance).toHaveBeenCalledWith(
-        expect.any(String),
-        '6-9yrs',
-        'John'
-      );
+      expect(GetDailyAttendance).toHaveBeenCalledWith(expect.any(String), '6-9yrs', 'John');
     });
   });
 
@@ -179,4 +173,4 @@ describe('Daily Attendance E2E Tests', () => {
       expect(screen.getByText(/No records found for/)).toBeInTheDocument();
     });
   });
-}); 
+});

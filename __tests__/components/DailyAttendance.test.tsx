@@ -12,9 +12,7 @@ jest.mock('@/app/services/GlobalApi', () => ({
 jest.mock('react-day-picker', () => ({
   DayPicker: ({ selected, onSelect, ...props }: any) => (
     <div data-testid="day-picker" {...props}>
-      <button onClick={() => onSelect(new Date('2024-12-19'))}>
-        Select Date
-      </button>
+      <button onClick={() => onSelect(new Date('2024-12-19'))}>Select Date</button>
     </div>
   ),
 }));
@@ -35,9 +33,9 @@ describe('DailyAttendance Component', () => {
         guardian: {
           id: 456,
           name: 'Sarah Smith',
-          contact: '555-0123'
-        }
-      }
+          contact: '555-0123',
+        },
+      },
     },
     {
       id: 2,
@@ -53,10 +51,10 @@ describe('DailyAttendance Component', () => {
         guardian: {
           id: 457,
           name: 'Mike Johnson',
-          contact: '555-0124'
-        }
-      }
-    }
+          contact: '555-0124',
+        },
+      },
+    },
   ];
 
   beforeEach(() => {
@@ -65,7 +63,7 @@ describe('DailyAttendance Component', () => {
 
   it('should render the daily attendance component', () => {
     render(<DailyAttendance />);
-    
+
     expect(screen.getByText('Daily Attendance')).toBeInTheDocument();
     expect(screen.getByTestId('day-picker')).toBeInTheDocument();
   });
@@ -147,7 +145,7 @@ describe('DailyAttendance Component', () => {
     // Simulate age group selection
     const ageGroupSelect = screen.getByRole('combobox');
     fireEvent.click(ageGroupSelect);
-    
+
     // Wait for the dropdown to appear and click on the option
     await waitFor(() => {
       const option = screen.getByText('6-9 years');
@@ -156,11 +154,7 @@ describe('DailyAttendance Component', () => {
 
     // Should trigger a new API call with age group filter
     await waitFor(() => {
-      expect(GetDailyAttendance).toHaveBeenCalledWith(
-        expect.any(String),
-        '6-9yrs',
-        ''
-      );
+      expect(GetDailyAttendance).toHaveBeenCalledWith(expect.any(String), '6-9yrs', '');
     });
   });
 
@@ -188,4 +182,4 @@ describe('DailyAttendance Component', () => {
       expect(screen.getAllByText('✓ Present')).toHaveLength(2);
     });
   });
-}); 
+});

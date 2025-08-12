@@ -1,5 +1,5 @@
-import React from "react";
-import GuestHeader from "./_components/GuestHeader";
+import React from 'react';
+import GuestHeader from './_components/GuestHeader';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (

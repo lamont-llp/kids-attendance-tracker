@@ -15,16 +15,19 @@ A modern web application for tracking attendance in kids ministry programs, buil
 ## 🚀 Getting Started
 
 Prerequisites:
+
 - Node.js LTS >= 18
 - pnpm (package manager)
 
 Setup:
+
 ```bash
 pnpm install
 cp .env.local.example .env.local # then edit values
 ```
 
 Database:
+
 ```bash
 # Push latest schema to your MySQL database
 pnpm db:push
@@ -34,6 +37,7 @@ pnpm db:studio
 ```
 
 Run the development server:
+
 ```bash
 pnpm dev
 ```
@@ -41,13 +45,16 @@ pnpm dev
 Open http://localhost:3000 in your browser.
 
 Troubleshooting:
+
 - Drizzle/MySQL permissions: ensure your DB user has CREATE/ALTER privileges; verify DATABASE_URL points to the correct database.
 - If db:studio fails, check that MySQL is running and DATABASE_URL is set in .env.local.
 
 ### Path Aliases
+
 This project uses an absolute import alias `@/` that maps to the repository root (see tsconfig.json and Jest configs).
 
 Examples:
+
 ```ts
 import { Kids } from '@/utils/schema';
 import AttendanceGrid from '@/app/dashboard/attendance/_components/AttendanceGrid';

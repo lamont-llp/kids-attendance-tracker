@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import React, { useEffect, useState } from "react";
-import GlobalApi, { AgeGroup } from "../services/GlobalApi";
+import React, { useEffect, useState } from 'react';
+import GlobalApi, { AgeGroup } from '../services/GlobalApi';
 
 /**
  * Determines the age group based on the numeric age
@@ -12,23 +12,23 @@ export const getAgeGroupFromAge = (age) => {
   const numAge = Number(age);
 
   if (isNaN(numAge)) {
-    return ""; // Return empty if age is not a valid number
+    return ''; // Return empty if age is not a valid number
   }
 
   if (numAge >= 2 && numAge <= 5) {
-    return "2-5yrs";
+    return '2-5yrs';
   } else if (numAge >= 6 && numAge <= 9) {
-    return "6-9yrs";
+    return '6-9yrs';
   } else if (numAge >= 10 && numAge <= 13) {
-    return "10-13yrs";
+    return '10-13yrs';
   } else {
-    return ""; // Return empty for ages outside the defined ranges
+    return ''; // Return empty for ages outside the defined ranges
   }
 };
 
 function AgeGroupSelect({ age, selectedAgeGroup }) {
   const [ageGroups, setAgeGroups] = useState([]);
-  const [selectedGroup, setSelectedGroup] = useState("2-5yrs");
+  const [selectedGroup, setSelectedGroup] = useState('2-5yrs');
 
   const GetAllAgeGroupsList = () => {
     GlobalApi.GetAllAgeGroups().then((response) => {

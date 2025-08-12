@@ -1,14 +1,20 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { DayPicker } from "react-day-picker";
-import { Search, Users, Clock, CalendarIcon } from "lucide-react";
-import GlobalApi from "@/app/services/GlobalApi";
-import { toast } from "sonner";
-import moment from "moment";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { DayPicker } from 'react-day-picker';
+import { Search, Users, Clock, CalendarIcon } from 'lucide-react';
+import GlobalApi from '@/app/services/GlobalApi';
+import { toast } from 'sonner';
+import moment from 'moment';
 import { Label } from '@/components/ui/label';
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
 import { Button } from '@/components/ui/button';
@@ -57,9 +63,10 @@ const DailyAttendance: React.FC = () => {
     if (!searchTerm.trim()) {
       setFilteredData(attendanceData);
     } else {
-      const filtered = attendanceData.filter(record =>
-        record.kid?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        record.kid?.guardian_name?.toLowerCase().includes(searchTerm.toLowerCase())
+      const filtered = attendanceData.filter(
+        (record) =>
+          record.kid?.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          record.kid?.guardian_name?.toLowerCase().includes(searchTerm.toLowerCase()),
       );
       setFilteredData(filtered);
     }
@@ -99,12 +106,9 @@ const DailyAttendance: React.FC = () => {
               <Label className="text-sm font-medium mb-2 block">Select Date</Label>
               <Popover>
                 <PopoverTrigger asChild>
-                  <Button
-                    variant="outline"
-                    className="w-full justify-start text-left font-normal"
-                  >
+                  <Button variant="outline" className="w-full justify-start text-left font-normal">
                     <CalendarIcon className="mr-2 h-4 w-4" />
-                    {selectedDate ? moment(selectedDate).format("MMM D, YYYY") : "Pick a date"}
+                    {selectedDate ? moment(selectedDate).format('MMM D, YYYY') : 'Pick a date'}
                   </Button>
                 </PopoverTrigger>
                 <PopoverContent className="w-auto p-0">
@@ -218,4 +222,4 @@ const DailyAttendance: React.FC = () => {
   );
 };
 
-export default DailyAttendance; 
+export default DailyAttendance;

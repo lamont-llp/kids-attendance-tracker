@@ -20,8 +20,20 @@ jest.mock('@/utils', () => ({
 
 // Mock the schema
 jest.mock('@/utils/schema', () => ({
-  Attendance: { id: 'attendance.id', kidId: 'attendance.kidId', present: 'attendance.present', day: 'attendance.day', date: 'attendance.date' },
-  Kids: { id: 'kids.id', name: 'kids.name', age: 'kids.age', contact: 'kids.contact', guardian_id: 'kids.guardian_id' },
+  Attendance: {
+    id: 'attendance.id',
+    kidId: 'attendance.kidId',
+    present: 'attendance.present',
+    day: 'attendance.day',
+    date: 'attendance.date',
+  },
+  Kids: {
+    id: 'kids.id',
+    name: 'kids.name',
+    age: 'kids.age',
+    contact: 'kids.contact',
+    guardian_id: 'kids.guardian_id',
+  },
   Guardians: { id: 'guardians.id', name: 'guardians.name', contact: 'guardians.contact' },
 }));
 
@@ -48,10 +60,10 @@ describe('Daily Attendance API', () => {
             guardian: {
               id: 456,
               name: 'Sarah Smith',
-              contact: '555-0123'
-            }
-          }
-        }
+              contact: '555-0123',
+            },
+          },
+        },
       ];
 
       // Mock the database query chain
@@ -102,10 +114,10 @@ describe('Daily Attendance API', () => {
             age: '8',
             guardian: {
               id: 456,
-              name: 'Sarah Smith'
-            }
-          }
-        }
+              name: 'Sarah Smith',
+            },
+          },
+        },
       ];
 
       const mockWhere = jest.fn().mockResolvedValue(mockData);
@@ -115,7 +127,9 @@ describe('Daily Attendance API', () => {
 
       (db.select as jest.Mock).mockReturnValue({ from: mockFrom });
 
-      const req = new NextRequest('http://localhost:3000/api/attendance/daily?date=19/12/2024&ageGroup=6-9yrs');
+      const req = new NextRequest(
+        'http://localhost:3000/api/attendance/daily?date=19/12/2024&ageGroup=6-9yrs',
+      );
       const response = await GET(req);
       const data = await response.json();
 
@@ -137,10 +151,10 @@ describe('Daily Attendance API', () => {
             age: '8',
             guardian: {
               id: 456,
-              name: 'Sarah Smith'
-            }
-          }
-        }
+              name: 'Sarah Smith',
+            },
+          },
+        },
       ];
 
       const mockWhere = jest.fn().mockResolvedValue(mockData);
@@ -150,7 +164,9 @@ describe('Daily Attendance API', () => {
 
       (db.select as jest.Mock).mockReturnValue({ from: mockFrom });
 
-      const req = new NextRequest('http://localhost:3000/api/attendance/daily?date=19/12/2024&search=John');
+      const req = new NextRequest(
+        'http://localhost:3000/api/attendance/daily?date=19/12/2024&search=John',
+      );
       const response = await GET(req);
       const data = await response.json();
 
@@ -190,4 +206,4 @@ describe('Daily Attendance API', () => {
       expect(data.error).toBe('Failed to fetch daily attendance records');
     });
   });
-}); 
+});

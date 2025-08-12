@@ -6,35 +6,35 @@
     font-size: 12px !important;
     font-weight: 600 !important;
   }
-  
+
   .ag-grid-responsive .ag-cell {
     font-size: 12px !important;
     padding: 4px !important;
   }
-  
+
   .ag-grid-responsive .ag-paging-panel {
     font-size: 12px !important;
   }
-  
+
   .ag-grid-responsive .ag-checkbox {
     width: 16px !important;
     height: 16px !important;
   }
-  
+
   .ag-grid-responsive .ag-paging-page-summary-panel {
     display: none; /* Hide page summary on mobile */
   }
-  
+
   .ag-grid-responsive .ag-paging-button {
     min-width: 28px !important;
     height: 28px !important;
   }
-  
+
   /* Compact header on mobile */
   .ag-grid-responsive .ag-header-cell {
     padding: 2px 4px !important;
   }
-  
+
   /* Better touch targets */
   .ag-grid-responsive .ag-checkbox-input-wrapper {
     width: 20px !important;
@@ -47,11 +47,11 @@
   .ag-grid-responsive .ag-header-cell-text {
     font-size: 13px !important;
   }
-  
+
   .ag-grid-responsive .ag-cell {
     font-size: 13px !important;
   }
-  
+
   .ag-grid-responsive .ag-checkbox {
     width: 18px !important;
     height: 18px !important;
@@ -63,7 +63,7 @@
   .ag-grid-responsive .ag-header-cell-text {
     font-size: 14px !important;
   }
-  
+
   .ag-grid-responsive .ag-cell {
     font-size: 14px !important;
   }
@@ -74,20 +74,20 @@
   .ag-grid-responsive {
     font-size: 11px !important;
   }
-  
+
   .ag-grid-responsive .ag-header-cell-text {
     font-size: 11px !important;
   }
-  
+
   .ag-grid-responsive .ag-cell {
     font-size: 11px !important;
     padding: 2px !important;
   }
-  
+
   .ag-grid-responsive .ag-paging-panel {
     padding: 4px !important;
   }
-  
+
   .ag-grid-responsive .ag-checkbox {
     width: 14px !important;
     height: 14px !important;
@@ -99,7 +99,7 @@
   .ag-grid-responsive .ag-body-horizontal-scroll {
     -webkit-overflow-scrolling: touch;
   }
-  
+
   .ag-grid-responsive .ag-body-viewport {
     -webkit-overflow-scrolling: touch;
   }
@@ -128,7 +128,7 @@
     flex-wrap: wrap;
     gap: 4px;
   }
-  
+
   .ag-grid-responsive .ag-paging-row-summary-panel {
     order: 3;
     width: 100%;
