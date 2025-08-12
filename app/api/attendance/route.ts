@@ -2,6 +2,12 @@ import { db } from "@/utils";
 import { Attendance, Guardians, Kids } from "@/utils/schema";
 import { and, eq, or, isNull, between, sql } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
+import { SmsDepotService } from "@/app/services/sms-depot";
+
+const smsDepotService = new SmsDepotService({
+  clientId: process.env.SMS_DEPOT_CLIENT_ID!,
+  apiSecret: process.env.SMS_DEPOT_API_SECRET!
+});
 
 /**
  * Gets the age range for a given age group
@@ -89,7 +95,7 @@ export async function GET(req: NextRequest) {
                 )
             );
 
-        console.log('Database result:', result);
+        //console.log('Database result:', result);
 
         return NextResponse.json(result);
 
@@ -132,6 +138,30 @@ export async function POST(req: NextRequest) {
             // Add timestamp if it's included in the schema
             checkInTime: data.checkInTime,
         });
+
+        // Get kid's name and guardian's contact information
+        const kidInfo = await db.select({
+            name: Kids.name,
+            guardianContact: Kids.contact,
+            guardianName: Guardians.name
+        })
+        .from(Kids)
+        .leftJoin(Guardians, eq(Kids.guardian_id, Guardians.id))
+        .where(eq(Kids.id, data.kidId))
+        .limit(1);
+
+        if (kidInfo.length > 0 && kidInfo[0].guardianContact) {
+            try {
+                await smsDepotService.sendParentNotification(
+                    kidInfo[0].name,
+                    kidInfo[0].guardianContact,
+                    kidInfo[0].guardianName || 'parent/guardian'
+                );
+            } catch (error) {
+                console.error('Failed to send SMS notification:', error);
+                // Don't fail the check-in if SMS sending fails
+            }
+        }
 
         return NextResponse.json(result);
     } catch (error) {

@@ -25,6 +25,7 @@
 *.pem
 /.idea/*
 /.cursor/*
+/.windsurf/*
 /.junie/*
 /.agent-os/*
 /.windsurf/*
