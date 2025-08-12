@@ -107,7 +107,7 @@ function EditKid({ kid, open, onOpenChange, refreshData }: EditKidProps) {
                 <DialogHeader>
                     <DialogTitle>Edit Kid</DialogTitle>
                     <DialogDescription>
-                        Update the kid's information in the attendance system.
+                        Update the kid&apos;s information in the attendance system.
                     </DialogDescription>
 
                     <FormProvider {...methods}>

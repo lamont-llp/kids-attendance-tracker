@@ -73,7 +73,7 @@ function Dashboard() {
                         Dashboard
                     </h1>
                     <p className='text-sm text-muted-foreground mt-2 font-medium'>
-                        Welcome back! Here's your attendance overview for {moment(selectedMonth).format('MMMM YYYY')}.
+                        Welcome back! Here&apos;s your attendance overview for {moment(selectedMonth).format('MMMM YYYY')}.
                     </p>
                 </div>
 
