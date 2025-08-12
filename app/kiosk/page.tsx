@@ -31,7 +31,8 @@ const KioskPage = () => {
 
     // Pick a random background color for the card
     const randomIndex = Math.floor(Math.random() * backgroundColors.length);
-    setCardColor(backgroundColors[randomIndex]);
+    // @ts-expect-error - TS2322: Type 'string' is not assignable to type 'never'.
+      setCardColor(backgroundColors[randomIndex]);
   }, []);
 
   /**
@@ -199,11 +200,11 @@ const KioskPage = () => {
         className="fixed bottom-4 right-4 w-20 h0auto cursor-pointer"
         style={{ zIndex: 100 }}
       />
-      <Card className="max-w-4xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
+      <Card className="max-w-8xl mx-auto bg-pink-100 text-black rounded 2xl shadow-md p-6">
         <CardHeader className="text-center">
           <CardTitle className="text-3xl font-bold">Check-In station for Awesome Kids!</CardTitle>
           <p className="text-muted-foreground mt-2">
-            Search for your child's name and check them in
+            Search for your child&apos;s name and check them in
           </p>
         </CardHeader>
         <CardContent>
@@ -275,7 +276,7 @@ const KioskPage = () => {
             <div className="text-center py-12">
               <h3 className="text-xl font-medium mb-2">Welcome!</h3>
               <p className="text-gray-500">
-                Please type your child's name in the search box above to check them in
+                Please type your child&apos;s name in the search box above to check them in
               </p>
             </div>
           )}

@@ -28,6 +28,7 @@
 /.windsurf/*
 /.junie/*
 /.agent-os/*
+/.windsurf/*
 /specs/*
 
 # debug
