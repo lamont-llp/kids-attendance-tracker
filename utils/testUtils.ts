@@ -9,12 +9,12 @@
  */
 export function isValidKidAge(age: string | number): boolean {
   const numAge = typeof age === 'string' ? parseInt(age, 10) : age;
-  
+
   // Check if age is a valid number
   if (isNaN(numAge)) {
     return false;
   }
-  
+
   // Check if age is within acceptable range
   return numAge >= 0 && numAge <= 18;
 }

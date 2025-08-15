@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import GlobalApi from "@/app/services/GlobalApi";
-import { toast } from "sonner";
-import { Search, CheckCircle } from "lucide-react";
-import moment from "moment";
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import GlobalApi from '@/app/services/GlobalApi';
+import { toast } from 'sonner';
+import { Search, CheckCircle } from 'lucide-react';
+import moment from 'moment';
 
 interface Kid {
   id: number;
@@ -32,7 +32,7 @@ const KioskPage = () => {
     // Pick a random background color for the card
     const randomIndex = Math.floor(Math.random() * backgroundColors.length);
     // @ts-expect-error - TS2322: Type 'string' is not assignable to type 'never'.
-      setCardColor(backgroundColors[randomIndex]);
+    setCardColor(backgroundColors[randomIndex]);
   }, []);
 
   /**
@@ -43,7 +43,7 @@ const KioskPage = () => {
       setIsLoading(true);
       const today = new Date();
       const day = today.getDate();
-      const date = moment(today).format("DD/MM/yyyy");
+      const date = moment(today).format('DD/MM/yyyy');
 
       // You might need to create a new API endpoint for this
       // For now we'll use the existing attendance endpoint
@@ -51,14 +51,12 @@ const KioskPage = () => {
 
       if (response.data && Array.isArray(response.data)) {
         // Filter to only include present kids for today's date
-        const todayCheckins = response.data.filter(record =>
-          record.present &&
-          Number(record.day) === day &&
-          record.date === date
+        const todayCheckins = response.data.filter(
+          (record) => record.present && Number(record.day) === day && record.date === date,
         );
 
         // Extract the kid IDs of those already checked in
-        const checkedInKidIds = todayCheckins.map(record => record.kidId);
+        const checkedInKidIds = todayCheckins.map((record) => record.kidId);
         setCheckedInKids(checkedInKidIds);
       }
     } catch (error) {
@@ -74,8 +72,8 @@ const KioskPage = () => {
     if (searchInput.trim() === '') {
       setFilteredKids([]);
     } else {
-      const filtered = kidsList.filter(kid =>
-        kid.name.toLowerCase().includes(searchInput.toLowerCase())
+      const filtered = kidsList.filter((kid) =>
+        kid.name.toLowerCase().includes(searchInput.toLowerCase()),
       );
       setFilteredKids(filtered);
     }
@@ -87,14 +85,14 @@ const KioskPage = () => {
   const fetchAllKids = () => {
     setIsLoading(true);
     GlobalApi.GetAllKids()
-      .then(response => {
+      .then((response) => {
         if (response.data && Array.isArray(response.data)) {
           setKidsList(response.data);
         }
       })
-      .catch(error => {
-        console.error("Error fetching kids:", error);
-        toast.error("Failed to load kids data");
+      .catch((error) => {
+        console.error('Error fetching kids:', error);
+        toast.error('Failed to load kids data');
       })
       .finally(() => {
         setIsLoading(false);
@@ -104,7 +102,7 @@ const KioskPage = () => {
   // Handle check-in for a kid
   const handleCheckIn = async (kid: Kid) => {
     if (!kid.id || !kid.name) {
-      toast.error("Invalid kid data");
+      toast.error('Invalid kid data');
       return;
     }
 
@@ -113,12 +111,12 @@ const KioskPage = () => {
 
     // Example operating hours check (7 AM to 8 PM)
     if (currentHour < 7 || currentHour > 20) {
-      toast.error("Check-in is only available during operating hours (7 AM - 8   PM)");
+      toast.error('Check-in is only available during operating hours (7 AM - 8   PM)');
       return;
     }
 
     const day = today.getDate();
-    const date = moment(today).format("DD/MM/yyyy"); // Include day in date format
+    const date = moment(today).format('DD/MM/yyyy'); // Include day in date format
 
     const data = {
       day: day.toString(),
@@ -138,23 +136,22 @@ const KioskPage = () => {
 
         // Successfully checked in
         toast.success(`${kid.name} has been checked in successfully!`);
-        setCheckedInKids(prev => [...prev, kid.id]);
-
+        setCheckedInKids((prev) => [...prev, kid.id]);
       } catch (error: any) {
-        console.error("Error checking in:", error);
+        console.error('Error checking in:', error);
 
         // Check if this is a 409 Conflict response (already checked in)
         if (error.response && error.response.status === 409) {
           toast.error(`${kid.name} is already checked in for today`);
           // Update the UI to show the kid as checked in
-          setCheckedInKids(prev => [...prev, kid.id]);
+          setCheckedInKids((prev) => [...prev, kid.id]);
           return;
         }
 
         if (attempts < retryCount) {
           attempts++;
           toast.error(`Retrying check-in... (Attempt ${attempts}/${retryCount})`);
-          await new Promise(resolve => setTimeout(resolve, 1000)); // Wait 1 second between retries
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // Wait 1 second between retries
           return attemptCheckIn();
         }
 
@@ -166,7 +163,6 @@ const KioskPage = () => {
 
     await attemptCheckIn();
   };
-
 
   // Clear search input
   const clearSearch = () => {
@@ -181,7 +177,7 @@ const KioskPage = () => {
     'bg-red-100',
     'bg-purple-100',
   ];
-  const [cardColor, setCardColor] = useState("bg-white")
+  const [cardColor, setCardColor] = useState('bg-white');
 
   return (
     <div
@@ -243,22 +239,32 @@ const KioskPage = () => {
                       <div className="flex items-center justify-between p-4">
                         <div>
                           <h3 className="font-semibold text-lg">{kid.name}</h3>
-                          <p className="text-sm text-gray-500"><b className='font-semibold text-white'>Age:</b> {kid.age}</p>
-                          <p className="text-sm text-gray-500"><b className='font-semibold text-white'>Contact:</b> {kid.contact}</p>
-                          <p className={kid.address ? 'text-sm text-gray-500' : 'bg-red-600 rounded-md'}><b className='font-semibold text-white'>Address:</b> {kid.address}</p>
+                          <p className="text-sm text-gray-500">
+                            <b className="font-semibold text-white">Age:</b> {kid.age}
+                          </p>
+                          <p className="text-sm text-gray-500">
+                            <b className="font-semibold text-white">Contact:</b> {kid.contact}
+                          </p>
+                          <p
+                            className={
+                              kid.address ? 'text-sm text-gray-500' : 'bg-red-600 rounded-md'
+                            }
+                          >
+                            <b className="font-semibold text-white">Address:</b> {kid.address}
+                          </p>
                           {/*<p className={kid.guardian_id ? 'text-sm text-gray-500' : 'bg-red-600'}><b className='font-semibold text-white'>Parent/Guardian:</b> {kid.guardian_id}</p>*/}
                         </div>
                         <Button
                           onClick={() => handleCheckIn(kid)}
                           disabled={isLoading || checkedInKids.includes(kid.id)}
-                          className={checkedInKids.includes(kid.id) ? "bg-green-600" : ""}
+                          className={checkedInKids.includes(kid.id) ? 'bg-green-600' : ''}
                         >
                           {checkedInKids.includes(kid.id) ? (
                             <>
                               <CheckCircle className="mr-1" /> Checked In
                             </>
                           ) : (
-                            "Check In"
+                            'Check In'
                           )}
                         </Button>
                       </div>

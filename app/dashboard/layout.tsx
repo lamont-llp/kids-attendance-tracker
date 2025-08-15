@@ -1,7 +1,7 @@
 // dashboard/layout.tsx
-import React from "react";
-import SideNav from "@/app/dashboard/_components/SideNav";
-import Header from "@/app/dashboard/_components/Header";
+import React from 'react';
+import SideNav from '@/app/dashboard/_components/SideNav';
+import Header from '@/app/dashboard/_components/Header';
 
 function layout({ children }: { children: React.ReactNode }) {
   return (
