@@ -1,11 +1,13 @@
 import axios from 'axios';
 
-const clientId = process.env.SMS_DEPOT_CLIENT_ID!;
+const apiKey = process.env.SMS_DEPOT_CLIENT_ID!;
 const apiSecret = process.env.SMS_DEPOT_API_SECRET!;
 
 interface SendSmsRequest {
-  to: string;
-  message: string;
+  messages: Array<{
+    content: string;
+    destination: string;
+  }>;
 }
 
 interface SmsResponse {
@@ -17,59 +19,45 @@ interface SmsResponse {
 export class SmsDepotService {
   private readonly baseUrl = 'https://rest.mymobileapi.com';
 
-  private async authenticate(): Promise<string> {
-    try {
-      // Basic authentication
-      const authString = `${clientId}:${apiSecret}`;
-      const auth = btoa(authString);
 
-      const response = await axios.post(
-        `${this.baseUrl}/Authentication`,
-        {},
-        {
-          headers: {
-            Authorization: `${auth}`,
-          },
-        },
-      );
-      console.log('Authentication Response:', response.data);
-
-      return response.data.token;
-    } catch (error) {
-      console.error('SMS Depot Authentication Error:', error);
-      console.log(`Url: ${this.baseUrl}/Authentication`);
-      throw new Error('Failed to authenticate with SMS Depot');
-    }
+  private getAuthHeaders(): { headers: { Authorization: string; 'Content-Type': string } } {
+    const credentials = `${apiKey}:${apiSecret}`;
+    const base64Credentials = Buffer.from(credentials).toString('base64');
+    
+    return {
+      headers: {
+        'Authorization': `Basic ${base64Credentials}`,
+        'Content-Type': 'application/json'
+      }
+    };
   }
 
   async sendSms(to: string, message: string): Promise<void> {
     try {
-      const token = await this.authenticate();
+      const requestData: SendSmsRequest = {
+        messages: [{
+          content: message,
+          destination: to
+        }]
+      };
 
       const response = await axios.post(
-        `${this.baseUrl}/sms/send`,
-        {
-          to,
-          message,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
+        `${this.baseUrl}/bulkmessages`,
+        requestData,
+        this.getAuthHeaders()
       );
-      console.log('SMS sent to:', to);
-      console.log('Response:', response.data);
-      console.log('Response Status:', response.status);
-      return response.data;
+
+      if (response.data) {
+        console.log('Success:', response.data);
+      }
     } catch (error: any) {
-      if (error.response?.status === 401) {
-        throw new Error('Invalid SMS Depot credentials');
+      if (error.response) {
+        console.log('Failure:', error.response.data);
+        throw new Error(error.response.data);
+      } else {
+        console.log('Something went wrong during the network request.');
+        throw new Error('Network request failed');
       }
-      if (error.response?.status === 429) {
-        throw new Error('Rate limit exceeded');
-      }
-      throw new Error(`SMS sending failed: ${error.response?.data?.message || error.message}`);
     }
   }
 
@@ -78,7 +66,7 @@ export class SmsDepotService {
     guardianContact: string,
     guardianName?: string,
   ): Promise<void> {
-    const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully.`;
+    const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully.\nEOM Kids`;
     await this.sendSms(guardianContact, message);
     console.log('SMS sent to:', guardianContact);
   }
