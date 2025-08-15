@@ -66,7 +66,12 @@ export class SmsDepotService {
     guardianContact: string,
     guardianName?: string,
   ): Promise<void> {
-    const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully.\nEOM Kids`;
+    const now = new Date();
+    const dateTimeStr = now.toLocaleString('en-ZA', { 
+      dateStyle: 'medium', 
+      timeStyle: 'short' 
+    });
+    const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully on ${dateTimeStr}.\nEOM Kids`;
     await this.sendSms(guardianContact, message);
     console.log('SMS sent to:', guardianContact);
   }
