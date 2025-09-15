@@ -1,4 +1,5 @@
 import axios from 'axios';
+import moment from 'moment-timezone';
 
 const apiKey = process.env.SMS_DEPOT_CLIENT_ID!;
 const apiSecret = process.env.SMS_DEPOT_API_SECRET!;
@@ -66,11 +67,8 @@ export class SmsDepotService {
     guardianContact: string,
     guardianName?: string,
   ): Promise<void> {
-    const now = new Date();
-    const dateTimeStr = now.toLocaleString('en-ZA', { 
-      dateStyle: 'medium', 
-      timeStyle: 'short' 
-    });
+    const now = moment().tz('Africa/Johannesburg');
+    const dateTimeStr = now.toLocaleString();
     const message = `Dear ${guardianName ? guardianName : 'parent/guardian'}, ${kidName} has been checked in successfully on ${dateTimeStr}.\nEOM Kids`;
     await this.sendSms(guardianContact, message);
     console.log('SMS sent to:', guardianContact);
