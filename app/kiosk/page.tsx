@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/button';
 import GlobalApi from '@/app/services/GlobalApi';
 import { toast } from 'sonner';
 import { Search, CheckCircle } from 'lucide-react';
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 interface Kid {
   id: number;
@@ -41,9 +41,9 @@ const KioskPage = () => {
   const fetchTodayCheckIns = async () => {
     try {
       setIsLoading(true);
-      const today = new Date();
-      const day = today.getDate();
-      const date = moment(today).format('DD/MM/yyyy');
+      const today = moment().tz('Africa/Johannesburg');
+      const day = today.date();
+      const date = today.format('DD/MM/yyyy');
 
       // You might need to create a new API endpoint for this
       // For now we'll use the existing attendance endpoint
@@ -106,8 +106,8 @@ const KioskPage = () => {
       return;
     }
 
-    const today = new Date();
-    const currentHour = today.getHours();
+    const today = moment().tz('Africa/Johannesburg');;
+    const currentHour = today.hour();
 
     // Example operating hours check (7 AM to 8 PM)
     if (currentHour < 7 || currentHour > 20) {
@@ -115,7 +115,7 @@ const KioskPage = () => {
       return;
     }
 
-    const day = today.getDate();
+    const day = today.day();
     const date = moment(today).format('DD/MM/yyyy'); // Include day in date format
 
     const data = {
@@ -123,7 +123,7 @@ const KioskPage = () => {
       kidId: kid.id,
       present: true,
       date: date,
-      timestamp: today.toISOString(), // Add timestamp for precise tracking
+      timestamp: today.format(), // Add timestamp for precise tracking
     };
 
     const retryCount = 3;
