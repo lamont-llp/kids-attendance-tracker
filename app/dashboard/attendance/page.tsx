@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import MonthSelection from '../../_components/MonthSelection';
 import AgeGroupSelect from '../../_components/AgeGroupSelect';
 import GlobalApi from '../../services/GlobalApi';
@@ -9,11 +9,19 @@ import { toast } from 'sonner';
 import { AttendanceRecord } from '@/utils/schema';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, UsersIcon, SearchIcon, Search } from 'lucide-react';
+import { CalendarIcon, UsersIcon, SearchIcon, Download } from 'lucide-react';
 import AttendanceGrid from './_components/AttendanceGrid';
 
 interface ApiResponse {
   data: AttendanceRecord[];
+}
+
+export function getExportErrorMessage(status: number, fallback: string): string {
+  if (status === 403) return "You don't have permission to export attendance.";
+  if (status === 413) return 'Export too large. Narrow the date range or filters.';
+  if (status === 429) return 'Too many export requests. Please try again later.';
+  if (status >= 500) return 'Server error while exporting. Please try again.';
+  return fallback;
 }
 
 function AttendancePage() {
@@ -21,6 +29,83 @@ function AttendancePage() {
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>('2-5yrs');
   const [attendanceList, setAttendanceList] = useState<AttendanceRecord[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
+  const [availableMonths, setAvailableMonths] = useState<string[]>([]);
+
+  // Fetch available months on component mount
+  useEffect(() => {
+    const fetchAvailableMonths = async () => {
+      try {
+        const response = await GlobalApi.GetAvailableMonths();
+        const months = response.data.availableMonths || [];
+        setAvailableMonths(months);
+
+        // If current month is not available, default to the latest available month
+        if (months.length > 0 && !months.includes(selectedMonth)) {
+          const latestMonth = months[months.length - 1];
+          setSelectedMonth(latestMonth);
+        }
+      } catch (error) {
+        console.error('Error fetching available months:', error);
+      }
+    };
+
+    fetchAvailableMonths();
+  }, []);
+
+  const handleExport = async () => {
+    if (!selectedMonth || !selectedAgeGroup) {
+      toast.error('Please select both month and age group');
+      return;
+    }
+
+    try {
+      setIsExporting(true);
+      const month = moment(selectedMonth).format('MM/YYYY');
+      const response = await fetch(
+        `/api/attendance/export?ageGroup=${encodeURIComponent(selectedAgeGroup)}&month=${encodeURIComponent(month)}`
+      );
+
+      if (!response.ok) {
+        let errMsg = 'Failed to export data';
+        try {
+          const error = await response.json();
+          errMsg = getExportErrorMessage(response.status, error.error || errMsg);
+        } catch {
+          errMsg = getExportErrorMessage(response.status, errMsg);
+        }
+        throw new Error(errMsg);
+      }
+
+      // Get the filename from the content-disposition header or generate one
+      const contentDisposition = response.headers.get('content-disposition');
+      let filename = `attendance-${month}-${selectedAgeGroup}.csv`;
+      if (contentDisposition) {
+        const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+        if (filenameMatch && filenameMatch[1]) {
+          filename = filenameMatch[1];
+        }
+      }
+
+      // Create a blob from the response and trigger download
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.setAttribute('download', filename);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+
+      toast.success('Export downloaded successfully');
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error(error instanceof Error ? error.message : 'Failed to export data');
+    } finally {
+      setIsExporting(false);
+    }
+  };
 
   const onSearchHandler = (): void => {
     if (!selectedMonth || !selectedAgeGroup) {
@@ -96,8 +181,27 @@ function AttendancePage() {
             <Button onClick={onSearchHandler} disabled={isLoading} className="px-4 py-2">
               {isLoading ? 'Loading...' : 'Search'}
             </Button>
+            {process.env.NEXT_PUBLIC_REPORTS_ATTENDANCE_CSV_EXPORT_ENABLED === 'true' && (
+              <Button
+                onClick={handleExport}
+                disabled={isExporting || !selectedMonth || !selectedAgeGroup}
+                variant="outline"
+                className="gap-2"
+              >
+                <Download className="h-4 w-4" />
+                {isExporting ? 'Exporting…' : 'Export CSV'}
+              </Button>
+            )}
           </div>
         </CardContent>
+        {availableMonths.length > 0 && (
+          <CardContent className="pt-0">
+            <div className="text-sm text-muted-foreground">
+              <span className="font-medium">Available months with data:</span>{' '}
+              {availableMonths.join(', ')}
+            </div>
+          </CardContent>
+        )}
       </Card>
 
       <Card className="overflow-hidden">

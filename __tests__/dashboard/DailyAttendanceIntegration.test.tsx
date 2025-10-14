@@ -2,6 +2,7 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import DailyAttendance from '@/app/dashboard/_components/DailyAttendance';
+import { getExportErrorMessage } from '@/app/dashboard/attendance/page';
 
 // Mock the API calls
 jest.mock('@/app/services/GlobalApi', () => ({
@@ -82,5 +83,13 @@ describe('Dashboard Integration - Daily Attendance', () => {
       // Should show empty state when no data
       expect(screen.getByText(/No records found for/)).toBeInTheDocument();
     });
+  });
+
+  it('maps export error codes to user-friendly messages', () => {
+    expect(getExportErrorMessage(403, 'x')).toBe("You don't have permission to export attendance.");
+    expect(getExportErrorMessage(413, 'x')).toBe('Export too large. Narrow the date range or filters.');
+    expect(getExportErrorMessage(429, 'x')).toBe('Too many export requests. Please try again later.');
+    expect(getExportErrorMessage(500, 'x')).toBe('Server error while exporting. Please try again.');
+    expect(getExportErrorMessage(400, 'Bad request')).toBe('Bad request');
   });
 });

@@ -38,6 +38,8 @@ const GetAttendanceList = (ageGroup: string | undefined, month: any) => {
 
 const MarkAttendance = (data: any) => axios.post('/api/attendance', data);
 
+const GetAvailableMonths = () => axios.get('/api/attendance/months');
+
 const MarkAbsent = (kidId: number, day: any, date: any) =>
   axios.delete('/api/attendance?kidId=' + kidId + '&day=' + day + '&date=' + date);
 
@@ -66,4 +68,5 @@ export default {
   MarkAbsent,
   TotalPresentCountByDay,
   GetDailyAttendance,
+  GetAvailableMonths,
 };
