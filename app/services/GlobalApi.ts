@@ -55,6 +55,10 @@ const GetDailyAttendance = (date: string, ageGroup?: string, search?: string) =>
   return axios.get(url);
 };
 
+const GetAttendanceListByDateRange = (ageGroup: string, startDate: string, endDate: string) => {
+  return axios.get(`/api/attendance/dateRange?ageGroup=${ageGroup}&startDate=${startDate}&endDate=${endDate}`);
+};
+
 export default {
   GetAllAgeGroups,
   CreateNewKid,
@@ -66,4 +70,5 @@ export default {
   MarkAbsent,
   TotalPresentCountByDay,
   GetDailyAttendance,
+  GetAttendanceListByDateRange,
 };

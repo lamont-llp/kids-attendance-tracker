@@ -1,42 +1,51 @@
 'use client';
 
 import React, { useState } from 'react';
-import MonthSelection from '../../_components/MonthSelection';
+import { DatePickerWithRange } from '@/components/ui/date-range-picker';
+import { DateRange } from 'react-day-picker';
 import AgeGroupSelect from '../../_components/AgeGroupSelect';
 import GlobalApi from '../../services/GlobalApi';
 import moment from 'moment';
 import { toast } from 'sonner';
 import { AttendanceRecord } from '@/utils/schema';
+import { ExportFormat, exportToCSV, exportToExcel, downloadBlob } from '@/utils/exportUtils';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { CalendarIcon, UsersIcon, SearchIcon, Search } from 'lucide-react';
+import { 
+  UsersIcon, 
+  SearchIcon 
+} from 'lucide-react';
+import { ExportButton } from './_components/ExportButton';
 import AttendanceGrid from './_components/AttendanceGrid';
+import AttendanceStats from './_components/AttendanceStats';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ApiResponse {
   data: AttendanceRecord[];
 }
 
 function AttendancePage() {
-  const [selectedMonth, setSelectedMonth] = useState<string>(moment(new Date()).format('MM/YYYY'));
+  const [dateRange, setDateRange] = useState<DateRange | undefined>();
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>('2-5yrs');
   const [attendanceList, setAttendanceList] = useState<AttendanceRecord[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [view, setView] = useState<'grid' | 'analytics'>('grid');
 
   const onSearchHandler = (): void => {
-    if (!selectedMonth || !selectedAgeGroup) {
-      toast.error('Please select both month and age group');
+    if (!dateRange?.from || !dateRange?.to || !selectedAgeGroup) {
+      toast.error('Please select date range and age group');
       return;
     }
 
     setIsLoading(true);
-    const month = moment(selectedMonth).format('MM/YYYY');
+    const startDate = moment(dateRange.from).format('YYYY-MM-DD');
+    const endDate = moment(dateRange.to).format('YYYY-MM-DD');
 
-    GlobalApi.GetAttendanceList(selectedAgeGroup, month)
+    GlobalApi.GetAttendanceListByDateRange(selectedAgeGroup, startDate, endDate)
       .then((response: ApiResponse) => {
         if (response.data && Array.isArray(response.data)) {
           setAttendanceList(response.data);
         } else {
-          console.error('Invalid data format received:', response.data);
           setAttendanceList([]);
           toast.error('No attendance data found');
         }
@@ -51,12 +60,32 @@ function AttendancePage() {
       });
   };
 
-  const handleMonthSelection = (value: string): void => {
-    setSelectedMonth(value);
-  };
+  const handleExport = async (format: ExportFormat) => {
+    if (!attendanceList?.length) {
+      toast.error('No data to export');
+      return;
+    }
 
-  const handleAgeGroupSelection = (value: string): void => {
-    setSelectedAgeGroup(value);
+    try {
+      const dateRangeString = dateRange?.from && dateRange?.to
+        ? `${moment(dateRange.from).format('YYYY-MM-DD')}_to_${moment(dateRange.to).format('YYYY-MM-DD')}`
+        : 'all-dates';
+      
+      const fileName = `attendance_${selectedAgeGroup}_${dateRangeString}`;
+      
+      let exportResult;
+      if (format === 'csv') {
+        exportResult = exportToCSV(attendanceList, { fileName });
+      } else {
+        exportResult = exportToExcel(attendanceList, { fileName });
+      }
+      
+      downloadBlob(exportResult);
+      toast.success(`Successfully exported as ${format.toUpperCase()}`);
+    } catch (error) {
+      console.error('Export error:', error);
+      toast.error(`Failed to export as ${format.toUpperCase()}`);
+    }
   };
 
   return (
@@ -64,7 +93,14 @@ function AttendancePage() {
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold tracking-tight">Attendance</h1>
-          <p className="text-muted-foreground">Manage and track student attendance records</p>
+          <p className="text-muted-foreground">Track and analyze student attendance records</p>
+        </div>
+        
+        <div className="flex gap-2">
+          <ExportButton
+            onExport={handleExport}
+            disabled={!attendanceList?.length}
+          />
         </div>
       </div>
 
@@ -72,24 +108,21 @@ function AttendancePage() {
         <CardHeader className="pb-3">
           <CardTitle className="text-md font-medium flex items-center gap-2">
             <SearchIcon className="h-4 w-4" />
-            Search Options
+            Search Attendance
           </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="flex flex-col md:flex-row gap-4 items-start md:items-end">
             <div className="grid w-full max-w-sm items-center gap-1.5">
-              <label className="text-sm font-medium">Month</label>
-              <div className="flex items-center gap-2">
-                <CalendarIcon className="h-4 w-4 text-muted-foreground" />
-                <MonthSelection selectedMonth={handleMonthSelection} />
-              </div>
+              <label className="text-sm font-medium">Date Range</label>
+              <DatePickerWithRange date={dateRange} onDateChange={setDateRange} />
             </div>
 
             <div className="grid w-full max-w-sm items-center gap-1.5">
               <label className="text-sm font-medium">Age Group</label>
               <div className="flex items-center gap-2">
                 <UsersIcon className="h-4 w-4 text-muted-foreground" />
-                <AgeGroupSelect age={undefined} selectedAgeGroup={handleAgeGroupSelection} />
+                <AgeGroupSelect age={undefined} selectedAgeGroup={(value: React.SetStateAction<string>) => setSelectedAgeGroup(value)} />
               </div>
             </div>
 
@@ -100,14 +133,37 @@ function AttendancePage() {
         </CardContent>
       </Card>
 
-      <Card className="overflow-hidden">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-md font-medium">Attendance Records</CardTitle>
-        </CardHeader>
-        <CardContent className="p-0">
-          <AttendanceGrid attendanceList={attendanceList} selectedMonth={selectedMonth} />
-        </CardContent>
-      </Card>
+      <Tabs value={view} onValueChange={(v) => setView(v as 'grid' | 'analytics')}>
+        <TabsList>
+          <TabsTrigger value="grid">Attendance Grid</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        </TabsList>
+        
+        <TabsContent value="grid">
+          <Card className="overflow-hidden">
+            <CardHeader className="pb-3">
+              <CardTitle className="text-md font-medium">Attendance Records</CardTitle>
+            </CardHeader>
+            <CardContent className="p-0">
+              <AttendanceGrid 
+                attendanceList={attendanceList} 
+                dateRange={dateRange}
+              />
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        <TabsContent value="analytics">
+          <Card>
+            <CardHeader className="pb-3">
+              <CardTitle className="text-md font-medium">Attendance Analytics</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <AttendanceStats attendanceList={attendanceList} />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

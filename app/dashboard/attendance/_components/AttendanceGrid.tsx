@@ -24,15 +24,19 @@ interface AttendanceItem {
 interface AttendanceGridProps {
   attendanceList?: AttendanceItem[];
   selectedMonth?: string;
+  dateRange?: DateRange;
 }
+
+import { DateRange } from 'react-day-picker';
 
 interface RowData {
   kidId: number;
+  age: string;
   name: string;
   [key: number]: boolean;
 }
 
-function AttendanceGrid({ attendanceList, selectedMonth }: AttendanceGridProps) {
+function AttendanceGrid({ attendanceList, selectedMonth, dateRange }: AttendanceGridProps) {
   const [rowData, setRowData] = useState<RowData[]>([]);
   const [colDefs, setColDefs] = useState<ColDef[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -105,6 +109,13 @@ function AttendanceGrid({ attendanceList, selectedMonth }: AttendanceGridProps) 
           sortable: true,
         },
         {
+          field: 'age',
+          headerName: 'Age',
+          filter: true,
+          width: 80,
+          maxWidth: 100,
+        },
+        {
           field: 'name',
           headerName: 'Student Name',
           filter: true,
@@ -117,6 +128,13 @@ function AttendanceGrid({ attendanceList, selectedMonth }: AttendanceGridProps) 
     }
 
     const baseColumns: ColDef[] = [
+      {        
+        field: 'age',
+        headerName: 'Age',
+        filter: true,
+        width: 80,
+        maxWidth: 100,
+      },
       {
         field: 'name',
         headerName: 'Student Name',
@@ -191,7 +209,7 @@ function AttendanceGrid({ attendanceList, selectedMonth }: AttendanceGridProps) 
         .then((response) => {
           if (response.data?.length > 0) {
             const emptyAttendance = response.data.map((kid: any) => {
-              const record: RowData = { kidId: kid.id, name: kid.name };
+              const record: RowData = { kidId: kid.id, age: kid.age, name: kid.name };
               sundays.forEach((day) => (record[day] = false));
               return record;
             });
