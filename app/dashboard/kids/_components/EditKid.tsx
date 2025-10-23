@@ -132,7 +132,7 @@ function EditKid({ kid, open, onOpenChange, refreshData }: EditKidProps) {
               <FormItem className="flex flex-col py-2">
                 <FormLabel>Age Group (automatically determined)</FormLabel>
                 <FormControl>
-                  <AgeGroupSelect age={kidAge} selectedAgeGroup={setAgeGroup} />
+                  <AgeGroupSelect age={Number(kidAge)} selectedAgeGroup={setAgeGroup} />
                 </FormControl>
               </FormItem>
               <FormItem className="py-2">
