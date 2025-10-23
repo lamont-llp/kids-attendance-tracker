@@ -30,6 +30,7 @@
     "@radix-ui/react-popover": "^1.1.14",
     "@radix-ui/react-select": "^2.2.5",
     "@radix-ui/react-slot": "^1.2.2",
+    "@radix-ui/react-tabs": "^1.1.13",
     "ag-grid-community": "^33.3.0",
     "ag-grid-react": "^33.3.0",
     "axios": "^1.9.0",
@@ -51,6 +52,7 @@
     "recharts": "^2.15.3",
     "sonner": "^2.0.3",
     "tailwind-merge": "^3.3.0",
+    "xlsx": "^0.18.5",
     "zod": "^3.25.7"
   },
   "devDependencies": {
