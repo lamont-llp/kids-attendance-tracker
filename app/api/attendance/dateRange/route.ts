@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { db } from '@/utils';
 import { eq, and, between, sql, inArray } from 'drizzle-orm';
 import { Kids, Attendance, Guardians } from '@/utils/schema';
-import { format, isValid, parseISO } from 'date-fns';
+import { isValid, parseISO } from 'date-fns';
 import { getAgeRangeFromGroup } from '@/utils/ageGroupUtils';
 
 export async function GET(request: Request) {
@@ -49,7 +49,7 @@ export async function GET(request: Request) {
       const monthStr = String(currentDate.getMonth() + 1).padStart(2, '0');
       const yearStr = String(currentDate.getFullYear());
       monthsInRange.push(`${monthStr}/${yearStr}`);
-      currentDate.setMonth(currentDate.getMonth() + 1);
+      currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
     }
 
     // Build where conditions
