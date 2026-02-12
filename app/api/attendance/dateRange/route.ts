@@ -12,8 +12,11 @@ export async function GET(request: Request) {
     const endDate = searchParams.get('endDate');
     const ageGroup = searchParams.get('ageGroup');
 
+    console.log('📅 [Attendance Search] Input params:', { startDate, endDate, ageGroup });
+
     // Validate required parameters
     if (!startDate || !endDate || !ageGroup) {
+      console.log('❌ [Attendance Search] Missing required parameters');
       return NextResponse.json(
         { error: 'Missing required parameters' },
         { status: 400 }
@@ -25,6 +28,7 @@ export async function GET(request: Request) {
     const parsedEndDate = parseISO(endDate);
 
     if (!isValid(parsedStartDate) || !isValid(parsedEndDate)) {
+      console.log('❌ [Attendance Search] Invalid date format');
       return NextResponse.json(
         { error: 'Invalid date format. Use YYYY-MM-DD' },
         { status: 400 }
@@ -33,6 +37,7 @@ export async function GET(request: Request) {
 
     // Get age range for filtering
     const { min, max } = getAgeRangeFromGroup(ageGroup);
+    console.log('👶 [Attendance Search] Age range:', { ageGroup, min, max });
 
     // Convert date range to MM/yyyy format(s) since DB stores dates as "MM/yyyy"
     // Generate all months in the range
@@ -52,6 +57,8 @@ export async function GET(request: Request) {
       currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
     }
 
+    console.log('📆 [Attendance Search] Months in range:', monthsInRange);
+
     // Build where conditions
     const whereConditions = [
       inArray(Attendance.date, monthsInRange)
@@ -63,6 +70,11 @@ export async function GET(request: Request) {
         between(sql`CAST(${Kids.age} AS UNSIGNED)`, min, max)
       );
     }
+
+    console.log('🔍 [Attendance Search] Where conditions:', { 
+      monthsFilter: monthsInRange, 
+      ageFilter: ageGroup !== 'all' ? `${min}-${max}` : 'all' 
+    });
 
     // Fetch attendance records with kid details
     const attendanceRecords = await db
@@ -87,9 +99,17 @@ export async function GET(request: Request) {
       .where(and(...whereConditions))
       .orderBy(Attendance.date, Kids.name);
 
+    console.log('💾 [Attendance Search] DB records found:', attendanceRecords.length);
+
     // Filter by actual day range and transform records to match the expected format
     const startDay = parsedStartDate.getDate();
     const endDay = parsedEndDate.getDate();
+    
+    console.log('🗓️  [Attendance Search] Day range filter:', { 
+      startDay, 
+      endDay, 
+      singleMonth: monthsInRange.length === 1 
+    });
     
     const formattedRecords = attendanceRecords
       .filter(record => {
@@ -132,6 +152,9 @@ export async function GET(request: Request) {
           guardian_name: record.guardian_name
         }
       }));
+
+    console.log('✅ [Attendance Search] Final records after day filtering:', formattedRecords.length);
+    console.log('📊 [Attendance Search] Sample record:', formattedRecords[0]);
 
     return NextResponse.json({ data: formattedRecords });
   } catch (error) {
