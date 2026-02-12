@@ -1,3 +1,26 @@
+export async function PATCH(req: NextRequest) {
+  try {
+    const body = await req.json();
+    const { kidId, date, day, present } = body;
+    if (!kidId || !date || !day || typeof present !== 'boolean') {
+      return NextResponse.json({ error: 'kidId, date, day, and present are required' }, { status: 400 });
+    }
+    const result = await db
+      .update(Attendance)
+      .set({ present })
+      .where(
+        and(
+          eq(Attendance.kidId, Number(kidId)),
+          eq(Attendance.date, date),
+          eq(Attendance.day, Number(day))
+        )
+      );
+    return NextResponse.json({ data: result });
+  } catch (error) {
+    console.error('Error updating attendance:', error);
+    return NextResponse.json({ error: 'Failed to update attendance record', details: typeof error === 'string' ? error : undefined }, { status: 500 });
+  }
+}
 import { db } from '@/utils';
 import { Attendance, Guardians, Kids } from '@/utils/schema';
 import { and, eq, or, isNull, between, sql } from 'drizzle-orm';
@@ -55,7 +78,7 @@ export async function GET(req: NextRequest) {
         .leftJoin(Attendance, eq(Kids.id, Attendance.kidId))
         .where(or(eq(Attendance.date, month), isNull(Attendance.date)));
 
-      return NextResponse.json(result);
+      return NextResponse.json({ data: result });
     }
     // Get the age range for the selected age group
     const { min, max } = getAgeRangeFromGroup(ageGroup);
@@ -89,10 +112,10 @@ export async function GET(req: NextRequest) {
 
     //console.log('Database result:', result);
 
-    return NextResponse.json(result);
+    return NextResponse.json({ data: result });
   } catch (error) {
     console.error('API Error:', error);
-    return NextResponse.json({ error: error });
+    return NextResponse.json({ error: 'Failed to fetch attendance records', details: typeof error === 'string' ? error : undefined }, { status: 500 });
   }
 }
 
@@ -153,10 +176,10 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    return NextResponse.json(result);
+    return NextResponse.json({ data: result });
   } catch (error) {
     console.error('Error marking attendance:', error);
-    return NextResponse.json({ error: 'Failed to mark attendance' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to mark attendance', details: typeof error === 'string' ? error : undefined }, { status: 500 });
   }
 }
 
@@ -164,7 +187,7 @@ export async function DELETE(req: NextRequest) {
   try {
     const searchParams = req.nextUrl.searchParams;
     const kidId = searchParams.get('kidId');
-    const date = searchParams.get('date');
+    const date = searchParams.get('date'); // Expect YYYY-MM-DD
     const day = searchParams.get('day');
 
     if (!kidId || !day || !date) {
@@ -181,9 +204,9 @@ export async function DELETE(req: NextRequest) {
         ),
       );
 
-    return NextResponse.json(result);
+    return NextResponse.json({ data: result });
   } catch (error) {
     console.error('Error deleting attendance:', error);
-    return NextResponse.json({ error: 'Failed to delete attendance record' }, { status: 500 });
+    return NextResponse.json({ error: 'Failed to delete attendance record', details: typeof error === 'string' ? error : undefined }, { status: 500 });
   }
 }
