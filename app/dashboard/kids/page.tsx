@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import AddNewKid from '@/app/dashboard/kids/_components/AddNewKid';
 import GlobalApi from '@/app/services/GlobalApi';
-import KidListTable from '@/app/dashboard/kids/_components/KidListTable';
+import KidsTable from '@/app/dashboard/kids/_components/KidsTable';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 function Kid() {
@@ -29,7 +29,7 @@ function Kid() {
 
       <Card className="overflow-hidden mt-2">
         <CardContent className="p-2 h-dvh">
-          <KidListTable kidList={kidList} refreshData={GetAllKids} />
+          <KidsTable kidList={kidList} refreshData={GetAllKids} />
         </CardContent>
       </Card>
     </div>
