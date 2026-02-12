@@ -21,7 +21,9 @@ import AttendanceStats from './_components/AttendanceStats';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 interface ApiResponse {
-  data: AttendanceRecord[];
+  data: {
+    data: AttendanceRecord[];
+  };
 }
 
 function AttendancePage() {
@@ -44,17 +46,41 @@ function AttendancePage() {
 
     GlobalApi.GetAttendanceListByDateRange(selectedAgeGroup, startDate, endDate)
       .then((response: ApiResponse) => {
-        if (response.data && Array.isArray(response.data)) {
-          setAttendanceList(response.data);
+        if (response.data.data && Array.isArray(response.data.data)) {
+          setAttendanceList(response.data.data);
         } else {
           setAttendanceList([]);
           toast.error('No attendance data found');
         }
       })
-      .catch((error: Error) => {
+      .catch((error: any) => {
         console.error('API Error:', error);
         setAttendanceList([]);
-        toast.error('Failed to fetch attendance data');
+        
+        // Handle specific HTTP error codes
+        if (error.response) {
+          const status = error.response.status;
+          const errorData = error.response.data;
+          
+          switch (status) {
+            case 400:
+              toast.error(errorData?.error || 'Invalid search parameters');
+              break;
+            case 401:
+              toast.error('Authentication required. Please log in.');
+              break;
+            case 404:
+              toast.error('Attendance data not found');
+              break;
+            case 500:
+              toast.error('Server error. Please try again later.');
+              break;
+            default:
+              toast.error(`Failed to fetch: ${errorData?.error || 'Unknown error'}`);
+          }
+        } else {
+          toast.error('Failed to fetch attendance data');
+        }
       })
       .finally(() => {
         setIsLoading(false);
@@ -198,7 +224,7 @@ function AttendancePage() {
               <label className="text-sm font-medium">Age Group</label>
               <div className="flex items-center gap-2">
                 <UsersIcon className="h-4 w-4 text-muted-foreground" />
-                <AgeGroupSelect age={undefined} selectedAgeGroup={(value: React.SetStateAction<string>) => setSelectedAgeGroup(value)} />
+                <AgeGroupSelect selectedAgeGroup={setSelectedAgeGroup} />
               </div>
             </div>
 
@@ -221,10 +247,19 @@ function AttendancePage() {
               <CardTitle className="text-md font-medium">Attendance Records</CardTitle>
             </CardHeader>
             <CardContent className="p-0">
-              <AttendanceGrid 
-                attendanceList={attendanceList} 
-                dateRange={dateRange}
-              />
+              {isLoading ? (
+                <div className="flex items-center justify-center h-64">
+                  <div className="text-center space-y-3">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="text-sm text-muted-foreground">Loading attendance records...</p>
+                  </div>
+                </div>
+              ) : (
+                <AttendanceGrid 
+                  attendanceList={attendanceList} 
+                  dateRange={dateRange}
+                />
+              )}
             </CardContent>
           </Card>
         </TabsContent>
@@ -235,7 +270,16 @@ function AttendancePage() {
               <CardTitle className="text-md font-medium">Attendance Analytics</CardTitle>
             </CardHeader>
             <CardContent>
-              <AttendanceStats attendanceList={attendanceList} />
+              {isLoading ? (
+                <div className="flex items-center justify-center h-64">
+                  <div className="text-center space-y-3">
+                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto"></div>
+                    <p className="text-sm text-muted-foreground">Loading analytics...</p>
+                  </div>
+                </div>
+              ) : (
+                <AttendanceStats attendanceList={attendanceList} />
+              )}
             </CardContent>
           </Card>
         </TabsContent>

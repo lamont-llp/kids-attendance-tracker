@@ -68,6 +68,7 @@ export async function GET(request: Request) {
       id: record.id,
       kidId: record.kidId,
       present: record.present,
+      day: new Date(record.date).getDate(),
       date: record.date,
       checkInTime: record.checkInTime,
       kid: {

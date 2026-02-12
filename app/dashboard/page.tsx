@@ -87,7 +87,7 @@ function Dashboard() {
                         <MonthSelection selectedMonth={setSelectedMonth} />
                     </div>
                     <div className="w-full xs:w-auto">
-                        <AgeGroupSelect selectedGroup={setSelectedAgeGroup} />
+                        <AgeGroupSelect selectedAgeGroup={setSelectedAgeGroup} />
                     </div>
                 </div>
                 */}
