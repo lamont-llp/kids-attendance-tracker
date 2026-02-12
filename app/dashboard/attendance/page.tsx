@@ -16,7 +16,7 @@ import {
   SearchIcon 
 } from 'lucide-react';
 import { ExportButton } from './_components/ExportButton';
-import AttendanceGrid from './_components/AttendanceGrid';
+import AttendanceTable from './_components/AttendanceTable';
 import AttendanceStats from './_components/AttendanceStats';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
@@ -255,7 +255,7 @@ function AttendancePage() {
                   </div>
                 </div>
               ) : (
-                <AttendanceGrid 
+                <AttendanceTable 
                   attendanceList={attendanceList} 
                   dateRange={dateRange}
                 />
