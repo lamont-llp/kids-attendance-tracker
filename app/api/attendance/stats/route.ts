@@ -15,11 +15,13 @@ export async function GET(req: NextRequest) {
     }
 
     {
-      let ageRange = { min: 0, max: 100 };
-      if (ageGroup) {
-        ageRange = getAgeRangeFromGroup(ageGroup);
-      }
-      // Use ageRange.min and ageRange.max in queries below
+      /*
+        const { min, max } = getAgeRangeFromGroup(ageGroup || 'all');
+
+        // Get total kids count for age group
+        const totalKidsResult = await db.select({
+            count: sql`COUNT(*)`.as('count')
+        }).from(Kids)
             .where(
                 ageGroup ?
                     between(sql`CAST(${Kids.age} AS UNSIGNED)`, min, max) :
@@ -72,6 +74,6 @@ export async function GET(req: NextRequest) {
     }
   } catch (error) {
     console.error('Stats API Error:', error);
-    return NextResponse.json({ error: 'Failed to fetch attendance stats', details: typeof error === 'string' ? error : undefined }, { status: 500 });
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
   }
 }

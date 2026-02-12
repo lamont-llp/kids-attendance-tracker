@@ -7,12 +7,12 @@ import { format, isValid, parseISO } from 'date-fns';
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const startDate = searchParams.get('startDate'); // Expect YYYY-MM-DD
-    const endDate = searchParams.get('endDate'); // Expect YYYY-MM-DD
+    const startDate = searchParams.get('startDate');
+    const endDate = searchParams.get('endDate');
     const ageGroup = searchParams.get('ageGroup');
 
     // Validate required parameters
-    if (!startDate || !endDate) {
+    if (!startDate || !endDate || !ageGroup) {
       return NextResponse.json(
         { error: 'Missing required parameters' },
         { status: 400 }
@@ -47,13 +47,7 @@ export async function GET(request: Request) {
       .where(
         and(
           between(Attendance.date, startDate, endDate),
-          ageGroup
-            ? between(
-                sql`CAST(${Kids.age} AS UNSIGNED)`,
-                getAgeRangeFromGroup(ageGroup).min,
-                getAgeRangeFromGroup(ageGroup).max
-              )
-            : undefined
+          eq(Kids.age, ageGroup)
         )
       )
       .orderBy(Attendance.date, Kids.name);
@@ -73,11 +67,11 @@ export async function GET(request: Request) {
       }
     }));
 
-    return NextResponse.json({ data: formattedRecords }); // Already standardized
+    return NextResponse.json({ data: formattedRecords });
   } catch (error) {
     console.error('Error in date range query:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch attendance records for date range', details: typeof error === 'string' ? error : undefined },
+      { error: 'Internal server error' },
       { status: 500 }
     );
   }

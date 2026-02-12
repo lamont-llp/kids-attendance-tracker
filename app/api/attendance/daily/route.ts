@@ -9,11 +9,19 @@ import { NextRequest, NextResponse } from 'next/server';
  * @returns true if valid, false otherwise
  */
 function isValidDateFormat(date: string): boolean {
-  // ISO 8601 format: YYYY-MM-DD
-  const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+  const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
   if (!dateRegex.test(date)) return false;
-  const dateObj = new Date(date);
-  return !isNaN(dateObj.getTime());
+
+  const [day, month, year] = date.split('/').map(Number);
+  // @ts-expect-error - TS2322: Type 'number' is not assignable to type 'string'.
+  const dateObj = new Date(year, month - 1, day);
+
+  return (
+    dateObj.getDate() === day &&
+    // @ts-expect-error - TS2322: Type 'Date' is not assignable to type 'string'.
+    dateObj.getMonth() === month - 1 &&
+    dateObj.getFullYear() === year
+  );
 }
 
 /**
@@ -52,7 +60,7 @@ export async function GET(req: NextRequest) {
 
     // Validate date format
     if (!isValidDateFormat(date)) {
-      return NextResponse.json({ error: 'Invalid date format. Use YYYY-MM-DD (ISO 8601)' }, { status: 400 });
+      return NextResponse.json({ error: 'Invalid date format. Use DD/MM/YYYY' }, { status: 400 });
     }
 
     // Build the base query - start with Kids table and join with Attendance
@@ -84,19 +92,19 @@ export async function GET(req: NextRequest) {
     const whereConditions = [eq(Attendance.date, date)];
 
     // Add age group filter if provided
-    if (ageGroup) {
-      // Use the same function as other endpoints
-      const { min, max } = getAgeRangeFromGroup(ageGroup);
-      // Only filter if valid range
-      if (min > 0 || max > 0) {
-        whereConditions.push(
-          between(
-            sql`CAST(${Kids.age} AS UNSIGNED)`,
-            min,
-            max
-          )
-        );
-      }
+    {
+      /*
+        if (ageGroup) {
+            const { min, max } = getAgeRangeFromGroup(ageGroup);
+            whereConditions.push(
+                between(
+                    sql`CAST(${Kids.age} AS UNSIGNED)`,
+                    min,
+                    max
+                )
+            );
+        }
+        */
     }
 
     // Add search filter if provided
@@ -114,11 +122,11 @@ export async function GET(req: NextRequest) {
 
     console.log('Daily Attendance Database result:', result);
 
-    return NextResponse.json({ data: result });
+    return NextResponse.json(result);
   } catch (error) {
     console.error('Daily Attendance API Error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch daily attendance records', details: typeof error === 'string' ? error : undefined },
+      { error: 'Failed to fetch daily attendance records' },
       { status: 500 },
     );
   }
