@@ -29,6 +29,7 @@ function AttendancePage() {
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>('2-5yrs');
   const [attendanceList, setAttendanceList] = useState<AttendanceRecord[] | undefined>(undefined);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isExporting, setIsExporting] = useState<boolean>(false);
   const [view, setView] = useState<'grid' | 'analytics'>('grid');
 
   const onSearchHandler = (): void => {
@@ -66,25 +67,100 @@ function AttendancePage() {
       return;
     }
 
+    if (!dateRange?.from || !dateRange?.to) {
+      toast.error('Please select a date range');
+      return;
+    }
+
+    setIsExporting(true);
+
     try {
-      const dateRangeString = dateRange?.from && dateRange?.to
-        ? `${moment(dateRange.from).format('YYYY-MM-DD')}_to_${moment(dateRange.to).format('YYYY-MM-DD')}`
-        : 'all-dates';
+      const startDate = moment(dateRange.from).format('YYYY-MM-DD');
+      const endDate = moment(dateRange.to).format('YYYY-MM-DD');
       
-      const fileName = `attendance_${selectedAgeGroup}_${dateRangeString}`;
-      
-      let exportResult;
-      if (format === 'csv') {
-        exportResult = exportToCSV(attendanceList, { fileName });
+      // For Excel format or small datasets, use client-side export
+      // For CSV with large datasets, use server-side export
+      const useClientExport = format === 'excel' || (attendanceList.length < 100);
+
+      if (useClientExport) {
+        // Client-side export (existing functionality)
+        const dateRangeString = `${startDate}_to_${endDate}`;
+        const fileName = `attendance_${selectedAgeGroup}_${dateRangeString}`;
+        
+        let exportResult;
+        if (format === 'csv') {
+          exportResult = exportToCSV(attendanceList, { fileName });
+        } else {
+          exportResult = exportToExcel(attendanceList, { fileName });
+        }
+        
+        downloadBlob(exportResult);
+        toast.success(`Successfully exported as ${format.toUpperCase()}`);
       } else {
-        exportResult = exportToExcel(attendanceList, { fileName });
+        // Server-side CSV export with streaming
+        const response = await GlobalApi.ExportAttendanceCSV(startDate, endDate, selectedAgeGroup);
+        
+        // Create blob from response
+        const blob = new Blob([response.data], { type: 'text/csv;charset=utf-8;' });
+        
+        // Extract filename from Content-Disposition header or use default
+        const contentDisposition = response.headers['content-disposition'];
+        let filename = `attendance-export-${startDate}-to-${endDate}.csv`;
+        
+        if (contentDisposition) {
+          const filenameMatch = contentDisposition.match(/filename="?(.+)"?/i);
+          if (filenameMatch && filenameMatch[1]) {
+            filename = filenameMatch[1];
+          }
+        }
+        
+        // Trigger download
+        const url = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        window.URL.revokeObjectURL(url);
+        
+        toast.success('Successfully exported attendance data');
       }
-      
-      downloadBlob(exportResult);
-      toast.success(`Successfully exported as ${format.toUpperCase()}`);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Export error:', error);
-      toast.error(`Failed to export as ${format.toUpperCase()}`);
+      
+      // Handle specific HTTP error codes
+      if (error.response) {
+        const status = error.response.status;
+        const errorData = error.response.data;
+        
+        switch (status) {
+          case 400:
+            toast.error(errorData?.error || 'Invalid export parameters');
+            break;
+          case 401:
+            toast.error('Authentication required. Please log in.');
+            break;
+          case 403:
+            toast.error('Export feature is not available');
+            break;
+          case 413:
+            toast.error(`Dataset too large to export. ${errorData?.error || 'Please reduce your date range.'}`);
+            break;
+          case 429:
+            toast.error('Too many export requests. Please try again later.');
+            break;
+          case 500:
+            toast.error('Server error. Please try again later.');
+            break;
+          default:
+            toast.error(`Failed to export: ${errorData?.error || 'Unknown error'}`);
+        }
+      } else {
+        toast.error('Failed to export data. Please try again.');
+      }
+    } finally {
+      setIsExporting(false);
     }
   };
 
@@ -99,7 +175,7 @@ function AttendancePage() {
         <div className="flex gap-2">
           <ExportButton
             onExport={handleExport}
-            disabled={!attendanceList?.length}
+            disabled={!attendanceList?.length || isExporting}
           />
         </div>
       </div>

@@ -3,6 +3,7 @@ import { db } from '@/utils';
 import { eq, and, between, sql } from 'drizzle-orm';
 import { Kids, Attendance } from '@/utils/schema';
 import { format, isValid, parseISO } from 'date-fns';
+import { getAgeRangeFromGroup } from '@/utils/ageGroupUtils';
 
 export async function GET(request: Request) {
   try {
@@ -30,6 +31,21 @@ export async function GET(request: Request) {
       );
     }
 
+    // Get age range for filtering
+    const { min, max } = getAgeRangeFromGroup(ageGroup);
+
+    // Build where conditions
+    const whereConditions = [
+      between(Attendance.date, startDate, endDate)
+    ];
+
+    // Add age filter if not 'all'
+    if (ageGroup !== 'all') {
+      whereConditions.push(
+        between(sql`CAST(${Kids.age} AS UNSIGNED)`, min, max)
+      );
+    }
+
     // Fetch attendance records with kid details
     const attendanceRecords = await db
       .select({
@@ -44,12 +60,7 @@ export async function GET(request: Request) {
       })
       .from(Attendance)
       .leftJoin(Kids, eq(Attendance.kidId, Kids.id))
-      .where(
-        and(
-          between(Attendance.date, startDate, endDate),
-          eq(Kids.age, ageGroup)
-        )
-      )
+      .where(and(...whereConditions))
       .orderBy(Attendance.date, Kids.name);
 
     // Transform records to match the expected format

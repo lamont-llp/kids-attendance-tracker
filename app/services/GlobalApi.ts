@@ -59,6 +59,21 @@ const GetAttendanceListByDateRange = (ageGroup: string, startDate: string, endDa
   return axios.get(`/api/attendance/dateRange?ageGroup=${ageGroup}&startDate=${startDate}&endDate=${endDate}`);
 };
 
+const ExportAttendanceCSV = async (startDate: string, endDate: string, ageGroup: string = 'all') => {
+  const response = await axios.post('/api/attendance/export', {
+    startDate,
+    endDate,
+    ageGroup,
+    includeHeaders: true
+  }, {
+    responseType: 'blob',
+    headers: {
+      'Content-Type': 'application/json',
+    }
+  });
+  return response;
+};
+
 export default {
   GetAllAgeGroups,
   CreateNewKid,
@@ -71,4 +86,5 @@ export default {
   TotalPresentCountByDay,
   GetDailyAttendance,
   GetAttendanceListByDateRange,
+  ExportAttendanceCSV,
 };

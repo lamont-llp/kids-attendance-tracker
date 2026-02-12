@@ -93,6 +93,7 @@ export interface AttendanceRecord {
   present: boolean | null;
   day: number;
   date: string;
+  checkInTime?: Date | string;
   // For queries with relations
   kid?: {
     id: number;
@@ -102,8 +103,8 @@ export interface AttendanceRecord {
     address?: string | null;
     guardian_id?: number | null;
     isVisitor: boolean;
-    created_at: string;
-    updated_at: string;
+    created_at: Date | string;
+    updated_at: Date | string;
     guardian_name?: string | null; // Add this
   };
 }
