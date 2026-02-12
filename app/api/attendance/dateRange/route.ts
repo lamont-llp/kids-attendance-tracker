@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { db } from '@/utils';
-import { eq, and, between, sql, inArray } from 'drizzle-orm';
+import { eq, and, between, sql } from 'drizzle-orm';
 import { Kids, Attendance, Guardians } from '@/utils/schema';
 import { isValid, parseISO } from 'date-fns';
 import { getAgeRangeFromGroup } from '@/utils/ageGroupUtils';
@@ -39,29 +39,11 @@ export async function GET(request: Request) {
     const { min, max } = getAgeRangeFromGroup(ageGroup);
     console.log('👶 [Attendance Search] Age range:', { ageGroup, min, max });
 
-    // Convert date range to MM/yyyy format(s) since DB stores dates as "MM/yyyy"
-    // Generate all months in the range
-    const startMonth = parsedStartDate.getMonth();
-    const startYear = parsedStartDate.getFullYear();
-    const endMonth = parsedEndDate.getMonth();
-    const endYear = parsedEndDate.getFullYear();
-    
-    const monthsInRange: string[] = [];
-    let currentDate = new Date(startYear, startMonth, 1);
-    const endDate_obj = new Date(endYear, endMonth, 1);
-    
-    while (currentDate <= endDate_obj) {
-      const monthStr = String(currentDate.getMonth() + 1).padStart(2, '0');
-      const yearStr = String(currentDate.getFullYear());
-      monthsInRange.push(`${monthStr}/${yearStr}`);
-      currentDate = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1);
-    }
-
-    console.log('📆 [Attendance Search] Months in range:', monthsInRange);
-
     // Build where conditions
+    // Note: Dates in DB are stored as DD/MM/YYYY format (e.g., '08/02/2026' for Feb 8, 2026)
+    // We need to convert the varchar date to a proper date for comparison
     const whereConditions = [
-      inArray(Attendance.date, monthsInRange)
+      sql`STR_TO_DATE(${Attendance.date}, '%d/%m/%Y') BETWEEN ${startDate} AND ${endDate}`
     ];
 
     // Add age filter if not 'all'
@@ -72,36 +54,9 @@ export async function GET(request: Request) {
     }
 
     console.log('🔍 [Attendance Search] Where conditions:', { 
-      monthsFilter: monthsInRange, 
+      dateRange: `${startDate} to ${endDate}`,
       ageFilter: ageGroup !== 'all' ? `${min}-${max}` : 'all' 
     });
-
-    // Debug: Check what attendance records exist
-    const allAttendance = await db
-      .select({
-        date: Attendance.date,
-        count: sql`COUNT(*)`
-      })
-      .from(Attendance)
-      .groupBy(Attendance.date)
-      .limit(10);
-    console.log('🔎 [DEBUG] Sample attendance dates in DB:', allAttendance);
-
-    // Debug: Check what kids exist in the age range
-    const kidsInAgeRange = await db
-      .select({
-        id: Kids.id,
-        name: Kids.name,
-        age: Kids.age,
-      })
-      .from(Kids)
-      .where(
-        ageGroup !== 'all' 
-          ? between(sql`CAST(${Kids.age} AS UNSIGNED)`, min, max)
-          : undefined
-      )
-      .limit(5);
-    console.log('🔎 [DEBUG] Kids in age range:', kidsInAgeRange);
 
     // Fetch attendance records with kid details
     const attendanceRecords = await db
@@ -128,59 +83,27 @@ export async function GET(request: Request) {
 
     console.log('💾 [Attendance Search] DB records found:', attendanceRecords.length);
 
-    // Filter by actual day range and transform records to match the expected format
-    const startDay = parsedStartDate.getDate();
-    const endDay = parsedEndDate.getDate();
-    
-    console.log('🗓️  [Attendance Search] Day range filter:', { 
-      startDay, 
-      endDay, 
-      singleMonth: monthsInRange.length === 1 
-    });
-    
-    const formattedRecords = attendanceRecords
-      .filter(record => {
-        if (!record.day) return false;
-        
-        // If single month, filter by day range
-        if (monthsInRange.length === 1) {
-          return record.day >= startDay && record.day <= endDay;
-        }
-        
-        // For multiple months, check first and last month boundaries
-        const recordMonthYear = record.date;
-        const firstMonth = monthsInRange[0];
-        const lastMonth = monthsInRange[monthsInRange.length - 1];
-        
-        if (recordMonthYear === firstMonth) {
-          return record.day >= startDay;
-        } else if (recordMonthYear === lastMonth) {
-          return record.day <= endDay;
-        }
-        
-        // Middle months - include all days
-        return true;
-      })
-      .map(record => ({
-        id: record.id,
-        kidId: record.kidId,
-        present: record.present,
-        day: record.day,
-        date: record.date,
-        checkInTime: record.checkInTime,
-        kid: {
-          id: record.kidId,
-          name: record.kid_name,
-          age: record.kid_age,
-          isVisitor: record.kid_isVisitor,
-          contact: record.kid_contact,
-          address: record.kid_address,
-          guardian_id: record.kid_guardian_id,
-          guardian_name: record.guardian_name
-        }
-      }));
+    // Transform records to match the expected format
+    const formattedRecords = attendanceRecords.map(record => ({
+      id: record.id,
+      kidId: record.kidId,
+      present: record.present,
+      day: record.day,
+      date: record.date,
+      checkInTime: record.checkInTime,
+      kid: {
+        id: record.kidId,
+        name: record.kid_name,
+        age: record.kid_age,
+        isVisitor: record.kid_isVisitor,
+        contact: record.kid_contact,
+        address: record.kid_address,
+        guardian_id: record.kid_guardian_id,
+        guardian_name: record.guardian_name
+      }
+    }));
 
-    console.log('✅ [Attendance Search] Final records after day filtering:', formattedRecords.length);
+    console.log('✅ [Attendance Search] Final records:', formattedRecords.length);
     console.log('📊 [Attendance Search] Sample record:', formattedRecords[0]);
 
     return NextResponse.json({ data: formattedRecords });
