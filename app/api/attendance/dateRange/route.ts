@@ -76,6 +76,33 @@ export async function GET(request: Request) {
       ageFilter: ageGroup !== 'all' ? `${min}-${max}` : 'all' 
     });
 
+    // Debug: Check what attendance records exist
+    const allAttendance = await db
+      .select({
+        date: Attendance.date,
+        count: sql`COUNT(*)`
+      })
+      .from(Attendance)
+      .groupBy(Attendance.date)
+      .limit(10);
+    console.log('🔎 [DEBUG] Sample attendance dates in DB:', allAttendance);
+
+    // Debug: Check what kids exist in the age range
+    const kidsInAgeRange = await db
+      .select({
+        id: Kids.id,
+        name: Kids.name,
+        age: Kids.age,
+      })
+      .from(Kids)
+      .where(
+        ageGroup !== 'all' 
+          ? between(sql`CAST(${Kids.age} AS UNSIGNED)`, min, max)
+          : undefined
+      )
+      .limit(5);
+    console.log('🔎 [DEBUG] Kids in age range:', kidsInAgeRange);
+
     // Fetch attendance records with kid details
     const attendanceRecords = await db
       .select({
