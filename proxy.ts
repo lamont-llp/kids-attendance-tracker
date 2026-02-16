@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { getKindeServerSession } from '@kinde-oss/kinde-auth-nextjs/server';
 
 // This function can be marked `async` if using `await` inside
-export async function middleware(request: Request) {
+export async function proxy(request: Request) {
   const { isAuthenticated, getPermission, getUser } = getKindeServerSession();
 
   // Check if user is authenticated
