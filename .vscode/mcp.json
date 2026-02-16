@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "Sentry": {
+      "url": "https://mcp.sentry.dev/mcp/lamont-vt/eom-kidz",
+      "type": "http"
+    }
+  }
+}
