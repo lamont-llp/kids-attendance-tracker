@@ -11,6 +11,9 @@ jobs:
     runs-on: ubuntu-latest
     env:
       DATABASE_URL: mysql://dummy:dummy@localhost:3306/dummy
+      KINDE_ISSUER_URL: https://dummy.issuer.url
+      KINDE_CLIENT_ID: dummy-client-id
+      KINDE_CLIENT_SECRET: dummy-client-secret
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
