@@ -9,6 +9,8 @@ on:
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
+    env:
+      DATABASE_URL: mysql://dummy:dummy@localhost:3306/dummy
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
