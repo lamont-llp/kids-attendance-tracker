@@ -42,7 +42,7 @@ const KioskPage = () => {
     try {
       setIsLoading(true);
       const today = moment().tz('Africa/Johannesburg');
-      const day = today.date();
+      const day = today.day(); // Changed from .date() to .day()
       const date = today.format('DD/MM/yyyy');
 
       // You might need to create a new API endpoint for this
