@@ -40,7 +40,7 @@ jobs:
         run: pnpm build
 
       - name: Lint
-        run: pnpm exec next lint --dir .
+        run: pnpm exec next lint app
 
       - name: Typecheck
         run: pnpm typecheck
