@@ -17,7 +17,7 @@ jobs:
       KINDE_SITE_URL: http://localhost:3000
       KINDE_POST_LOGOUT_REDIRECT_URL: http://localhost:3000
       KINDE_POST_LOGIN_REDIECRT_URL: http://localhost:3000/dashboard
-      
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -40,7 +40,7 @@ jobs:
         run: pnpm build
 
       - name: Lint
-        run: pnpm lint
+        run: pnpm exec next lint
 
       - name: Typecheck
         run: pnpm typecheck
