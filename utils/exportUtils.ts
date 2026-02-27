@@ -21,6 +21,8 @@ function formatAttendanceForExport(records: AttendanceRecord[]) {
     'Date': record.date,
     'Student Name': record.kid?.name || '',
     'Age Group': record.kid?.age || '',
+    'Contact': record.kid?.contact || '',
+    'Address': record.kid?.address || '',
     'Status': record.present ? 'Present' : 'Absent',
     'Check-in Time': record.checkInTime ? new Date(record.checkInTime).toLocaleTimeString() : 'N/A',
     'Visitor': record.kid?.isVisitor ? 'Yes' : 'No',
