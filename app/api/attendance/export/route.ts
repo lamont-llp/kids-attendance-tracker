@@ -212,7 +212,7 @@ export async function POST(req: NextRequest) {
 
           // CSV Headers
           if (includeHeaders) {
-            const headers = ['Date', 'Student Name', 'Age Group', 'Status', 'Check-in Time', 'Visitor'];
+            const headers = ['Date', 'Student Name', 'Contact', 'Age Group', 'Status', 'Check-in Time', 'Visitor'];
             const headerRow = headers.map(h => escapeCsvCell(h)).join(',') + '\n';
             controller.enqueue(encoder.encode(headerRow));
           }
@@ -230,6 +230,7 @@ export async function POST(req: NextRequest) {
                 date: Attendance.date,
                 checkInTime: Attendance.checkInTime,
                 kid_name: Kids.name,
+                kid_contact: Kids.contact,
                 kid_age: Kids.age,
                 kid_isVisitor: Kids.isVisitor,
               })
@@ -250,6 +251,7 @@ export async function POST(req: NextRequest) {
               const row = [
                 record.date,
                 record.kid_name || '',
+                record.kid_contact || '',
                 record.kid_age || '',
                 record.present ? 'Present' : 'Absent',
                 formatCheckInTime(record.checkInTime),
